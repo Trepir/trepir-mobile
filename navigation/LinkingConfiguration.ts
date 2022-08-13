@@ -9,28 +9,34 @@ import * as Linking from 'expo-linking';
 
 import { RootStackParamList } from '../types';
 
+//WHEN WE CHANGE SOMETHING ON THE ROUTES WE HAVE TO CHANGE IT HERE
 const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: [Linking.createURL('/')],
-  config: {
-    screens: {
-      Root: {
-        screens: {
-          TabOne: {
-            screens: {
-              TabOneScreen: 'one',
-            },
-          },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: 'two',
-            },
-          },
-        },
-      },
-      Modal: 'modal',
-      NotFound: '*',
-    },
-  },
+	prefixes: [Linking.createURL('/')],
+	config: {
+		screens: {
+			Root: {
+				screens: {
+					Dashboard: {
+						screens: {
+							Dashboard: 'Dashboard',
+						},
+					},
+					Create: {
+						screens: {
+							Create: 'Create Trip',
+						},
+					},
+					Discover: {
+						screens: {
+							Discover: 'Discover',
+						},
+					},
+				},
+			},
+			Modal: 'modal',
+			NotFound: '*',
+		},
+	},
 };
 
 export default linking;
