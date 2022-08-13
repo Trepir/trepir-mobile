@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider, extendTheme } from 'native-base';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
@@ -21,14 +23,16 @@ export default function App() {
 		return null;
 	} else {
 		return (
-			<NativeBaseProvider theme={theme}>
-				<SafeAreaProvider>
-					<GestureHandlerRootView style={{ flex: 1 }}>
-						<Navigation /*colorScheme={colorScheme} */ />
-					</GestureHandlerRootView>
-					<StatusBar />
-				</SafeAreaProvider>
-			</NativeBaseProvider>
+			<Provider store={store}>
+				<NativeBaseProvider theme={theme}>
+					<SafeAreaProvider>
+						<GestureHandlerRootView style={{ flex: 1 }}>
+							<Navigation /*colorScheme={colorScheme} */ />
+						</GestureHandlerRootView>
+						<StatusBar />
+					</SafeAreaProvider>
+				</NativeBaseProvider>
+			</Provider>
 		);
 	}
 }
