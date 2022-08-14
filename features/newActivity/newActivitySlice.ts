@@ -8,6 +8,7 @@ interface NewActivityState {
 	description: string;
 	time: Date;
 	creatorId: string;
+	tags: string[];
 	// rating,
 
 	//LOCATION OBJECT
@@ -18,7 +19,8 @@ const initialState: NewActivityState = {
 	duration: 0,
 	description: '',
 	time: new Date(Date.now()),
-	creatorId: 'NoCreator',
+	creatorId: '',
+	tags: [],
 };
 
 const newActivitySlice = createSlice({
