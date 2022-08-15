@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-//THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
+// THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
 interface NewActivityState {
 	// value: number;
 	name: string;
@@ -12,7 +12,7 @@ interface NewActivityState {
 	tags: string[];
 	// rating,
 
-	//LOCATION OBJECT
+	// LOCATION OBJECT
 }
 
 const initialState: NewActivityState = {
@@ -27,12 +27,12 @@ const initialState: NewActivityState = {
 
 const newActivitySlice = createSlice({
 	name: 'newActivity',
-	initialState: initialState,
+	initialState,
 	reducers: {
 		storeNewActivity: (state: NewActivityState, action: PayloadAction<NewActivityState>) => {
 			state = { ...action.payload };
 		},
-		//Change Type if necessary
+		// Change Type if necessary
 		clearState: (state: NewActivityState) => {
 			state = initialState;
 		},

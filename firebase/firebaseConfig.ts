@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import firebaseConfigInfo from '../constants/firebaseSecrets';
 import { getAuth } from 'firebase/auth';
+import firebaseConfigInfo from '../constants/firebaseSecrets';
 // import { getAnalytics } from 'firebase/analytics';
 
 // Initialize Firebase
