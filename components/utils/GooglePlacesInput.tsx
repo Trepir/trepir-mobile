@@ -9,7 +9,8 @@ import ApiKeys from '../../constants/ApiKeys';
 const GooglePlacesInput = ({}) => {
 	const GooglePlacesRef = useRef<GooglePlacesAutocompleteRef>(null);
 	return (
-		<View position={'absolute'} width={'100%'} alignSelf={'center'} zIndex={2} mt={12}>
+		// Remove view from here
+		<View position={'absolute'} width={'100%'} alignSelf={'center'} zIndex={2} mt={16}>
 			<GooglePlacesAutocomplete
 				textInputProps={{
 					// leftIcon: { type: 'font-awesome', name: 'chevron-left' },

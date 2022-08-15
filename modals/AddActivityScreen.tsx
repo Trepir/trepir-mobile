@@ -102,10 +102,11 @@ export default function AddActivityModal() {
 					<InputLabel labelText={'Set a reminder (Optional)'} />
 
 					{/* Could Move to another Component*/}
-					<Box w={'90'} alignSelf={'center'} rounded={'full'}>
+					<HStack w={'90'} alignSelf={'center'} rounded={'full'} alignItems={'center'}>
 						<RNDateTimePicker
 							style={{
 								backgroundColor: time.touched ? Colors.primary.normal : '',
+								width: 100,
 							}}
 							mode="time"
 							value={time.value}
@@ -115,7 +116,12 @@ export default function AddActivityModal() {
 								setTime({ value: date!, touched: true });
 							}}
 						/>
-					</Box>
+						{time.touched && (
+							<Text fontSize={'xl'} ml={5}>
+								X
+							</Text>
+						)}
+					</HStack>
 
 					<InputLabel labelText={'Pick some Tags'} />
 					<DropDownPicker
