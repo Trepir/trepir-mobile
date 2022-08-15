@@ -6,20 +6,21 @@ import {
 import { View } from 'native-base';
 import ApiKeys from '../../constants/ApiKeys';
 
-const GooglePlacesInput = ({}) => {
+function GooglePlacesInput() {
 	const GooglePlacesRef = useRef<GooglePlacesAutocompleteRef>(null);
 	return (
-		<View position={'absolute'} width={'100%'} alignSelf={'center'} zIndex={2} mt={12}>
+		<View position="absolute" width="100%" alignSelf="center" zIndex={2} mt={12}>
 			<GooglePlacesAutocomplete
 				textInputProps={{
 					// leftIcon: { type: 'font-awesome', name: 'chevron-left' },
 					errorStyle: { color: 'red' },
 				}}
 				ref={GooglePlacesRef}
-				//THIS PLACEHOLDER IS PASSED TROUGH PARAMS
+				// THIS PLACEHOLDER IS PASSED TROUGH PARAMS
 				placeholder="Add a Location..."
-				//THIS ON PRESS IS PASSED THROUGH PARAMS
+				// THIS ON PRESS IS PASSED THROUGH PARAMS
 				onPress={(data, details) => {
+					console.log(data, details);
 					// console.log(details);
 					// if (GooglePlacesRef.current !== null) {
 					// 	GooglePlacesRef.current.setAddressText('');
@@ -30,9 +31,9 @@ const GooglePlacesInput = ({}) => {
 					key: ApiKeys.googleMapsAPIKey,
 					language: 'en',
 					// type: ['(cities)', '(regions)'],
-					type: 'establishment', //THIS IS PASSED TROUGH PARAMS
+					type: 'establishment', // THIS IS PASSED TROUGH PARAMS
 				}}
-				fetchDetails={true}
+				fetchDetails
 				styles={{
 					textInput: {
 						height: 38,
@@ -45,6 +46,6 @@ const GooglePlacesInput = ({}) => {
 			/>
 		</View>
 	);
-};
+}
 
 export default GooglePlacesInput;

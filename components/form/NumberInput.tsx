@@ -1,26 +1,38 @@
-import { Factory, HStack, Input, Text } from 'native-base';
+import { HStack, Text } from 'native-base';
 import React, { useState } from 'react';
-import { Control, Controller, FieldErrorsImpl } from 'react-hook-form';
-import { Keyboard, TextInput, StyleSheet } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Controller, FieldErrorsImpl } from 'react-hook-form';
+import { TextInput, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 import { ActivityFormControl } from '../../modals/AddActivityScreen';
 import InputLabel from '../ui/InputLabel';
 
 type Props = {
 	name: string;
-	//This variables are form specif
+	// This variables are form specif
 	control: ActivityFormControl;
 	errors: FieldErrorsImpl;
 	placeholder: string;
 };
-//WORKING FOR NOW HAVE TO  CHECK THE FORM
-const NumberInput = ({
+
+const styles = StyleSheet.create({
+	numberInput: {
+		backgroundColor: 'white',
+		width: '33%',
+		height: 36,
+		borderColor: Colors.primary.normal,
+		borderWidth: 2,
+		borderRadius: 10,
+		textAlign: 'center',
+	},
+});
+
+// WORKING FOR NOW HAVE TO  CHECK THE FORM
+function NumberInput({
 	name,
-	control, //Maybe put default values here
+	control, // Maybe put default values here
 	errors,
 	placeholder,
-}: Props) => {
+}: Props) {
 	const [duration, setDuration] = useState('');
 
 	// const FactoryTextInput = Factory(TextInput);
@@ -34,9 +46,9 @@ const NumberInput = ({
 				rules={{
 					required: true,
 				}}
-				render={({ field: { onChange, onBlur, value } }) => (
-					<HStack alignItems={'center'}>
-						<Text fontSize={'md'} mr={2}>
+				render={({ field: { onChange } }) => (
+					<HStack alignItems="center">
+						<Text fontSize="md" mr={2}>
 							Hours it takes to do:{' '}
 						</Text>
 						<TextInput
@@ -59,21 +71,9 @@ const NumberInput = ({
 					</HStack>
 				)}
 			/>
-			{errors[name] && <Text color={'error.600'}>This is required.</Text>}
+			{errors[name] && <Text color="error.600">This is required.</Text>}
 		</>
 	);
-};
+}
 
 export default NumberInput;
-
-const styles = StyleSheet.create({
-	numberInput: {
-		backgroundColor: 'white',
-		width: '33%',
-		height: 36,
-		borderColor: Colors.primary.normal,
-		borderWidth: 2,
-		borderRadius: 10,
-		textAlign: 'center',
-	},
-});

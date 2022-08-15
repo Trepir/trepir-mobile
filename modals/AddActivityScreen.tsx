@@ -1,28 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform } from 'react-native';
 
-import { Box, Divider, Heading, HStack, ScrollView, Text, View } from 'native-base';
+import { Box, Divider, Heading, HStack, View } from 'native-base';
 import { useForm, Control } from 'react-hook-form';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { useState } from 'react';
+import DropDownPicker from 'react-native-dropdown-picker';
 import TextInputForm from '../components/form/TextInput';
 import TextAreaInput from '../components/form/TextAreaInput';
 import NumberInput from '../components/form/NumberInput';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { useState } from 'react';
 import GooglePlacesInput from '../components/utils/GooglePlacesInput';
 import Colors from '../constants/Colors';
 import ButtonCustom from '../components/ui/ButtonCustom';
 import GoogleIcon from '../assets/icons/GoogleIcon';
 import InputLabel from '../components/ui/InputLabel';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { useAppDispatch } from '../app/hooks';
 import { storeNewActivity } from '../features/newActivity/newActivitySlice';
 
-//For ANDROID => READ THE DOCS
+// For ANDROID => READ THE DOCS
 // DateTimePickerAndroid.open(params: AndroidNativeProps)
 // DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
 
-//FORM CONTROL TYPE EXPORT => MOVE IT IF NECESSARY
+// FORM CONTROL TYPE EXPORT => MOVE IT IF NECESSARY
 export type ActivityFormControl = Control<
 	{
 		name: string;
@@ -34,7 +34,7 @@ export type ActivityFormControl = Control<
 	any
 >;
 
-//FULLSCREEN MODAL
+// FULLSCREEN MODAL
 export default function AddActivityModal() {
 	const dispatch = useAppDispatch();
 
@@ -74,35 +74,35 @@ export default function AddActivityModal() {
 		<DismissKeyboard>
 			<View flex={1} px="10">
 				{/* WHEN THIS IS ACTIVE I HAVE TO TOP THE SCROLLING OF THE MODAL  */}
-				<HStack alignSelf={'center'} alignItems={'center'}>
+				<HStack alignSelf="center" alignItems="center">
 					<GoogleIcon size={25} />
-					<Heading fontSize={'lg'} fontWeight={'semibold'} my={4} ml={2}>
+					<Heading fontSize="lg" fontWeight="semibold" my={4} ml={2}>
 						Select a Location for your Activity
 					</Heading>
 				</HStack>
 				<GooglePlacesInput />
 
-				<View flex={1} mt={'16'}>
+				<View flex={1} mt="16">
 					<Divider mb={2} />
 					<TextInputForm
-						name={'name'}
+						name="name"
 						control={control}
 						errors={errors}
-						placeholder={'Activity Name'}
+						placeholder="Activity Name"
 					/>
 					<TextAreaInput
-						name={'description'}
+						name="description"
 						control={control}
 						errors={errors}
-						placeholder={'Give a short description...'}
+						placeholder="Give a short description..."
 					/>
 
-					<NumberInput name={'duration'} control={control} errors={errors} placeholder={'0'} />
+					<NumberInput name="duration" control={control} errors={errors} placeholder="0" />
 
-					<InputLabel labelText={'Set a reminder (Optional)'} />
+					<InputLabel labelText="Set a reminder (Optional)" />
 
-					{/* Could Move to another Component*/}
-					<Box w={'90'} alignSelf={'center'} rounded={'full'}>
+					{/* Could Move to another Component */}
+					<Box w="90" alignSelf="center" rounded="full">
 						<RNDateTimePicker
 							style={{
 								backgroundColor: time.touched ? Colors.primary.normal : '',
@@ -117,7 +117,7 @@ export default function AddActivityModal() {
 						/>
 					</Box>
 
-					<InputLabel labelText={'Pick some Tags'} />
+					<InputLabel labelText="Pick some Tags" />
 					<DropDownPicker
 						open={open}
 						value={value}
@@ -125,7 +125,7 @@ export default function AddActivityModal() {
 						setOpen={setOpen}
 						setValue={setValue}
 						setItems={setItems}
-						multiple={true}
+						multiple
 						min={0}
 						max={5}
 					/>
@@ -133,8 +133,8 @@ export default function AddActivityModal() {
 					<Box mt={8}>
 						<ButtonCustom
 							pressFunction={handleSubmit(onSubmit)}
-							text={'Create Activity'}
-							alignment={'center'}
+							text="Create Activity"
+							alignment="center"
 						/>
 					</Box>
 
@@ -146,8 +146,7 @@ export default function AddActivityModal() {
 	);
 }
 
-{
-	/* <Controller
+/* <Controller
 	control={control}
 	rules={{
 		required: true,
@@ -166,4 +165,3 @@ export default function AddActivityModal() {
 	)}
 	name="name"
 /> */
-}

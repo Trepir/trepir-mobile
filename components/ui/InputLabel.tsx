@@ -6,12 +6,12 @@ type Props = {
 	labelText: string;
 };
 
-const InputLabel = ({ labelText }: Props) => {
+function InputLabel({ labelText }: Props) {
 	return (
-		<Text color={Colors.primary.inputLabel} fontSize={'md'} fontWeight={'medium'} my={2}>
+		<Text color={Colors.primary.inputLabel} fontSize="md" fontWeight="medium" my={2}>
 			{labelText}
 		</Text>
 	);
-};
+}
 
 export default InputLabel;
