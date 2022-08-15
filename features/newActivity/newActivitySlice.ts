@@ -6,6 +6,7 @@ interface NewActivityState {
 	name: string;
 	duration: number;
 	description: string;
+	// time: string;
 	time: Date;
 	creatorId: string;
 	tags: string[];
@@ -19,6 +20,7 @@ const initialState: NewActivityState = {
 	duration: 0,
 	description: '',
 	time: new Date(Date.now()),
+	// time: String(new Date(Date.now())),
 	creatorId: '',
 	tags: [],
 };
@@ -27,13 +29,11 @@ const newActivitySlice = createSlice({
 	name: 'newActivity',
 	initialState: initialState,
 	reducers: {
-		storeNewActivity: (state: NewActivityState) => {
-			state = {
-				...state,
-			};
+		storeNewActivity: (state: NewActivityState, action: PayloadAction<NewActivityState>) => {
+			state = { ...action.payload };
 		},
 		//Change Type if necessary
-		clearState: (state: NewActivityState, action: PayloadAction<NewActivityState>) => {
+		clearState: (state: NewActivityState) => {
 			state = initialState;
 		},
 	},

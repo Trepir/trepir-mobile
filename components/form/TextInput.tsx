@@ -1,9 +1,9 @@
 import { Input, Text } from 'native-base';
 import React from 'react';
-import { Control, Controller, FieldErrorsImpl } from 'react-hook-form';
-import { Keyboard } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Controller, FieldErrorsImpl } from 'react-hook-form';
+import Colors from '../../constants/Colors';
 import { ActivityFormControl } from '../../modals/AddActivityScreen';
+import InputLabel from '../ui/InputLabel';
 
 type Props = {
 	name: string;
@@ -23,7 +23,7 @@ const TextInput = ({
 }: Props) => {
 	return (
 		<>
-			<Text> {name.charAt(0).toUpperCase() + name.slice(1)}</Text>
+			<InputLabel labelText={name.charAt(0).toUpperCase() + name.slice(1)} />
 			<Controller
 				name={name as 'name'}
 				control={control}
@@ -36,7 +36,12 @@ const TextInput = ({
 						onBlur={onBlur}
 						onChangeText={onChange}
 						value={value}
-						size="lg"
+						size="xl"
+						bgColor={'white'}
+						borderColor={Colors.primary.normal}
+						borderWidth={'2'}
+						rounded={'xl'}
+						_focus={{ borderColor: Colors.primary.light }}
 						type={password ? 'password' : 'text'}
 					/>
 				)}

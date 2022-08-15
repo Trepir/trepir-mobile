@@ -8,6 +8,7 @@ export const store = configureStore({
 		counter: counterReducer,
 		newActivity: newActivityReducer,
 	},
+	// middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export type AppDispatch = typeof store.dispatch;

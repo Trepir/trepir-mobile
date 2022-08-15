@@ -3,8 +3,8 @@ import {
 	GooglePlacesAutocomplete,
 	GooglePlacesAutocompleteRef,
 } from 'react-native-google-places-autocomplete';
-import Constants from 'expo-constants';
 import { View } from 'native-base';
+import ApiKeys from '../../constants/ApiKeys';
 
 const GooglePlacesInput = ({}) => {
 	const GooglePlacesRef = useRef<GooglePlacesAutocompleteRef>(null);
@@ -16,7 +16,9 @@ const GooglePlacesInput = ({}) => {
 					errorStyle: { color: 'red' },
 				}}
 				ref={GooglePlacesRef}
+				//THIS PLACEHOLDER IS PASSED TROUGH PARAMS
 				placeholder="Add a Location..."
+				//THIS ON PRESS IS PASSED THROUGH PARAMS
 				onPress={(data, details) => {
 					// console.log(details);
 					// if (GooglePlacesRef.current !== null) {
@@ -25,10 +27,10 @@ const GooglePlacesInput = ({}) => {
 				}}
 				onFail={(error) => console.error(error)}
 				query={{
-					key: 'AIzaSyDzxriUNVcBOw_5cRbcVJKRz2xL9jpfbOA',
+					key: ApiKeys.googleMapsAPIKey,
 					language: 'en',
 					// type: ['(cities)', '(regions)'],
-					type: 'establishment',
+					type: 'establishment', //THIS IS PASSED TROUGH PARAMS
 				}}
 				fetchDetails={true}
 				styles={{
