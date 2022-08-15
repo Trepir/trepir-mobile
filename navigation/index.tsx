@@ -14,8 +14,10 @@ import DashboardScreen from '../screens/DashboardScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import AddActivityModal from '../modals/AddActivityScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList, RootTabParamList } from '../types';
+import { HomeStackParamList, RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import HomeScreen from '../screens/HomeScreen';
+import Login from '../modals/Login';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -86,6 +88,7 @@ function RootNavigator() {
 	return (
 		<Stack.Navigator>
 			<Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+
 			<Stack.Group screenOptions={{ presentation: 'modal' }}>
 				<Stack.Screen
 					name="NewActivityModal"
@@ -95,6 +98,19 @@ function RootNavigator() {
 			</Stack.Group>
 			<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 		</Stack.Navigator>
+	);
+}
+
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
+
+function HomeNavigator() {
+	return (
+		<HomeStack.Navigator>
+			<HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+			<HomeStack.Group screenOptions={{ presentation: 'modal' }}>
+				<HomeStack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
+			</HomeStack.Group>
+		</HomeStack.Navigator>
 	);
 }
 

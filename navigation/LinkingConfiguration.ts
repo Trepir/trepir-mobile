@@ -14,6 +14,25 @@ const linking: LinkingOptions<RootStackParamList> = {
 	prefixes: [Linking.createURL('/')],
 	config: {
 		screens: {
+			Auth: {
+				screens: {
+					Login: {
+						screens: {
+							Login: 'Login',
+						},
+					},
+					Home: {
+						screens: {
+							Home: 'Home',
+						},
+					},
+					Register: {
+						screens: {
+							Register: 'Register',
+						},
+					},
+				},
+			},
 			Root: {
 				screens: {
 					Dashboard: {
