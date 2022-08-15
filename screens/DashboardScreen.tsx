@@ -1,12 +1,19 @@
-import { View, Text } from 'native-base';
+import { View, Text, Pressable } from 'native-base';
 import React from 'react';
+import { RootTabScreenProps } from '../types';
 
-type Props = {};
+// type Props = {};
 
-const DashboardScreen = (props: Props) => {
+const DashboardScreen = ({ navigation }: RootTabScreenProps<'Dashboard'>) => {
 	return (
 		<View flex={1} justifyContent={'center'} alignItems={'center'}>
-			<Text>DashboardScreen</Text>
+			<Pressable
+				onPress={() => {
+					navigation.navigate('NewActivityModal');
+				}}
+			>
+				<Text>DashboardScreen</Text>
+			</Pressable>
 		</View>
 	);
 };

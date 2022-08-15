@@ -12,7 +12,7 @@ import * as React from 'react';
 import CreateScreen from '../screens/CreateScreen';
 import DashboardScreen from '../screens/DashboardScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
-import ModalScreen from '../modals/AddActivityScreen';
+import AddActivityModal from '../modals/AddActivityScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -40,10 +40,14 @@ function RootNavigator() {
 	return (
 		<Stack.Navigator>
 			<Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-			<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 			<Stack.Group screenOptions={{ presentation: 'modal' }}>
-				<Stack.Screen name="Modal" component={ModalScreen} />
+				<Stack.Screen
+					name="NewActivityModal"
+					component={AddActivityModal}
+					options={{ title: 'Create a New Activity' }}
+				/>
 			</Stack.Group>
+			<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 		</Stack.Navigator>
 	);
 }
