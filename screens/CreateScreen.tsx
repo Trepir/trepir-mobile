@@ -1,14 +1,14 @@
 import { View, Text } from 'native-base';
 import React from 'react';
 
-type Props = {};
+// type Props = {};
 
-const CreateScreen = (props: Props) => {
+function CreateScreen() {
 	return (
-		<View flex={1} justifyContent={'center'} alignItems={'center'}>
+		<View flex={1} justifyContent="center" alignItems="center">
 			<Text>CreateScreen</Text>
 		</View>
 	);
-};
+}
 
 export default CreateScreen;

@@ -14,42 +14,17 @@ import DashboardScreen from '../screens/DashboardScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import AddActivityModal from '../modals/AddActivityScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-
-export default function Navigation(/*{ colorScheme }: { colorScheme: ColorSchemeName } */) {
-	return (
-		<NavigationContainer
-			linking={LinkingConfiguration}
-			// theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-		>
-			<RootNavigator />
-		</NavigationContainer>
-	);
-}
-
 /**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
+ * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-function RootNavigator() {
-	// THIS IS WHERE ALL ELEMENTS OF THE ROOT NAVIGATION STACK ARE
-	//HANDLES ALL THE ROUTES AT TOP LEVEL
-	return (
-		<Stack.Navigator>
-			<Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-			<Stack.Group screenOptions={{ presentation: 'modal' }}>
-				<Stack.Screen
-					name="NewActivityModal"
-					component={AddActivityModal}
-					options={{ title: 'Create a New Activity' }}
-				/>
-			</Stack.Group>
-			<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-		</Stack.Navigator>
-	);
+// JUST AN ICON THAT WE ARE GONNA OVERRIDE
+function TabBarIcon(props: {
+	name: React.ComponentProps<typeof FontAwesome>['name'];
+	color: string;
+}) {
+	return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
 /**
@@ -100,18 +75,41 @@ function BottomTabNavigator() {
 }
 
 /**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+ * A root stack navigator is often used for displaying modals on top of all other content.
+ * https://reactnavigation.org/docs/modal
  */
-// JUST AN ICON THAT WE ARE GONNA OVERRIDE
-function TabBarIcon(props: {
-	name: React.ComponentProps<typeof FontAwesome>['name'];
-	color: string;
-}) {
-	return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+function RootNavigator() {
+	// THIS IS WHERE ALL ELEMENTS OF THE ROOT NAVIGATION STACK ARE
+	// HANDLES ALL THE ROUTES AT TOP LEVEL
+	return (
+		<Stack.Navigator>
+			<Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+			<Stack.Group screenOptions={{ presentation: 'modal' }}>
+				<Stack.Screen
+					name="NewActivityModal"
+					component={AddActivityModal}
+					options={{ title: 'Create a New Activity' }}
+				/>
+			</Stack.Group>
+			<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+		</Stack.Navigator>
+	);
 }
 
-{
-	/* <BottomTab.Screen
+export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
+	return (
+		<NavigationContainer
+			linking={LinkingConfiguration}
+			// theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+		>
+			<RootNavigator />
+		</NavigationContainer>
+	);
+}
+
+/* <BottomTab.Screen
   name="TabOne"
   component={TabOneScreen}
   options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
@@ -134,4 +132,3 @@ function TabBarIcon(props: {
     ),
   })}
 /> */
-}

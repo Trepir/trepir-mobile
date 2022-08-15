@@ -7,14 +7,14 @@ import InputLabel from '../ui/InputLabel';
 
 type Props = {
 	name: string;
-	//This variables are form specif
+	// This variables are form specif
 	control: ActivityFormControl;
 	errors: FieldErrorsImpl;
 	placeholder: string;
-	password?: boolean;
+	// password?: boolean;
 };
 
-const TextAreaInput = ({ name, control, errors, placeholder }: Props) => {
+function TextAreaInput({ name, control, errors, placeholder }: Props) {
 	return (
 		<>
 			<InputLabel labelText={name.charAt(0).toUpperCase() + name.slice(1)} />
@@ -25,7 +25,7 @@ const TextAreaInput = ({ name, control, errors, placeholder }: Props) => {
 					required: true,
 				}}
 				render={({ field: { onChange, onBlur, value } }) => (
-					//CANT TELL WHAT THIS ERROR IS SAYING
+					// CANT TELL WHAT THIS ERROR IS SAYING
 					// @ts-ignore
 					<TextArea
 						onBlur={onBlur}
@@ -33,18 +33,18 @@ const TextAreaInput = ({ name, control, errors, placeholder }: Props) => {
 						value={value}
 						placeholder={placeholder}
 						size="xl"
-						bgColor={'white'}
+						bgColor="white"
 						borderColor={Colors.primary.normal}
-						borderWidth={'2'}
-						rounded={'xl'}
+						borderWidth="2"
+						rounded="xl"
 						h={120}
 						_focus={{ borderColor: Colors.primary.light }}
 					/>
 				)}
 			/>
-			{errors[name] && <Text color={'error.600'}>This is required.</Text>}
+			{errors[name] && <Text color="error.600">This is required.</Text>}
 		</>
 	);
-};
+}
 
 export default TextAreaInput;
