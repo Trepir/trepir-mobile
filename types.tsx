@@ -12,14 +12,8 @@ export type RootTabParamList = {
 	Create: undefined;
 	Discover: undefined;
 };
-export type HomeStackParamList = {
-	Home: undefined;
-	Login: undefined;
-	Register: undefined;
-};
 
 export type RootStackParamList = {
-	Auth: NavigatorScreenParams<HomeStackParamList> | undefined;
 	Root: NavigatorScreenParams<RootTabParamList> | undefined;
 	NewActivityModal: undefined;
 	NotFound: undefined;
@@ -40,10 +34,17 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> = Composit
 	NativeStackScreenProps<RootStackParamList>
 >;
 
-export type HomePageParamList = {
+export type HomeStackParamList = {
+	Login: undefined;
 	Home: undefined;
+	Register: undefined;
 };
+
+export type HomePageParamList = {
+	HomeScreen: NavigatorScreenParams<HomeStackParamList> | undefined;
+};
+
 export type HomePageScreenProps<Screen extends keyof HomePageParamList> = CompositeScreenProps<
 	BottomTabScreenProps<HomePageParamList, Screen>,
-	NativeStackScreenProps<RootStackParamList>
+	NativeStackScreenProps<HomeStackParamList>
 >;

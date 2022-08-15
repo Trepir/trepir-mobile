@@ -14,8 +14,8 @@ import DashboardScreen from '../screens/DashboardScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import AddActivityModal from '../modals/AddActivityScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import { HomeStackParamList, RootStackParamList, RootTabParamList } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
+import { HomePageParamList, RootStackParamList, RootTabParamList } from '../types';
+import { linkingRoot, LinkingAuth } from './LinkingConfiguration';
 import HomeScreen from '../screens/HomeScreen';
 import Login from '../modals/Login';
 /**
@@ -101,26 +101,32 @@ function RootNavigator() {
 	);
 }
 
-const HomeStack = createNativeStackNavigator<HomeStackParamList>();
+const AuthStack = createNativeStackNavigator<HomePageParamList>();
 
-function HomeNavigator() {
+function AuthNavigator() {
 	return (
-		<HomeStack.Navigator>
-			<HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-			<HomeStack.Group screenOptions={{ presentation: 'modal' }}>
-				<HomeStack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
-			</HomeStack.Group>
-		</HomeStack.Navigator>
+		<AuthStack.Navigator>
+			<AuthStack.Screen name="HomeScreen" component={HomeScreen} />
+			<AuthStack.Screen name="Login" component={Login} />
+		</AuthStack.Navigator>
 	);
 }
 
 export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
+	const loggedIn = true;
+	if (loggedIn) {
+		return (
+			<NavigationContainer
+				linking={linkingRoot}
+				// theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+			>
+				<RootNavigator />
+			</NavigationContainer>
+		);
+	}
 	return (
-		<NavigationContainer
-			linking={LinkingConfiguration}
-			// theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-		>
-			<RootNavigator />
+		<NavigationContainer linking={LinkingAuth}>
+			<AuthNavigator />
 		</NavigationContainer>
 	);
 }
