@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform } from 'react-native';
 
-import { Box, Divider, Heading, HStack, Text, View } from 'native-base';
+import { Box, Divider, Heading, HStack, View } from 'native-base';
 import { useForm, Control } from 'react-hook-form';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { useState } from 'react';
@@ -102,7 +102,7 @@ export default function AddActivityModal() {
 					<InputLabel labelText="Set a reminder (Optional)" />
 
 					{/* Could Move to another Component */}
-					<HStack w="90" alignSelf="center" rounded="full" alignItems="center">
+					<Box w="90" alignSelf="center" rounded="full">
 						<RNDateTimePicker
 							style={{
 								backgroundColor: time.touched ? Colors.primary.normal : '',
@@ -117,12 +117,7 @@ export default function AddActivityModal() {
 								setTime({ value: date!, touched: true });
 							}}
 						/>
-						{time.touched && (
-							<Text fontSize="xl" ml={5}>
-								X
-							</Text>
-						)}
-					</HStack>
+					</Box>
 
 					<InputLabel labelText="Pick some Tags" />
 					<DropDownPicker

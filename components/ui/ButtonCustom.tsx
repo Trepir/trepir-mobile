@@ -8,7 +8,7 @@ type Props = {
 	alignment: 'center' | 'flex-start' | 'flex-end';
 };
 
-const ButtonCustom = ({ text, pressFunction, alignment }: Props) => {
+function ButtonCustom({ text, pressFunction, alignment }: Props) {
 	return (
 		<Pressable
 			onPress={pressFunction}
@@ -16,13 +16,13 @@ const ButtonCustom = ({ text, pressFunction, alignment }: Props) => {
 			px={8}
 			py={4}
 			alignSelf={alignment}
-			rounded={'3xl'}
+			rounded="3xl"
 		>
-			<Text color={'white'} fontSize={'md'} fontWeight={'semibold'}>
+			<Text color="white" fontSize="md" fontWeight="semibold">
 				{text}
 			</Text>
 		</Pressable>
 	);
-};
+}
 
 export default ButtonCustom;

@@ -4,9 +4,9 @@ import { RootTabScreenProps } from '../types';
 
 // type Props = {};
 
-const DashboardScreen = ({ navigation }: RootTabScreenProps<'Dashboard'>) => {
+function DashboardScreen({ navigation }: RootTabScreenProps<'Dashboard'>) {
 	return (
-		<View flex={1} justifyContent={'center'} alignItems={'center'}>
+		<View flex={1} justifyContent="center" alignItems="center">
 			<Pressable
 				onPress={() => {
 					navigation.navigate('NewActivityModal');
@@ -16,6 +16,6 @@ const DashboardScreen = ({ navigation }: RootTabScreenProps<'Dashboard'>) => {
 			</Pressable>
 		</View>
 	);
-};
+}
 
 export default DashboardScreen;

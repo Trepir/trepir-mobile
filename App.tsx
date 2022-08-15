@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 
 import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
+// import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
 export default function App() {
@@ -21,18 +21,17 @@ export default function App() {
 
 	if (!isLoadingComplete) {
 		return null;
-	} else {
-		return (
-			<Provider store={store}>
-				<NativeBaseProvider theme={theme}>
-					<SafeAreaProvider>
-						<GestureHandlerRootView style={{ flex: 1 }}>
-							<Navigation /*colorScheme={colorScheme} */ />
-						</GestureHandlerRootView>
-						<StatusBar />
-					</SafeAreaProvider>
-				</NativeBaseProvider>
-			</Provider>
-		);
 	}
+	return (
+		<Provider store={store}>
+			<NativeBaseProvider theme={theme}>
+				<SafeAreaProvider>
+					<GestureHandlerRootView style={{ flex: 1 }}>
+						<Navigation /* colorScheme={colorScheme} */ />
+					</GestureHandlerRootView>
+					<StatusBar />
+				</SafeAreaProvider>
+			</NativeBaseProvider>
+		</Provider>
+	);
 }

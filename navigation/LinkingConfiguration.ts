@@ -9,7 +9,7 @@ import * as Linking from 'expo-linking';
 
 import { RootStackParamList } from '../types';
 
-//WHEN WE CHANGE SOMETHING ON THE ROUTES WE HAVE TO CHANGE IT HERE
+// WHEN WE CHANGE SOMETHING ON THE ROUTES WE HAVE TO CHANGE IT HERE
 const linking: LinkingOptions<RootStackParamList> = {
 	prefixes: [Linking.createURL('/')],
 	config: {

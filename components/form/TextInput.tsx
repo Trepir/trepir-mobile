@@ -7,20 +7,20 @@ import InputLabel from '../ui/InputLabel';
 
 type Props = {
 	name: string;
-	//This variables are form specif
+	// This variables are form specif
 	control: ActivityFormControl;
 	errors: FieldErrorsImpl;
 	placeholder: string;
 	password?: boolean;
 };
 
-const TextInput = ({
+function TextInput({
 	name,
-	control, //Maybe put default values here
+	control, // Maybe put default values here
 	errors,
 	placeholder,
 	password = false,
-}: Props) => {
+}: Props) {
 	return (
 		<>
 			<InputLabel labelText={name.charAt(0).toUpperCase() + name.slice(1)} />
@@ -37,18 +37,22 @@ const TextInput = ({
 						onChangeText={onChange}
 						value={value}
 						size="xl"
-						bgColor={'white'}
+						bgColor="white"
 						borderColor={Colors.primary.normal}
-						borderWidth={'2'}
-						rounded={'xl'}
+						borderWidth="2"
+						rounded="xl"
 						_focus={{ borderColor: Colors.primary.light }}
 						type={password ? 'password' : 'text'}
 					/>
 				)}
 			/>
-			{errors[name] && <Text color={'error.600'}>This is required.</Text>}
+			{errors[name] && <Text color="error.600">This is required.</Text>}
 		</>
 	);
+}
+
+TextInput.defaultProps = {
+	password: false,
 };
 
 export default TextInput;
