@@ -28,7 +28,7 @@ export type ActivityFormControl = Control<
 		name: string;
 		description: string;
 		duration: number;
-		time: Date;
+		time: number;
 		tags: string[];
 	},
 	any
@@ -59,7 +59,7 @@ export default function AddActivityModal() {
 			name: '',
 			duration: 0,
 			description: '',
-			time: new Date(Date.now()),
+			time: Date.now(),
 			tags: [''],
 		},
 	});
@@ -68,7 +68,7 @@ export default function AddActivityModal() {
 		console.log(data);
 
 		// dispatch(storeNewActivity({ creatorId: 1, time: String(data.time), ...data }));
-		dispatch(storeNewActivity({ creatorId: 1, ...data }));
+		dispatch(storeNewActivity({ creatorId: '1', ...data }));
 	};
 	return (
 		<DismissKeyboard>

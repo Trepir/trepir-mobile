@@ -1,14 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import newActivityReducer from '../features/newActivity/newActivitySlice';
-// import pokemonReducer from '../features/pokemons/pokemonSlice';
 
 export const store = configureStore({
 	reducer: {
 		counter: counterReducer,
 		newActivity: newActivityReducer,
 	},
-	// middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export type AppDispatch = typeof store.dispatch;
