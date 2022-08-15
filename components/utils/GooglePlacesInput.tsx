@@ -3,48 +3,44 @@ import {
 	GooglePlacesAutocomplete,
 	GooglePlacesAutocompleteRef,
 } from 'react-native-google-places-autocomplete';
-import { View } from 'native-base';
 import ApiKeys from '../../constants/ApiKeys';
 
-function GooglePlacesInput() {
+type Props = {
+	// eslint-disable-next-line no-unused-vars
+	pressFunction: (data: any, details: any) => void;
+	queryType: 'establishment' | ['(cities)', '(regions)'];
+	placeholder: string;
+};
+
+function GooglePlacesInput({ pressFunction, queryType, placeholder }: Props) {
 	const GooglePlacesRef = useRef<GooglePlacesAutocompleteRef>(null);
 	return (
-		<View position="absolute" width="100%" alignSelf="center" zIndex={2} mt={12}>
-			<GooglePlacesAutocomplete
-				textInputProps={{
-					// leftIcon: { type: 'font-awesome', name: 'chevron-left' },
-					errorStyle: { color: 'red' },
-				}}
-				ref={GooglePlacesRef}
-				// THIS PLACEHOLDER IS PASSED TROUGH PARAMS
-				placeholder="Add a Location..."
-				// THIS ON PRESS IS PASSED THROUGH PARAMS
-				onPress={(data, details) => {
-					console.log(data, details);
-					// console.log(details);
-					// if (GooglePlacesRef.current !== null) {
-					// 	GooglePlacesRef.current.setAddressText('');
-					// }
-				}}
-				onFail={(error) => console.error(error)}
-				query={{
-					key: ApiKeys.googleMapsAPIKey,
-					language: 'en',
-					// type: ['(cities)', '(regions)'],
-					type: 'establishment', // THIS IS PASSED TROUGH PARAMS
-				}}
-				fetchDetails
-				styles={{
-					textInput: {
-						height: 38,
-						color: '#5d5d5d',
-						fontSize: 16,
-						borderColor: '#d6d3d1',
-						borderWidth: 1,
-					},
-				}}
-			/>
-		</View>
+		<GooglePlacesAutocomplete
+			textInputProps={{
+				// leftIcon: { type: 'font-awesome', name: 'chevron-left' },
+				errorStyle: { color: 'red' },
+				placeholderTextColor: '#c1c1c1',
+			}}
+			ref={GooglePlacesRef}
+			placeholder={placeholder}
+			onPress={(data, details) => pressFunction(data, details)}
+			onFail={(error) => console.error(error)}
+			query={{
+				key: ApiKeys.googleMapsAPIKey,
+				language: 'en',
+				type: queryType,
+			}}
+			fetchDetails
+			styles={{
+				textInput: {
+					height: 38,
+					color: '#5d5d5d',
+					fontSize: 16,
+					borderColor: '#d6d3d1',
+					borderWidth: 1,
+				},
+			}}
+		/>
 	);
 }
 

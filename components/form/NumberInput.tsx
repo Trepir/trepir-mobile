@@ -45,6 +45,10 @@ function NumberInput({
 				control={control}
 				rules={{
 					required: true,
+					validate: (value) => {
+						if (+value === 0) return 'Please enter a duration';
+						return true;
+					},
 				}}
 				render={({ field: { onChange } }) => (
 					<HStack alignItems="center">
