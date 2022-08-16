@@ -13,8 +13,13 @@ export const createEmailUser = async (email: string, password: string) => {
 };
 
 export const loginEmail = async (email: string, password: string) => {
-	const user = await signInWithEmailAndPassword(auth, email, password);
-	return user;
+	try {
+		const user = await signInWithEmailAndPassword(auth, email, password);
+		return user;
+	} catch (error) {
+		console.log(error);
+	}
+	return null;
 };
 
 export const loginGoogle = async () => {
