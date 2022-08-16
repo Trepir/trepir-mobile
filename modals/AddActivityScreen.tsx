@@ -1,22 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform } from 'react-native';
 
-import { Box, Divider, Heading, HStack, View } from 'native-base';
+import { Box, Divider, Heading, HStack, Text, View } from 'native-base';
 import { useForm, Control } from 'react-hook-form';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { useState } from 'react';
-import DropDownPicker from 'react-native-dropdown-picker';
 import TextInputForm from '../components/form/TextInput';
 import TextAreaInput from '../components/form/TextAreaInput';
 import NumberInput from '../components/form/NumberInput';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
 import GooglePlacesInput from '../components/utils/GooglePlacesInput';
-import Colors from '../constants/Colors';
 import ButtonCustom from '../components/ui/ButtonCustom';
 import GoogleIcon from '../assets/icons/GoogleIcon';
 import InputLabel from '../components/ui/InputLabel';
 import { useAppDispatch } from '../app/hooks';
 import { storeNewActivity } from '../features/newActivity/newActivitySlice';
+import TimePickerInput from '../components/form/TimePickerInput';
+import DropDown from '../components/form/DropDown';
+import { RootTabScreenProps } from '../types';
 
 // For ANDROID => READ THE DOCS
 // DateTimePickerAndroid.open(params: AndroidNativeProps)
@@ -28,47 +28,76 @@ export type ActivityFormControl = Control<
 		name: string;
 		description: string;
 		duration: number;
-		time: Date;
+		timeStart: number;
+		timeEnd: number;
 		tags: string[];
+		location: any;
 	},
 	any
 >;
 
 // FULLSCREEN MODAL
-export default function AddActivityModal() {
+export default function AddActivityModal({ navigation }: RootTabScreenProps<'Dashboard'>) {
 	const dispatch = useAppDispatch();
 
-	const [time, setTime] = useState({
+	const [timeStart, setTimeStart] = useState({
 		value: new Date(),
 		touched: false,
 	});
-
-	const [open, setOpen] = useState(false);
-	const [value, setValue] = useState([]);
-	const [items, setItems] = useState([
-		{ label: 'Apple', value: 'apple' },
-		{ label: 'Banana', value: 'banana' },
-	]);
-
+	const [timeEnd, setTimeEnd] = useState({
+		value: new Date(),
+		touched: false,
+	});
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
+		setValue,
 	} = useForm({
 		defaultValues: {
 			name: '',
 			duration: 0,
 			description: '',
-			time: new Date(Date.now()),
+			timeStart: Date.now(),
+			timeEnd: Date.now(),
 			tags: [''],
+			location: {},
 		},
 	});
 
 	const onSubmit = (data: any) => {
 		console.log(data);
+		dispatch(storeNewActivity({ creatorId: '1', ...data }));
+		navigation.goBack();
+	};
 
-		// dispatch(storeNewActivity({ creatorId: 1, time: String(data.time), ...data }));
-		dispatch(storeNewActivity({ creatorId: 1, ...data }));
+	const getLocationData = (_: any, details: any) => {
+		let country;
+		let state;
+		let city;
+
+		details?.address_components.forEach((comp: any) => {
+			if (comp.types.includes('country')) {
+				country = comp.long_name;
+			}
+			if (comp.types.includes('administrative_area_level_1')) {
+				state = comp.long_name;
+			}
+			if (comp.types.includes('administrative_area_level_2')) {
+				city = comp.long_name;
+			}
+		});
+		// console.log(data, details);
+		const locData = {
+			latitude: details?.geometry.location.lat,
+			longitude: details?.geometry.location.lng,
+			locationName: details?.name,
+			googleId: details?.place_id,
+			country,
+			state,
+			city,
+		};
+		setValue('location', locData, { shouldValidate: true });
 	};
 	return (
 		<DismissKeyboard>
@@ -80,7 +109,14 @@ export default function AddActivityModal() {
 						Select a Location for your Activity
 					</Heading>
 				</HStack>
-				<GooglePlacesInput />
+
+				<View position="absolute" width="100%" alignSelf="center" zIndex={2} mt={16}>
+					<GooglePlacesInput
+						placeholder="Select a Location for your Activity"
+						pressFunction={getLocationData}
+						queryType="establishment"
+					/>
+				</View>
 
 				<View flex={1} mt="16">
 					<Divider mb={2} />
@@ -99,35 +135,32 @@ export default function AddActivityModal() {
 
 					<NumberInput name="duration" control={control} errors={errors} placeholder="0" />
 
-					<InputLabel labelText="Set a reminder (Optional)" />
-
-					{/* Could Move to another Component */}
-					<Box w="90" alignSelf="center" rounded="full">
-						<RNDateTimePicker
-							style={{
-								backgroundColor: time.touched ? Colors.primary.normal : '',
-							}}
-							mode="time"
-							value={time.value}
-							accentColor={time.touched ? 'white' : Colors.primary.normal}
-							onChange={(e, date) => {
-								console.log(date);
-								setTime({ value: date!, touched: true });
+					<InputLabel labelText="Pick a time range (Optional)" />
+					<HStack alignSelf="center" alignItems="center">
+						<TimePickerInput
+							time={timeStart}
+							onChangeFunction={(e, date) => {
+								setTimeStart({ value: date!, touched: true });
+								setValue('timeStart', date.getTime(), { shouldValidate: true });
 							}}
 						/>
-					</Box>
+						<Text fontWeight="bold"> - </Text>
+						<TimePickerInput
+							time={timeEnd}
+							onChangeFunction={(e, date) => {
+								setTimeEnd({ value: date!, touched: true });
+								setValue('timeEnd', date.getTime(), { shouldValidate: true });
+							}}
+						/>
+					</HStack>
 
 					<InputLabel labelText="Pick some Tags" />
-					<DropDownPicker
-						open={open}
-						value={value}
-						items={items}
-						setOpen={setOpen}
+					<DropDown
+						name="tags"
+						control={control}
+						errors={errors}
+						placeholder="Select up to three tags"
 						setValue={setValue}
-						setItems={setItems}
-						multiple
-						min={0}
-						max={5}
 					/>
 
 					<Box mt={8}>

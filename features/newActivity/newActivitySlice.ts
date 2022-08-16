@@ -7,7 +7,7 @@ interface NewActivityState {
 	duration: number;
 	description: string;
 	// time: string;
-	time: Date;
+	time: number;
 	creatorId: string;
 	tags: string[];
 	// rating,
@@ -19,7 +19,7 @@ const initialState: NewActivityState = {
 	name: '',
 	duration: 0,
 	description: '',
-	time: new Date(Date.now()),
+	time: Date.now(),
 	// time: String(new Date(Date.now())),
 	creatorId: '',
 	tags: [],
@@ -30,6 +30,7 @@ const newActivitySlice = createSlice({
 	initialState,
 	reducers: {
 		storeNewActivity: (state: NewActivityState, action: PayloadAction<NewActivityState>) => {
+			console.log(action.payload);
 			state = { ...action.payload };
 		},
 		// Change Type if necessary
