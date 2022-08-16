@@ -71,6 +71,7 @@ function BottomTabNavigator() {
 				component={DiscoverScreen}
 				options={{
 					title: 'Discover',
+					headerShown: false,
 					tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
 				}}
 			/>
