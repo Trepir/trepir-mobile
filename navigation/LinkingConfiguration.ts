@@ -7,10 +7,10 @@
 import { LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 
-import { RootStackParamList } from '../types';
+import { RootStackParamList, HomePageParamList } from '../types';
 
 // WHEN WE CHANGE SOMETHING ON THE ROUTES WE HAVE TO CHANGE IT HERE
-const linking: LinkingOptions<RootStackParamList> = {
+export const linkingRoot: LinkingOptions<RootStackParamList> = {
 	prefixes: [Linking.createURL('/')],
 	config: {
 		screens: {
@@ -39,4 +39,31 @@ const linking: LinkingOptions<RootStackParamList> = {
 	},
 };
 
-export default linking;
+export const linkingAuth: LinkingOptions<HomePageParamList> = {
+	prefixes: [Linking.createURL('/')],
+	config: {
+		screens: {
+			HomeScreen: {
+				screens: {
+					Login: {
+						screens: {
+							Login: 'Login',
+						},
+					},
+					Home: {
+						screens: {
+							Home: 'Home',
+						},
+					},
+					Register: {
+						screens: {
+							Register: 'Register',
+						},
+					},
+				},
+			},
+		},
+	},
+};
+
+// export default linkingRoot, linkingAuth;

@@ -14,8 +14,10 @@ import DashboardScreen from '../screens/DashboardScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import AddActivityModal from '../modals/AddActivityScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList, RootTabParamList } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
+import { HomePageParamList, RootStackParamList, RootTabParamList } from '../types';
+import { linkingRoot, LinkingAuth } from './LinkingConfiguration';
+import HomeScreen from '../screens/HomeScreen';
+import Login from '../modals/Login';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -86,6 +88,7 @@ function RootNavigator() {
 	return (
 		<Stack.Navigator>
 			<Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+
 			<Stack.Group screenOptions={{ presentation: 'modal' }}>
 				<Stack.Screen
 					name="NewActivityModal"
@@ -98,13 +101,32 @@ function RootNavigator() {
 	);
 }
 
-export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
+const AuthStack = createNativeStackNavigator<HomePageParamList>();
+
+function AuthNavigator() {
 	return (
-		<NavigationContainer
-			linking={LinkingConfiguration}
-			// theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-		>
-			<RootNavigator />
+		<AuthStack.Navigator>
+			<AuthStack.Screen name="HomeScreen" component={HomeScreen} />
+			<AuthStack.Screen name="Login" component={Login} />
+		</AuthStack.Navigator>
+	);
+}
+
+export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
+	const loggedIn = true;
+	if (loggedIn) {
+		return (
+			<NavigationContainer
+				linking={linkingRoot}
+				// theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+			>
+				<RootNavigator />
+			</NavigationContainer>
+		);
+	}
+	return (
+		<NavigationContainer linking={LinkingAuth}>
+			<AuthNavigator />
 		</NavigationContainer>
 	);
 }
