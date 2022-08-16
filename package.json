@@ -51,6 +51,7 @@
     "react-native-web": "~0.18.7",
     "react-redux": "^8.0.2",
     "redux-devtools-extension": "^2.13.9",
+    "expo-secure-store": "~11.3.0",
     "@expo/webpack-config": "^0.17.0"
   },
   "devDependencies": {
