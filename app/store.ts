@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import newActivityReducer from '../features/newActivity/newActivitySlice';
+import authReducer from '../features/auth/authSlice';
 import newAccommodationReducer from '../features/newAccommodation/newAccommodationSlice';
 import newTravelReducer from '../features/newTravel/newTravelSlice';
 
@@ -8,6 +9,7 @@ export const store = configureStore({
 	reducer: {
 		counter: counterReducer,
 		newActivity: newActivityReducer,
+		auth: authReducer,
 		newAccommodation: newAccommodationReducer,
 		newTravel: newTravelReducer,
 	},

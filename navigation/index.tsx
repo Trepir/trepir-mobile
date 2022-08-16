@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /**
  * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
  * https://reactnavigation.org/docs/getting-started
@@ -17,9 +18,11 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import { HomePageParamList, RootStackParamList, RootTabParamList } from '../types';
 import { linkingRoot, linkingAuth } from './LinkingConfiguration';
 import HomeScreen from '../screens/HomeScreen';
-import Login from '../modals/Login';
+import Login from './Login';
 import AddTravelScreen from '../modals/AddTravelScreen';
 import AddAccomScreen from '../modals/AddAccomScreen';
+import { useAppSelector } from '../app/hooks';
+import { store } from '../app/store';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -118,15 +121,18 @@ const AuthStack = createNativeStackNavigator<HomePageParamList>();
 function AuthNavigator() {
 	return (
 		<AuthStack.Navigator>
-			<AuthStack.Screen name="HomeScreen" component={HomeScreen} />
-			<AuthStack.Screen name="Login" component={Login} />
+			<AuthStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
+			<AuthStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+			<AuthStack.Screen name="Register" component={Login} options={{ headerShown: false }} />
 		</AuthStack.Navigator>
 	);
 }
 
 export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
-	const loggedIn = true;
-	if (loggedIn) {
+	// get 'user' data from redux store and check if user is logged in
+	const token = useAppSelector((state) => state.auth.token);
+	console.log('navigation/token', token);
+	if (token) {
 		return (
 			<NavigationContainer
 				linking={linkingRoot}

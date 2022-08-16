@@ -38,12 +38,14 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> = Composit
 
 export type HomeStackParamList = {
 	Login: undefined;
-	Home: undefined;
+	HomeScreen: undefined;
 	Register: undefined;
 };
 
 export type HomePageParamList = {
 	HomeScreen: NavigatorScreenParams<HomeStackParamList> | undefined;
+	Login: undefined;
+	Register: undefined;
 };
 
 export type HomePageScreenProps<Screen extends keyof HomePageParamList> = CompositeScreenProps<
