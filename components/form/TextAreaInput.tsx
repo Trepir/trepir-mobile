@@ -1,14 +1,13 @@
 import { Text, TextArea } from 'native-base';
 import React from 'react';
-import { Controller, FieldErrorsImpl } from 'react-hook-form';
+import { Control, Controller, FieldErrorsImpl } from 'react-hook-form';
 import Colors from '../../constants/Colors';
-import { ActivityFormControl } from '../../modals/AddActivityScreen';
 import InputLabel from '../ui/InputLabel';
 
 type Props = {
 	name: string;
 	// This variables are form specif
-	control: ActivityFormControl;
+	control: Control<any>;
 	errors: FieldErrorsImpl;
 	placeholder: string;
 	// password?: boolean;

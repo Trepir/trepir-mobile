@@ -4,6 +4,7 @@ import Colors from '../../constants/Colors';
 
 type Props = {
 	text: string;
+	// eslint-disable-next-line no-unused-vars
 	pressFunction: (...args: any[]) => void;
 	alignment: 'center' | 'flex-start' | 'flex-end';
 };

@@ -1,14 +1,13 @@
 import { Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { Controller, FieldErrorsImpl, UseFormSetValue } from 'react-hook-form';
+import { Control, Controller, FieldErrorsImpl, UseFormSetValue } from 'react-hook-form';
 import { StyleSheet } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Colors from '../../constants/Colors';
-import { ActivityFormControl } from '../../modals/AddActivityScreen';
 
 type Props = {
 	name: string;
-	control: ActivityFormControl;
+	control: Control<any>;
 	errors: FieldErrorsImpl;
 	placeholder: string;
 	setValue: UseFormSetValue<{
