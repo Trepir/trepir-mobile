@@ -17,7 +17,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import { HomePageParamList, RootStackParamList, RootTabParamList } from '../types';
 import { linkingRoot, linkingAuth } from './LinkingConfiguration';
 import HomeScreen from '../screens/HomeScreen';
-import Login from '../modals/Login';
+import Login from './Login';
 import AddTravelScreen from '../modals/AddTravelScreen';
 import AddAccomScreen from '../modals/AddAccomScreen';
 /**
@@ -118,8 +118,9 @@ const AuthStack = createNativeStackNavigator<HomePageParamList>();
 function AuthNavigator() {
 	return (
 		<AuthStack.Navigator>
-			<AuthStack.Screen name="HomeScreen" component={HomeScreen} />
-			<AuthStack.Screen name="Login" component={Login} />
+			<AuthStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
+			<AuthStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+			<AuthStack.Screen name="Register" component={Login} options={{ headerShown: false }} />
 		</AuthStack.Navigator>
 	);
 }
