@@ -52,3 +52,55 @@ export type HomePageScreenProps<Screen extends keyof HomePageParamList> = Compos
 	BottomTabScreenProps<HomePageParamList, Screen>,
 	NativeStackScreenProps<HomeStackParamList>
 >;
+
+// DATABASE TAGS
+export type Tag =
+	| 'Relax'
+	| 'Landmark'
+	| 'Entertainment'
+	| 'Drinks'
+	| 'Restaurant'
+	| 'Adventure'
+	| 'Museum'
+	| 'Outdoors'
+	| 'Tour'
+	| 'Beach'
+	| 'Culture'
+	| 'Nightlife'
+	| 'Nature'
+	| 'Festivity'
+	| 'Sport';
+
+export class Location {
+	constructor() {
+		this.latitude = 0;
+		this.longitude = 0;
+		this.country = '';
+		this.state = '';
+		this.locationName = '';
+		this.city = '';
+		this.googleId = null;
+	}
+
+	latitude: number;
+
+	longitude: number;
+
+	country: string;
+
+	state: string;
+
+	locationName: string;
+
+	city: string;
+
+	googleId: string | null;
+}
+export type Activity = {
+	name: string;
+	duration: number;
+	description: string;
+	time: Date | null;
+	rating: number | null;
+	tags: Tag[];
+};

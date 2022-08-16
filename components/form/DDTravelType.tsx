@@ -1,19 +1,25 @@
 import { Text } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Control, Controller, FieldErrorsImpl, UseFormSetValue } from 'react-hook-form';
 import { StyleSheet } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Colors from '../../constants/Colors';
 
+type DropDownItems = {
+	label: string;
+	value: string;
+};
 type Props = {
 	name: string;
 	control: Control<any>;
 	errors: FieldErrorsImpl;
 	placeholder: string;
 	setValue: UseFormSetValue<any>;
-	dropDownItems: { label: string; value: string }[];
+	dropDownItems: DropDownItems[];
 	min: number;
 	max: number;
+	// eslint-disable-next-line no-unused-vars
+	trackValue: (value: string) => void;
 };
 
 const styles = StyleSheet.create({
@@ -27,7 +33,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-function DropDown({
+function DDTravelType({
 	name,
 	control, // Maybe put default values here
 	errors,
@@ -36,15 +42,11 @@ function DropDown({
 	dropDownItems,
 	min,
 	max,
+	trackValue,
 }: Props) {
 	const [openDropDown, setOpenDropDown] = useState(false);
-	const [valueDropDown, setValueDropDown] = useState([]);
+	const [valueDropDown, setValueDropDown] = useState<string[]>([]);
 	const [itemsDropDown, setItemsDropDown] = useState(dropDownItems);
-
-	useEffect(() => {
-		setValue('tags', valueDropDown);
-	}, [valueDropDown, setValue]);
-
 	return (
 		<>
 			<Controller
@@ -53,7 +55,7 @@ function DropDown({
 				rules={{
 					required: true,
 					validate: (value) => {
-						if (value.length > 0 && value.length < 4) return true;
+						if (value) return true;
 						return false;
 					},
 				}}
@@ -64,6 +66,16 @@ function DropDown({
 						items={itemsDropDown}
 						setOpen={setOpenDropDown}
 						setValue={setValueDropDown}
+						onSelectItem={(item) => {
+							if (item) {
+								setValue('type', item[0].value);
+								trackValue(item[0].value as string);
+							}
+							setOpenDropDown(false);
+						}}
+						onOpen={() => {
+							setValueDropDown([]);
+						}}
 						setItems={setItemsDropDown}
 						multiple
 						min={min}
@@ -81,4 +93,4 @@ function DropDown({
 	);
 }
 
-export default DropDown;
+export default DDTravelType;

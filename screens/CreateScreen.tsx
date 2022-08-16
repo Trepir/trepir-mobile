@@ -34,7 +34,7 @@ function CreateScreen({ navigation }: RootTabScreenProps<'Create'>) {
 					navigation.navigate('NewActivityModal');
 				}}
 			>
-				<Text>Add Accommodation Modal</Text>
+				<Text>Add Activity Modal</Text>
 			</Pressable>
 		</View>
 	);

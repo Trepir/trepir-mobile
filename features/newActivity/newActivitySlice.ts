@@ -1,19 +1,17 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Location } from '../../types';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
 interface NewActivityState {
-	// value: number;
 	name: string;
 	duration: number;
 	description: string;
-	// time: string;
 	time: number;
 	creatorId: string;
 	tags: string[];
-	// rating,
-
-	// LOCATION OBJECT
+	// rating: number: null
+	location: Location;
 }
 
 const initialState: NewActivityState = {
@@ -21,9 +19,17 @@ const initialState: NewActivityState = {
 	duration: 0,
 	description: '',
 	time: Date.now(),
-	// time: String(new Date(Date.now())),
 	creatorId: '',
 	tags: [],
+	location: {
+		latitude: 0,
+		longitude: 0,
+		country: '',
+		state: '',
+		locationName: '',
+		city: '',
+		googleId: null,
+	},
 };
 
 const newActivitySlice = createSlice({
