@@ -13,7 +13,7 @@ interface NewTravelState {
 
 const initialState: NewTravelState = {
 	type: '',
-	departure: 0,
+	departure: Date.now(),
 	creatorId: '',
 	origin: {
 		latitude: 0,
