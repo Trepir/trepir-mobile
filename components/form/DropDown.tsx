@@ -4,6 +4,7 @@ import { Control, Controller, FieldErrorsImpl, UseFormSetValue } from 'react-hoo
 import { StyleSheet } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Colors from '../../constants/Colors';
+import { Location } from '../../types';
 
 type Props = {
 	name: string;
@@ -17,7 +18,7 @@ type Props = {
 		timeStart: number;
 		timeEnd: number;
 		tags: string[];
-		location: {};
+		location: Location;
 	}>;
 };
 
