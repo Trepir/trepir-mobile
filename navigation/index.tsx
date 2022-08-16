@@ -15,9 +15,11 @@ import DiscoverScreen from '../screens/DiscoverScreen';
 import AddActivityModal from '../modals/AddActivityScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { HomePageParamList, RootStackParamList, RootTabParamList } from '../types';
-import { linkingRoot, LinkingAuth } from './LinkingConfiguration';
+import { linkingRoot, linkingAuth } from './LinkingConfiguration';
 import HomeScreen from '../screens/HomeScreen';
 import Login from '../modals/Login';
+import AddTravelScreen from '../modals/AddTravelScreen';
+import AddAccomScreen from '../modals/AddAccomScreen';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -95,6 +97,16 @@ function RootNavigator() {
 					component={AddActivityModal}
 					options={{ title: 'Create a New Activity' }}
 				/>
+				<Stack.Screen
+					name="NewTravelModal"
+					component={AddTravelScreen}
+					options={{ title: 'Add a Travel Event' }}
+				/>
+				<Stack.Screen
+					name="NewAccommodationModal"
+					component={AddAccomScreen}
+					options={{ title: 'Add an Accommodation' }}
+				/>
 			</Stack.Group>
 			<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 		</Stack.Navigator>
@@ -125,7 +137,7 @@ export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchem
 		);
 	}
 	return (
-		<NavigationContainer linking={LinkingAuth}>
+		<NavigationContainer linking={linkingAuth}>
 			<AuthNavigator />
 		</NavigationContainer>
 	);

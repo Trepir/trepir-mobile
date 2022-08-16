@@ -34,6 +34,8 @@ export const linkingRoot: LinkingOptions<RootStackParamList> = {
 				},
 			},
 			NewActivityModal: 'NewActivityModal',
+			NewTravelModal: 'NewTravelModal',
+			NewAccommodationModal: 'NewAccommodationModal',
 			NotFound: '*',
 		},
 	},
