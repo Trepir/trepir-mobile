@@ -26,6 +26,16 @@ function CreateScreen({ navigation }: RootTabScreenProps<'Create'>) {
 			>
 				<Text>Add Accommodation Modal</Text>
 			</Pressable>
+			<Pressable
+				py={5}
+				my={5}
+				bgColor="amber.300"
+				onPress={() => {
+					navigation.navigate('NewActivityModal');
+				}}
+			>
+				<Text>Add Accommodation Modal</Text>
+			</Pressable>
 		</View>
 	);
 }
