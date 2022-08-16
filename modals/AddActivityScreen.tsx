@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Platform } from 'react-native';
 
 import { Box, Divider, Heading, HStack, Text, View } from 'native-base';
-import { useForm, Control } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import TextInputForm from '../components/form/TextInput';
@@ -23,20 +23,6 @@ import { parseLocationDetails } from '../helpers/parseLocationDetails';
 // For ANDROID => READ THE DOCS
 // DateTimePickerAndroid.open(params: AndroidNativeProps)
 // DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
-
-// FORM CONTROL TYPE EXPORT => MOVE IT IF NECESSARY
-export type ActivityFormControl = Control<
-	{
-		name: string;
-		description: string;
-		duration: number;
-		timeStart: number;
-		timeEnd: number;
-		tags: string[];
-		location: Location;
-	},
-	any
->;
 
 // FULLSCREEN MODAL
 export default function AddActivityModal({ navigation }: RootTabScreenProps<'Create'>) {
