@@ -13,7 +13,6 @@ import React, { useState } from 'react';
 import { Control, useForm } from 'react-hook-form';
 import { Platform } from 'react-native';
 import { useAppDispatch } from '../app/hooks';
-import GoogleIcon from '../assets/icons/GoogleIcon';
 import DropDown from '../components/form/DropDown';
 import TextAreaInput from '../components/form/TextAreaInput';
 import TimePickerInput from '../components/form/TimePickerInput';
@@ -22,8 +21,7 @@ import InputLabel from '../components/ui/InputLabel';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
 import GooglePlacesInput from '../components/utils/GooglePlacesInput';
 import { storeNewActivity } from '../features/newActivity/newActivitySlice';
-import { createEmailUser } from '../firebase/firebaseFunctions';
-import { RootTabScreenProps } from '../types';
+import { HomePageScreenProps } from '../types';
 import TextInputForm from '../components/form/TextInput';
 // import * as SecureStore from 'expo-secure-store';
 
@@ -38,17 +36,9 @@ export type LoginFromControl = Control<
 >;
 
 // FULLSCREEN MODAL
-function Login({ navigation }: RootTabScreenProps<'Dashboard'>) {
+function Login() {
 	const dispatch = useAppDispatch();
 
-	const [timeStart, setTimeStart] = useState({
-		value: new Date(),
-		touched: false,
-	});
-	const [timeEnd, setTimeEnd] = useState({
-		value: new Date(),
-		touched: false,
-	});
 	const {
 		control,
 		handleSubmit,
@@ -56,13 +46,9 @@ function Login({ navigation }: RootTabScreenProps<'Dashboard'>) {
 		setValue,
 	} = useForm({
 		defaultValues: {
-			name: '',
-			duration: 0,
-			description: '',
-			timeStart: Date.now(),
-			timeEnd: Date.now(),
-			tags: [''],
-			location: {},
+			username: '',
+			email: '',
+			password: '',
 		},
 	});
 
@@ -77,16 +63,7 @@ function Login({ navigation }: RootTabScreenProps<'Dashboard'>) {
 			<View flex={1} px="10">
 				{/* WHEN THIS IS ACTIVE I HAVE TO TOP THE SCROLLING OF THE MODAL  */}
 
-				<View position="absolute" width="100%" alignSelf="center" zIndex={2} mt={16}>
-					<GooglePlacesInput
-						placeholder="Select a Location for your Activity"
-						pressFunction={getLocationData}
-						queryType="establishment"
-					/>
-				</View>
-
 				<View flex={1} mt="16">
-					<Divider mb={2} />
 					<TextInputForm
 						name="name"
 						control={control}
