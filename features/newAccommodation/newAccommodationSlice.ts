@@ -2,24 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Location } from '../../types';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
-interface NewActivityState {
-	name: string;
-	duration: number;
-	description: string;
-	time: number;
-	creatorId: string;
-	tags: string[];
-	// rating: number: null
+interface NewAccommodationState {
+	startDate: number;
+	endDate: number;
 	location: Location;
+	creatorId: string;
 }
 
-const initialState: NewActivityState = {
-	name: '',
-	duration: 0,
-	description: '',
-	time: Date.now(),
+const initialState: NewAccommodationState = {
+	startDate: Date.now(),
+	endDate: Date.now(),
 	creatorId: '',
-	tags: [],
 	location: {
 		latitude: 0,
 		longitude: 0,
@@ -32,19 +25,23 @@ const initialState: NewActivityState = {
 };
 
 const newActivitySlice = createSlice({
-	name: 'newActivity',
+	name: 'newAccommodation',
 	initialState,
 	reducers: {
-		storeNewActivity: (state: NewActivityState, action: PayloadAction<NewActivityState>) => {
+		storeNewAccommodation: (
+			state: NewAccommodationState,
+			action: PayloadAction<NewAccommodationState>
+		) => {
 			console.log(action.payload);
+			// eslint-disable-next-line no-param-reassign
 			state = { ...action.payload };
 		},
 		// Change Type if necessary
-		clearState: (state: NewActivityState) => {
+		clearState: (state: NewAccommodationState) => {
 			state = initialState;
 		},
 	},
 });
 
-export const { storeNewActivity, clearState } = newActivitySlice.actions;
+export const { storeNewAccommodation, clearState } = newActivitySlice.actions;
 export default newActivitySlice.reducer;

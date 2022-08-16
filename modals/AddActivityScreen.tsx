@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 import { Box, Divider, Heading, HStack, Text, View } from 'native-base';
 import { useForm, Control } from 'react-hook-form';
 import { useState } from 'react';
+import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import TextInputForm from '../components/form/TextInput';
 import TextAreaInput from '../components/form/TextAreaInput';
 import NumberInput from '../components/form/NumberInput';
@@ -16,7 +17,8 @@ import { useAppDispatch } from '../app/hooks';
 import { storeNewActivity } from '../features/newActivity/newActivitySlice';
 import TimePickerInput from '../components/form/TimePickerInput';
 import DropDown from '../components/form/DropDown';
-import { RootTabScreenProps } from '../types';
+import { Location, RootTabScreenProps } from '../types';
+import { parseLocationDetails } from '../helpers/parseLocationDetails';
 
 // For ANDROID => READ THE DOCS
 // DateTimePickerAndroid.open(params: AndroidNativeProps)
@@ -31,13 +33,13 @@ export type ActivityFormControl = Control<
 		timeStart: number;
 		timeEnd: number;
 		tags: string[];
-		location: any;
+		location: Location;
 	},
 	any
 >;
 
 // FULLSCREEN MODAL
-export default function AddActivityModal({ navigation }: RootTabScreenProps<'Dashboard'>) {
+export default function AddActivityModal({ navigation }: RootTabScreenProps<'Create'>) {
 	const dispatch = useAppDispatch();
 
 	const [timeStart, setTimeStart] = useState({
@@ -61,7 +63,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Das
 			timeStart: Date.now(),
 			timeEnd: Date.now(),
 			tags: [''],
-			location: {},
+			location: new Location(),
 		},
 	});
 
@@ -71,34 +73,11 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Das
 		navigation.goBack();
 	};
 
-	const getLocationData = (_: any, details: any) => {
-		let country;
-		let state;
-		let city;
-
-		details?.address_components.forEach((comp: any) => {
-			if (comp.types.includes('country')) {
-				country = comp.long_name;
-			}
-			if (comp.types.includes('administrative_area_level_1')) {
-				state = comp.long_name;
-			}
-			if (comp.types.includes('administrative_area_level_2')) {
-				city = comp.long_name;
-			}
-		});
-		// console.log(data, details);
-		const locData = {
-			latitude: details?.geometry.location.lat,
-			longitude: details?.geometry.location.lng,
-			locationName: details?.name,
-			googleId: details?.place_id,
-			country,
-			state,
-			city,
-		};
-		setValue('location', locData, { shouldValidate: true });
+	const getLocationData = (_: any, details: GooglePlaceDetail) => {
+		const locationData = parseLocationDetails(details);
+		setValue('location', locationData, { shouldValidate: true });
 	};
+
 	return (
 		<DismissKeyboard>
 			<View flex={1} px="10">
@@ -162,7 +141,6 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Das
 						placeholder="Select up to three tags"
 						setValue={setValue}
 					/>
-
 					<Box mt={8}>
 						<ButtonCustom
 							pressFunction={handleSubmit(onSubmit)}
