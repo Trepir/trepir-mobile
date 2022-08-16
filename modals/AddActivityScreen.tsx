@@ -126,6 +126,14 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 						errors={errors}
 						placeholder="Select up to three tags"
 						setValue={setValue}
+						dropDownItems={[
+							{ label: 'Apple', value: 'apple' },
+							{ label: 'Banana', value: 'banana' },
+							{ label: 'Orange', value: 'orange' },
+							{ label: 'Peach', value: 'peach' },
+						]}
+						min={1}
+						max={3}
 					/>
 					<Box mt={8}>
 						<ButtonCustom

@@ -125,7 +125,7 @@ function AuthNavigator() {
 }
 
 export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
-	const loggedIn = false;
+	const loggedIn = true;
 	if (loggedIn) {
 		return (
 			<NavigationContainer

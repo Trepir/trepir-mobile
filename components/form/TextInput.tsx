@@ -11,6 +11,7 @@ type Props = {
 	errors: FieldErrorsImpl;
 	placeholder: string;
 	password?: boolean;
+	isRequired?: boolean;
 };
 
 function TextInput({
@@ -19,6 +20,7 @@ function TextInput({
 	errors,
 	placeholder,
 	password = false,
+	isRequired = true,
 }: Props) {
 	return (
 		<>
@@ -27,7 +29,7 @@ function TextInput({
 				name={name as 'name'}
 				control={control}
 				rules={{
-					required: true,
+					required: isRequired,
 				}}
 				render={({ field: { onChange, onBlur, value } }) => (
 					<Input
@@ -52,6 +54,7 @@ function TextInput({
 
 TextInput.defaultProps = {
 	password: false,
+	isRequired: true,
 };
 
 export default TextInput;
