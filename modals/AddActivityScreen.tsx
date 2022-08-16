@@ -4,13 +4,11 @@ import { Platform } from 'react-native';
 import { Box, Divider, Heading, HStack, Text, View } from 'native-base';
 import { useForm, Control } from 'react-hook-form';
 import { useState } from 'react';
-import DropDownPicker from 'react-native-dropdown-picker';
 import TextInputForm from '../components/form/TextInput';
 import TextAreaInput from '../components/form/TextAreaInput';
 import NumberInput from '../components/form/NumberInput';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
 import GooglePlacesInput from '../components/utils/GooglePlacesInput';
-import Colors from '../constants/Colors';
 import ButtonCustom from '../components/ui/ButtonCustom';
 import GoogleIcon from '../assets/icons/GoogleIcon';
 import InputLabel from '../components/ui/InputLabel';
@@ -18,6 +16,7 @@ import { useAppDispatch } from '../app/hooks';
 import { storeNewActivity } from '../features/newActivity/newActivitySlice';
 import TimePickerInput from '../components/form/TimePickerInput';
 import DropDown from '../components/form/DropDown';
+import { RootTabScreenProps } from '../types';
 
 // For ANDROID => READ THE DOCS
 // DateTimePickerAndroid.open(params: AndroidNativeProps)
@@ -38,7 +37,7 @@ export type ActivityFormControl = Control<
 >;
 
 // FULLSCREEN MODAL
-export default function AddActivityModal() {
+export default function AddActivityModal({ navigation }: RootTabScreenProps<'Dashboard'>) {
 	const dispatch = useAppDispatch();
 
 	const [timeStart, setTimeStart] = useState({
@@ -49,15 +48,6 @@ export default function AddActivityModal() {
 		value: new Date(),
 		touched: false,
 	});
-
-	const [openDropDown, setOpenDropDown] = useState(false);
-	const [valueDropDown, setValueDropDown] = useState([]);
-	const [itemsDropDown, setItemsDropDown] = useState([
-		{ label: 'Apple', value: 'apple' },
-		{ label: 'Banana', value: 'banana' },
-		{ label: 'Orange', value: 'orange' },
-		{ label: 'Peach', value: 'peach' },
-	]);
 	const {
 		control,
 		handleSubmit,
@@ -78,6 +68,7 @@ export default function AddActivityModal() {
 	const onSubmit = (data: any) => {
 		console.log(data);
 		dispatch(storeNewActivity({ creatorId: '1', ...data }));
+		navigation.goBack();
 	};
 
 	const getLocationData = (_: any, details: any) => {
@@ -99,7 +90,7 @@ export default function AddActivityModal() {
 		// console.log(data, details);
 		const locData = {
 			latitude: details?.geometry.location.lat,
-			longitude: details?.geometry.location.lon,
+			longitude: details?.geometry.location.lng,
 			locationName: details?.name,
 			googleId: details?.place_id,
 			country,
@@ -150,6 +141,7 @@ export default function AddActivityModal() {
 							time={timeStart}
 							onChangeFunction={(e, date) => {
 								setTimeStart({ value: date!, touched: true });
+								setValue('timeStart', date.getTime(), { shouldValidate: true });
 							}}
 						/>
 						<Text fontWeight="bold"> - </Text>
@@ -157,6 +149,7 @@ export default function AddActivityModal() {
 							time={timeEnd}
 							onChangeFunction={(e, date) => {
 								setTimeEnd({ value: date!, touched: true });
+								setValue('timeEnd', date.getTime(), { shouldValidate: true });
 							}}
 						/>
 					</HStack>
