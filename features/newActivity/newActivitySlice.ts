@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
@@ -35,6 +36,7 @@ const newActivitySlice = createSlice({
 		},
 		// Change Type if necessary
 		clearState: (state: NewActivityState) => {
+			// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 			state = initialState;
 		},
 	},

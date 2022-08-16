@@ -10,7 +10,7 @@ import ButtonCustom from '../components/ui/ButtonCustom';
 
 import { HomePageScreenProps } from '../types';
 import TextInputForm from '../components/form/TextInput';
-import { StoreNewUserInfo } from '../features/login/loginSlice';
+import { StoreNewUserInfo } from '../features/auth/authSlice';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
 
 export type LoginFromControl = Control<

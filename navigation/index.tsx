@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /**
  * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
  * https://reactnavigation.org/docs/getting-started
@@ -20,6 +21,8 @@ import HomeScreen from '../screens/HomeScreen';
 import Login from './Login';
 import AddTravelScreen from '../modals/AddTravelScreen';
 import AddAccomScreen from '../modals/AddAccomScreen';
+import { useAppSelector } from '../app/hooks';
+import { store } from '../app/store';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -126,8 +129,10 @@ function AuthNavigator() {
 }
 
 export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
-	const loggedIn = false;
-	if (loggedIn) {
+	// get 'user' data from redux store and check if user is logged in
+	const token = useAppSelector((state) => state.auth.token);
+	console.log('navigation/token', token);
+	if (token) {
 		return (
 			<NavigationContainer
 				linking={linkingRoot}

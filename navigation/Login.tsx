@@ -1,5 +1,5 @@
-import { View, Box, StatusBar, ScrollView } from 'native-base';
-import React, { useState, useRef, useMemo, useCallback } from 'react';
+import { Box } from 'native-base';
+import React, { useMemo } from 'react';
 import { Control, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -8,9 +8,8 @@ import { useAppDispatch } from '../app/hooks';
 
 import ButtonCustom from '../components/ui/ButtonCustom';
 
-import { HomePageScreenProps } from '../types';
 import TextInputForm from '../components/form/TextInput';
-import { StoreNewUserInfo } from '../features/login/loginSlice';
+import { storeNewAuth } from '../features/auth/authSlice';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
 
 export type LoginFromControl = Control<
@@ -29,6 +28,11 @@ const styles = StyleSheet.create({
 	},
 });
 
+// Storing the user info in the secure storage
+async function save(key: string, value: string) {
+	await SecureStore.setItemAsync(key, value);
+}
+
 function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	const dispatch = useAppDispatch();
 
@@ -44,9 +48,11 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 		},
 	});
 
-	const onSubmit = (data: any) => {
-		console.log(data);
-		dispatch(StoreNewUserInfo({ creatorId: '1', ...data }));
+	const onSubmit = async (/* data: any */) => {
+		await save('user', '1');
+		dispatch(storeNewAuth({ token: '1' }));
+		// @ts-ignore
+		reference.current.dismiss();
 	};
 
 	const snapPoints = useMemo(() => ['50%', '80%'], []);
@@ -54,16 +60,17 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	// const handleSheetChanges = useCallback((index: number) => {
 	// 	console.log('handleSheetChanges', index);
 	// }, []);
+
 	return (
 		<BottomSheetModalProvider>
 			<BottomSheetModal
 				ref={reference}
 				index={0}
 				snapPoints={snapPoints}
-				// onChange={handleSheetChanges}
 				enablePanDownToClose
-				keyboardBehavior="interactive"
-				detached
+				keyboardBehavior="fillParent"
+				handleHeight={1000}
+				// isVisible={isModelVisible}
 			>
 				<DismissKeyboard>
 					<KeyboardAvoidingView
