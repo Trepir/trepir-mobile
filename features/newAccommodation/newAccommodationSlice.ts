@@ -2,17 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Location } from '../../types';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
-interface NewAccommodationState {
+export interface NewAccommodationState {
 	startDate: number;
 	endDate: number;
 	location: Location;
-	creatorId: string;
+	uid: string;
 }
 
 const initialState: NewAccommodationState = {
 	startDate: Date.now(),
 	endDate: Date.now(),
-	creatorId: '',
+	uid: '',
 	location: {
 		latitude: 0,
 		longitude: 0,
@@ -34,12 +34,10 @@ const newActivitySlice = createSlice({
 		) => {
 			console.log(action.payload);
 			// eslint-disable-next-line no-param-reassign
-			state = { ...action.payload };
+			return { ...action.payload };
 		},
 		// Change Type if necessary
-		clearState: (state: NewAccommodationState) => {
-			state = initialState;
-		},
+		clearState: (state: NewAccommodationState) => initialState,
 	},
 });
 

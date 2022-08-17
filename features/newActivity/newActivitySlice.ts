@@ -8,7 +8,7 @@ interface NewActivityState {
 	duration: number;
 	description: string;
 	time: number;
-	creatorId: string;
+	uid: string;
 	tags: string[];
 	// rating: number: null
 	location: Location;
@@ -19,7 +19,7 @@ const initialState: NewActivityState = {
 	duration: 0,
 	description: '',
 	time: Date.now(),
-	creatorId: '',
+	uid: '',
 	tags: [],
 	location: {
 		latitude: 0,
@@ -38,13 +38,11 @@ const newActivitySlice = createSlice({
 	reducers: {
 		storeNewActivity: (state: NewActivityState, action: PayloadAction<NewActivityState>) => {
 			console.log(action.payload);
-			state = { ...action.payload };
+			return { ...action.payload };
 		},
 		// Change Type if necessary
-		clearState: (state: NewActivityState) => {
-			// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-			state = initialState;
-		},
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+		clearState: (state: NewActivityState) => initialState,
 	},
 });
 
