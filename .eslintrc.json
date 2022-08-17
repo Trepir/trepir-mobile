@@ -16,6 +16,8 @@
 		"import/extensions": "off",
 		"no-promise-executor-return": "off",
 		"react/jsx-props-no-spreading": "off",
-		"react/react-in-jsx-scope": "off"
+		"react/react-in-jsx-scope": "off",
+		"no-console": "off",
+		"react-hooks/exhaustive-deps": "off"
 	}
 }

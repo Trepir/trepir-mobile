@@ -1,10 +1,10 @@
 import { Box } from 'native-base';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Control, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as SecureStore from 'expo-secure-store';
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 
 import ButtonCustom from '../components/ui/ButtonCustom';
 
@@ -35,6 +35,14 @@ async function save(key: string, value: string) {
 
 function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	const dispatch = useAppDispatch();
+	const token = useAppSelector((state) => {
+		console.log('Login whole state', state);
+		return state.auth.token;
+	});
+	console.log(token);
+	useEffect(() => {
+		console.log('Token login', token);
+	}, [token]);
 
 	const {
 		control,
@@ -50,7 +58,7 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 
 	const onSubmit = async (/* data: any */) => {
 		await save('user', '1');
-		dispatch(storeNewAuth({ token: '1' }));
+		dispatch(storeNewAuth('1'));
 		// @ts-ignore
 		reference.current.dismiss();
 	};

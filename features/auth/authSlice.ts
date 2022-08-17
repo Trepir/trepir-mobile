@@ -11,18 +11,16 @@ const initialState: AuthState = {
 };
 
 const newAuthSlice = createSlice({
-	name: 'AuthInfo',
+	name: 'auth',
 	initialState,
 	reducers: {
-		storeNewAuth: (state: AuthState, action: PayloadAction<AuthState>) => {
-			console.log(action.payload);
-			state = { ...action.payload };
+		storeNewAuth: (state: AuthState, action: PayloadAction<string | null>) => {
+			console.log('Payload', action.payload);
+			return { token: action.payload };
+			console.log('State', state);
 		},
 		// Change Type if necessary
-		clearAuthState: (state: AuthState) => {
-			// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-			state = initialState;
-		},
+		clearAuthState: (state: AuthState) => initialState,
 	},
 });
 
