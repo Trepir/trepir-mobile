@@ -19,6 +19,7 @@ import TimePickerInput from '../components/form/TimePickerInput';
 import DropDown from '../components/form/DropDown';
 import { Location, RootTabScreenProps } from '../types';
 import { parseLocationDetails } from '../helpers/parseLocationDetails';
+import { ActivityTags } from '../constants/ActivityTags';
 
 // For ANDROID => READ THE DOCS
 // DateTimePickerAndroid.open(params: AndroidNativeProps)
@@ -54,7 +55,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 	});
 
 	const onSubmit = (data: any) => {
-		dispatch(storeNewActivity({ creatorId: '1', ...data }));
+		dispatch(storeNewActivity({ uid: '1', ...data }));
 		navigation.goBack();
 	};
 
@@ -125,12 +126,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 						errors={errors}
 						placeholder="Select up to three tags"
 						setValue={setValue}
-						dropDownItems={[
-							{ label: 'Apple', value: 'apple' },
-							{ label: 'Banana', value: 'banana' },
-							{ label: 'Orange', value: 'orange' },
-							{ label: 'Peach', value: 'peach' },
-						]}
+						dropDownItems={ActivityTags}
 						min={1}
 						max={3}
 					/>

@@ -52,7 +52,6 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 		defaultValues: {
 			type: '',
 			departure: Date.now(),
-			creatorId: '',
 			origin: new Location(),
 			destination: new Location(),
 			flightNumber: null,
@@ -69,7 +68,8 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	};
 
 	const onSubmit = (data: any) => {
-		dispatch(storeNewTravel({ creatorId: '1', ...data }));
+		console.log(data);
+		dispatch(storeNewTravel({ uid: '1', ...data }));
 		navigation.goBack();
 	};
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
 // eslint-disable-next-line react/prop-types
-function GoogleIcon({ size = 40 }) {
+function GoogleIcon({ size = 40 }: { size: number | string }) {
 	return (
 		<Svg
 			width={size}

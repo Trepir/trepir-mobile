@@ -1,53 +1,21 @@
 import { Box, Divider, Pressable, Text, View } from 'native-base';
 import React, { useState } from 'react';
-import { Calendar } from 'react-native-calendars';
-import { DateData, Theme } from 'react-native-calendars/src/types';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
 import InputLabel from '../components/ui/InputLabel';
-import Colors from '../constants/Colors';
-import { generateDateRange } from '../helpers/generateDayRange';
 import GooglePlacesInput from '../components/utils/GooglePlacesInput';
 import ButtonCustom from '../components/ui/ButtonCustom';
 import { Location, RootTabScreenProps } from '../types';
 import { parseLocationDetails } from '../helpers/parseLocationDetails';
 import { useAppDispatch } from '../app/hooks';
 import { storeNewAccommodation } from '../features/newAccommodation/newAccommodationSlice';
-
-const styles = StyleSheet.create({
-	calendar: {
-		borderWidth: 2,
-		borderColor: Colors.primary.normal,
-		borderRadius: 10,
-	},
-});
+import DateRangePicker from '../components/form/DateRangePicker';
 
 function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
-	const calendarTheme: Theme = {
-		backgroundColor: '#ffffff',
-		calendarBackground: '#ffffff',
-		textSectionTitleColor: '#b6c1cd',
-		textSectionTitleDisabledColor: '#d9e1e8',
-		selectedDayBackgroundColor: '#00adf5',
-		selectedDayTextColor: '#ffffff',
-		todayTextColor: Colors.primary.normal,
-		dayTextColor: '#2d4150',
-		textDisabledColor: '#d9e1e8',
-		dotColor: '#00adf5',
-		selectedDotColor: '#ffffff',
-		arrowColor: Colors.primary.normal,
-		disabledArrowColor: '#d9e1e8',
-		textDayFontWeight: '300',
-		textMonthFontWeight: '500',
-		textDayHeaderFontWeight: '400',
-	};
-
 	const dispatch = useAppDispatch();
 
-	const [dateToggle, setDateToggle] = useState(true);
-	const [dateRange, setDateRange] = useState({});
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
 	const [formValidation, setFormValidation] = useState({
@@ -55,22 +23,6 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 		location: true,
 	});
 	const [location, setLocation] = useState(new Location());
-
-	const selectDay = (day: DateData) => {
-		if (dateToggle) {
-			setStartDate(day.dateString);
-			setDateRange({
-				[day.dateString]: { startingDay: true, color: Colors.primary.dark, textColor: 'white' },
-			});
-		} else if (new Date(startDate).getTime() < day.timestamp) {
-			setEndDate(day.dateString);
-			setDateRange(generateDateRange(startDate, day.dateString));
-		} else {
-			setDateRange({});
-		}
-
-		setDateToggle(!dateToggle);
-	};
 
 	const assignLocation = (_: any, details: GooglePlaceDetail) => {
 		const locationData = parseLocationDetails(details);
@@ -93,7 +45,7 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 		} else {
 			dispatch(
 				storeNewAccommodation({
-					creatorId: '1',
+					uid: '1',
 					startDate: new Date(startDate).getTime(),
 					endDate: new Date(endDate).getTime(),
 					location,
@@ -126,18 +78,13 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 
 				<Box mt="24">
 					{!formValidation.location && <Text color="error.600">This is required.</Text>}
-
-					<InputLabel labelText="Pick your Dates" />
-					<Calendar
-						style={styles.calendar}
-						theme={calendarTheme}
-						initialDate={new Date(Date.now()).toISOString().split('T')[0]}
-						minDate={new Date(Date.now()).toISOString().split('T')[0]}
-						onDayPress={(day) => selectDay(day)}
-						markingType="period"
-						markedDates={dateRange}
+					<DateRangePicker
+						name="Pick your dates"
+						startDate={startDate}
+						setStartDate={setStartDate}
+						setEndDate={setEndDate}
+						isValid={formValidation.date}
 					/>
-					{!formValidation.date && <Text color="error.600">This is required.</Text>}
 				</Box>
 				<Box mt="8">
 					<ButtonCustom
