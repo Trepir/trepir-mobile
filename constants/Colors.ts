@@ -22,7 +22,7 @@ export default {
 		dark: '#343434',
 		medium: '#808080',
 		light: '#c2c2c2',
-		offWhite: '#f0f0f0',
+		offWhite: '#f3f3f3',
 	},
 	primary: {
 		normal: 'rgba(28, 185, 133, 1)',

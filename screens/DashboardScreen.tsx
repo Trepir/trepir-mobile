@@ -7,6 +7,7 @@ import { storeNewAuth } from '../features/auth/authSlice';
 import Colors from '../constants/Colors';
 import ButtonCustom from '../components/ui/ButtonCustom';
 import TopView from '../components/Dashboard/TopView';
+import TripCarousel from '../components/TripCarousel';
 
 function DashboardScreen({ navigation }: RootTabScreenProps<'Dashboard'>) {
 	// const activityStore = useAppSelector((state) => state.newActivity);
@@ -29,13 +30,7 @@ function DashboardScreen({ navigation }: RootTabScreenProps<'Dashboard'>) {
 		<View flex={1} justifyContent="flex-start" flexDirection="column">
 			<TopView />
 			<View flex={1} backgroundColor={Colors.grey.offWhite}>
-				<Pressable
-					onPress={() => {
-						navigation.navigate('NewActivityModal');
-					}}
-				>
-					<Text>DashboardScreen</Text>
-				</Pressable>
+				<TripCarousel tittle={'Upcoming trips'} />
 			</View>
 		</View>
 	);
