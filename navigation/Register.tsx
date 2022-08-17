@@ -48,14 +48,14 @@ function Register({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 		},
 	});
 
-	const onSubmit = async (data: any) => {
+	const onSubmit = async () => {
 		await save('user', '1');
 		dispatch(storeNewAuth({ token: '1' }));
 		// @ts-ignore
 		reference.current.dismiss();
 	};
 
-	const snapPoints = useMemo(() => ['50%', '80%'], []);
+	const snapPoints = useMemo(() => ['50%', '90%'], []);
 
 	// const handleSheetChanges = useCallback((index: number) => {
 	// 	console.log('handleSheetChanges', index);

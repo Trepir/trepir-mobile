@@ -43,7 +43,7 @@ function HomeScreen({ navigation }: HomePageScreenProps<'HomeScreen'>) {
 			const result = await SecureStore.getItemAsync('user');
 			if (result) {
 				console.log('user is logged in', result);
-				dispatch(storeNewAuth({ token: result }));
+				dispatch(storeNewAuth(result));
 			}
 		}
 		getUser();
@@ -84,7 +84,9 @@ function HomeScreen({ navigation }: HomePageScreenProps<'HomeScreen'>) {
 					</Text>
 				</Pressable>
 			</View>
+
 			<Login reference={LoginRef} />
+
 			<Register reference={RegisterRef} />
 		</View>
 	);
