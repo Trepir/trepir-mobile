@@ -1,8 +1,10 @@
+import { preventAutoHideAsync } from 'expo-splash-screen';
 import { View, Box } from 'native-base';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { parseLocationDetails } from '../../helpers/parseLocationDetails';
+import { newTripType } from '../../screens/CreateScreen';
 import { Location } from '../../types';
 import DateRangePicker from '../form/DateRangePicker';
 import TextInput from '../form/TextInput';
@@ -13,9 +15,11 @@ import GooglePlacesInput from '../utils/GooglePlacesInput';
 type Props = {
 	// eslint-disable-next-line no-unused-vars
 	jumpTo: (key: string) => void;
+	newTrip: newTripType;
+	setNewTrip: Dispatch<SetStateAction<newTripType>>;
 };
 
-function Step1({ jumpTo }: Props) {
+function Step1({ jumpTo, newTrip, setNewTrip }: Props) {
 	// const navigation = useNavigation();
 
 	const [startDate, setStartDate] = useState('');
@@ -43,6 +47,7 @@ function Step1({ jumpTo }: Props) {
 
 	const onSubmit = (data: any) => {
 		console.log(data);
+		setNewTrip((prev) => ({ ...prev, ...data }));
 		jumpTo('second');
 	};
 

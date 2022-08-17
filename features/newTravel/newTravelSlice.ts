@@ -2,19 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Location } from '../../types';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
-interface NewTravelState {
+export interface NewTravelState {
 	type: string;
 	departure: number;
 	origin: Location;
 	destination: Location;
 	flightNum?: number | null;
-	creatorId: string;
+	uid: string;
 }
 
 const initialState: NewTravelState = {
 	type: '',
 	departure: Date.now(),
-	creatorId: '',
+	uid: '',
 	origin: {
 		latitude: 0,
 		longitude: 0,
@@ -42,12 +42,10 @@ const newActivitySlice = createSlice({
 	reducers: {
 		storeNewTravel: (state: NewTravelState, action: PayloadAction<NewTravelState>) => {
 			console.log(action.payload);
-			state = { ...action.payload };
+			return { ...action.payload };
 		},
 		// Change Type if necessary
-		clearState: (state: NewTravelState) => {
-			state = initialState;
-		},
+		clearState: (state: NewAccommodationState) => initialState,
 	},
 });
 
