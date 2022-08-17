@@ -34,6 +34,17 @@ function DiscoverScreen() {
 			longitudeDelta: 0.1,
 		});
 	};
+	const dispatch = useAppDispatch();
+	const handlePress = async () => {
+		dispatch(storeNewAuth({ token: null }));
+		try {
+			await SecureStore.deleteItemAsync('user');
+			const result = await SecureStore.getItemAsync('user');
+			console.log(result);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
 		<View style={styles.container} flex={1} alignItems="center" justifyContent="center">
 			<MapView style={styles.map} ref={mapRef} />

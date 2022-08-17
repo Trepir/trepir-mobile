@@ -7,12 +7,12 @@ import {
 } from 'firebase/auth';
 import auth from './firebaseConfig';
 
-export const createEmailUser = async (email: string, password: string) => {
+const createEmailUser = async (email: string, password: string) => {
 	const user = await createUserWithEmailAndPassword(auth, email, password);
 	return user;
 };
 
-export const loginEmail = async (email: string, password: string) => {
+const loginEmail = async (email: string, password: string) => {
 	try {
 		const user = await signInWithEmailAndPassword(auth, email, password);
 		return user;
@@ -22,12 +22,12 @@ export const loginEmail = async (email: string, password: string) => {
 	return null;
 };
 
-export const loginGoogle = async () => {
+const loginGoogle = async () => {
 	const provider = new GoogleAuthProvider();
 	const user = await signInWithPopup(auth, provider);
 	return user;
 };
 
-export const logOut = async () => {
+const logOut = async () => {
 	await signOut(auth);
 };
