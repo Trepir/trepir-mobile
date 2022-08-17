@@ -20,61 +20,63 @@ export default function App() {
 		'Gilroy-Light': GilroyLight,
 	});
 
-	const theme = extendTheme({
-		fontConfig: {
-			Gilroy: {
-				100: {
-					normal: 'Gilroy-Light',
-					bold: 'Gilroy-ExtraBold',
-				},
-				200: {
-					normal: 'Gilroy-Light',
-					bold: 'Gilroy-ExtraBold',
-				},
-				300: {
-					normal: 'Gilroy-Light',
-					bold: 'Gilroy-ExtraBold',
-				},
-				400: {
-					normal: 'Gilroy-Light',
-					bold: 'Gilroy-ExtraBold',
-				},
-				500: {
-					normal: 'Gilroy-Light',
-					bold: 'Gilroy-ExtraBold',
-				},
-				600: {
-					normal: 'Gilroy-Light',
-					bold: 'Gilroy-ExtraBold',
-				},
-				700: {
-					normal: 'Gilroy-Light',
-					bold: 'Gilroy-ExtraBold',
-				},
-				800: {
-					normal: 'Gilroy-Light',
-					bold: 'Gilroy-ExtraBold',
-				},
-				900: {
-					normal: 'Gilroy-Light',
-					bold: 'Gilroy-ExtraBold',
-				},
-			},
-		},
+	const theme = {};
+	// 	= extendTheme({
+	// 	fontConfig: {
+	// 		Gilroy: {
+	// 			100: {
+	// 				normal: 'Gilroy-Light',
+	// 				bold: 'Gilroy-ExtraBold',
+	// 			},
+	// 			200: {
+	// 				normal: 'Gilroy-Light',
+	// 				bold: 'Gilroy-ExtraBold',
+	// 			},
+	// 			300: {
+	// 				normal: 'Gilroy-Light',
+	// 				bold: 'Gilroy-ExtraBold',
+	// 			},
+	// 			400: {
+	// 				normal: 'Gilroy-Light',
+	// 				bold: 'Gilroy-ExtraBold',
+	// 			},
+	// 			500: {
+	// 				normal: 'Gilroy-Light',
+	// 				bold: 'Gilroy-ExtraBold',
+	// 			},
+	// 			600: {
+	// 				normal: 'Gilroy-Light',
+	// 				bold: 'Gilroy-ExtraBold',
+	// 			},
+	// 			700: {
+	// 				normal: 'Gilroy-Light',
+	// 				bold: 'Gilroy-ExtraBold',
+	// 			},
+	// 			800: {
+	// 				normal: 'Gilroy-Light',
+	// 				bold: 'Gilroy-ExtraBold',
+	// 			},
+	// 			900: {
+	// 				normal: 'Gilroy-Light',
+	// 				bold: 'Gilroy-ExtraBold',
+	// 			},
+	// 		},
+	// 	},
 
-		fonts: {
-			heading: 'Gilroy',
-			body: 'Gilroy',
-			mono: 'Gilroy',
-		},
-	});
+	// 	fonts: {
+	// 		heading: 'Gilroy',
+	// 		body: 'Gilroy',
+	// 		mono: 'Gilroy',
+	// 	},
+	// });
 
-	if (!isLoadingComplete) {
+	if (!isLoadingComplete && !fontsLoaded) {
 		return null;
 	}
 	return (
 		<Provider store={store}>
-			<NativeBaseProvider theme={theme}>
+			{/* <NativeBaseProvider theme={theme}> */}
+			<NativeBaseProvider>
 				<SafeAreaProvider>
 					<GestureHandlerRootView style={{ flex: 1 }}>
 						<Navigation /* colorScheme={colorScheme} */ />

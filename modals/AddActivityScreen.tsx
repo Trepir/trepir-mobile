@@ -54,7 +54,6 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 	});
 
 	const onSubmit = (data: any) => {
-		console.log(data);
 		dispatch(storeNewActivity({ creatorId: '1', ...data }));
 		navigation.goBack();
 	};

@@ -10,20 +10,8 @@ type User = {
 	photo: string;
 };
 
-function TopView() {
+function TopView({ user }: { user: User }) {
 	const dispatch = useAppDispatch();
-
-	const [photo, setPhoto] = useState<User['photo']>(
-		'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg'
-	);
-	const [userName, setUserName] = useState<User['userName']>('DeVittozz');
-
-	// WHEN A USER IS CREATED AND STORED IN REDUX, THIS FUNCTION IS CALLED
-	// useEffect(() => {
-	// 	const user: user = dispatch(hereWeGetTheUser);
-	// 	setPhoto(user.photo);
-	// 	setUserName(user.userName);
-	// }, []);
 
 	const handlePress = async () => {
 		dispatch(storeNewAuth(null));
@@ -35,36 +23,46 @@ function TopView() {
 	};
 
 	return (
-		<Center
+		<View
 			flex={0.15}
 			flexDirection="row"
 			justifyContent="space-around"
 			alignItems="center"
-			backgroundColor={Colors.white}
+			backgroundColor={Colors.primary.dark}
 			width="100%"
 			pt={9}
+			mb={0.5}
 			shadow={1}
 		>
-			{/* <View flex={0.1} /> */}
+			<View flex={0.1} />
 			<View
 				flex={0.8}
-				pl={10}
+				// pl={10}
 				flexDirection="row"
 				justifyContent="center"
 				alignItems="center"
-				backgroundColor={Colors.white}
+				backgroundColor={Colors.primary.dark}
 			>
 				<Image
 					source={{
-						uri: photo,
+						uri: user.photo,
 					}}
 					alt="Danny DeVito"
 					width={60}
 					height={60}
 					borderRadius={50}
 				/>
-				<Text fontSize="3xl" fontWeight="black" ml={3}>
-					{userName}
+				<Text
+					color={Colors.white}
+					noOfLines={2}
+					flexShrink={1}
+					fontSize="3xl"
+					fontWeight="bold"
+					ml={3}
+					isTruncated
+					textAlign="center"
+				>
+					{user.userName}
 				</Text>
 			</View>
 			<View flex={0.25} mr={8}>
@@ -77,12 +75,12 @@ function TopView() {
 					rounded="3xl"
 					shadow={1}
 				>
-					<Text color="white" fontSize="md" fontWeight="semibold">
+					<Text color="white" fontSize="md" fontWeight="bold">
 						Logout
 					</Text>
 				</Pressable>
 			</View>
-		</Center>
+		</View>
 	);
 }
 

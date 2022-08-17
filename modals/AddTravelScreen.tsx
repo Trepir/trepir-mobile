@@ -69,7 +69,6 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	};
 
 	const onSubmit = (data: any) => {
-		console.log(data);
 		dispatch(storeNewTravel({ creatorId: '1', ...data }));
 		navigation.goBack();
 	};

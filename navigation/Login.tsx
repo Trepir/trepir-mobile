@@ -35,14 +35,6 @@ async function save(key: string, value: string) {
 
 function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	const dispatch = useAppDispatch();
-	const token = useAppSelector((state) => {
-		console.log('Login whole state', state);
-		return state.auth.token;
-	});
-	console.log(token);
-	useEffect(() => {
-		console.log('Token login', token);
-	}, [token]);
 
 	const {
 		control,

@@ -1,11 +1,7 @@
-import { View, Text, Pressable, Image } from 'native-base';
-import React from 'react';
-import * as SecureStore from 'expo-secure-store';
+import { View } from 'native-base';
+import React, { useState } from 'react';
 import { RootTabScreenProps } from '../types';
-import { useAppDispatch } from '../app/hooks';
-import { storeNewAuth } from '../features/auth/authSlice';
 import Colors from '../constants/Colors';
-import ButtonCustom from '../components/ui/ButtonCustom';
 import TopView from '../components/Dashboard/TopView';
 import TripCarousel from '../components/TripCarousel';
 
@@ -14,23 +10,25 @@ function DashboardScreen({ navigation }: RootTabScreenProps<'Dashboard'>) {
 	// useEffect(() => {
 	// 	console.log(activityStore);
 	// }, [activityStore]);
-	const dispatch = useAppDispatch();
-	const handlePress = async () => {
-		dispatch(storeNewAuth(null));
-		try {
-			await SecureStore.deleteItemAsync('user');
-			const result = await SecureStore.getItemAsync('user');
-			console.log(result);
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	const [user, setUser] = useState({
+		userName: 'DeVittoz',
+		photo:
+			'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg',
+	});
+
+	// WHEN A USER IS CREATED AND STORED IN REDUX, THIS FUNCTION IS CALLED
+	// useEffect(() => {
+	// 	const user: user = dispatch(hereWeGetTheUser);
+	// 	setPhoto(user.photo);
+	// 	setUserName(user.userName);
+	// }, []);
 
 	return (
 		<View flex={1} justifyContent="flex-start" flexDirection="column">
-			<TopView />
+			<TopView user={user} />
 			<View flex={1} backgroundColor={Colors.grey.offWhite}>
-				<TripCarousel tittle={'Upcoming trips'} />
+				<TripCarousel title="Upcoming trips" />
+				<TripCarousel title="Past trips" />
 			</View>
 		</View>
 	);
