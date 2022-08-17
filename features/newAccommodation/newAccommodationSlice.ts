@@ -37,9 +37,7 @@ const newActivitySlice = createSlice({
 			state = { ...action.payload };
 		},
 		// Change Type if necessary
-		clearState: (state: NewAccommodationState) => {
-			state = initialState;
-		},
+		clearState: () => initialState,
 	},
 });
 

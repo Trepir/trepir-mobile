@@ -52,7 +52,7 @@ export const linkingAuth: LinkingOptions<HomePageParamList> = {
 							Login: 'Login',
 						},
 					},
-					Home: {
+					HomeScreen: {
 						screens: {
 							Home: 'Home',
 						},

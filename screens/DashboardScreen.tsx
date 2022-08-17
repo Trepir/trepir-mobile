@@ -1,9 +1,12 @@
-import { View, Text, Pressable } from 'native-base';
+import { View, Text, Pressable, Image } from 'native-base';
 import React from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { RootTabScreenProps } from '../types';
 import { useAppDispatch } from '../app/hooks';
 import { storeNewAuth } from '../features/auth/authSlice';
+import Colors from '../constants/Colors';
+import ButtonCustom from '../components/ui/ButtonCustom';
+import TopView from '../components/Dashboard/TopView';
 
 function DashboardScreen({ navigation }: RootTabScreenProps<'Dashboard'>) {
 	// const activityStore = useAppSelector((state) => state.newActivity);
@@ -23,18 +26,17 @@ function DashboardScreen({ navigation }: RootTabScreenProps<'Dashboard'>) {
 	};
 
 	return (
-		<View flex={1} justifyContent="center" alignItems="center">
-			<Pressable
-				onPress={() => {
-					navigation.navigate('NewActivityModal');
-				}}
-			>
-				<Text>DashboardScreen</Text>
-			</Pressable>
-
-			<Pressable py={5} my={5} bgColor="amber.300" onPress={handlePress}>
-				<Text>@@@@@@@@@@@@@@ Logout @@@@@@@@@@@@@@@@</Text>
-			</Pressable>
+		<View flex={1} justifyContent="flex-start" flexDirection="column">
+			<TopView />
+			<View flex={1} backgroundColor={Colors.grey.offWhite}>
+				<Pressable
+					onPress={() => {
+						navigation.navigate('NewActivityModal');
+					}}
+				>
+					<Text>DashboardScreen</Text>
+				</Pressable>
+			</View>
 		</View>
 	);
 }
