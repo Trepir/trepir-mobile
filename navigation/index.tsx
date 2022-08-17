@@ -133,7 +133,7 @@ export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchem
 	// get 'user' data from redux store and check if user is logged in
 	const token = useAppSelector((state) => state.auth.token);
 	console.log('navigation/token', token);
-	if (token) {
+	if (true) {
 		return (
 			<NavigationContainer
 				linking={linkingRoot}
