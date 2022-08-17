@@ -55,6 +55,7 @@ function BottomTabNavigator() {
 				component={DashboardScreen}
 				options={() => ({
 					title: 'Dashboard',
+					headerShown: false,
 					tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
 				})}
 			/>
@@ -130,22 +131,12 @@ function AuthNavigator() {
 type Token = string | null;
 
 export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
-
 	const [isAuthenticated, setIsAuthenticated] = useState<Token>(null);
-	const token = useAppSelector((state) => {
-		console.log(state);
-		return state.auth.token;
-	});
+	const token = useAppSelector((state) => state.auth.token);
 
-	console.log('first/token', token);
 	useEffect(() => {
-		console.log('useEffect/token', token);
 		setIsAuthenticated(token);
 	}, [token]);
-
-	useEffect(() => {
-		console.log('useEffect/isAuthenticated', isAuthenticated);
-	}, [isAuthenticated]);
 
 	if (isAuthenticated) {
 		return (

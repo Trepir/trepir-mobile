@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
@@ -17,10 +16,9 @@ const newAuthSlice = createSlice({
 		storeNewAuth: (state: AuthState, action: PayloadAction<string | null>) => {
 			console.log('Payload', action.payload);
 			return { token: action.payload };
-			console.log('State', state);
 		},
 		// Change Type if necessary
-		clearAuthState: (state: AuthState) => initialState,
+		clearAuthState: () => initialState,
 	},
 });
 

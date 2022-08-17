@@ -53,7 +53,6 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	});
 
 	const onSubmit = (data: any) => {
-		console.log(data);
 		dispatch(StoreNewUserInfo({ creatorId: '1', ...data }));
 	};
 

@@ -42,7 +42,6 @@ function HomeScreen({ navigation }: HomePageScreenProps<'HomeScreen'>) {
 		async function getUser() {
 			const result = await SecureStore.getItemAsync('user');
 			if (result) {
-				console.log('user is logged in', result);
 				dispatch(storeNewAuth(result));
 			}
 		}
