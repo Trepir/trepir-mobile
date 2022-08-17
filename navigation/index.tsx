@@ -72,6 +72,7 @@ function BottomTabNavigator() {
 				component={DiscoverScreen}
 				options={{
 					title: 'Discover',
+					headerShown: false,
 					tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
 				}}
 			/>
@@ -129,6 +130,7 @@ function AuthNavigator() {
 type Token = string | null;
 
 export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
+
 	const [isAuthenticated, setIsAuthenticated] = useState<Token>(null);
 	const token = useAppSelector((state) => {
 		console.log(state);
