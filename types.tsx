@@ -108,10 +108,15 @@ export class Location {
 	googleId: string | null;
 }
 export type Activity = {
+	id: string;
+	uid?: string;
 	name: string;
 	duration: number;
 	description: string;
-	time: Date | null;
+	timeStart: number;
+	timeEnd: number;
 	rating: number | null;
 	tags: Tag[];
+	location: Location;
+	imageUrl: string;
 };

@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Location } from '../../types';
+import { Activity, Location } from '../../types';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
-interface NewActivityState {
+export interface NewActivityState {
 	name: string;
 	duration: number;
 	description: string;
@@ -14,13 +14,17 @@ interface NewActivityState {
 	location: Location;
 }
 
-const initialState: NewActivityState = {
+const initialState: Activity = {
+	id: '',
 	name: '',
 	duration: 0,
 	description: '',
-	time: Date.now(),
+	timeStart: Date.now(), // Date.now(),
+	timeEnd: Date.now(), // Date.now(),
 	uid: '',
 	tags: [],
+	imageUrl: '',
+	rating: null,
 	location: {
 		latitude: 0,
 		longitude: 0,
@@ -36,13 +40,13 @@ const newActivitySlice = createSlice({
 	name: 'newActivity',
 	initialState,
 	reducers: {
-		storeNewActivity: (state: NewActivityState, action: PayloadAction<NewActivityState>) => {
+		storeNewActivity: (state: Activity, action: PayloadAction<Activity>) => {
 			console.log(action.payload);
 			return { ...action.payload };
 		},
 		// Change Type if necessary
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-		clearActivityState: (state: NewActivityState) => initialState,
+		clearActivityState: (state: Activity) => initialState,
 	},
 });
 

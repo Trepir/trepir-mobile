@@ -1,9 +1,10 @@
 import React from 'react';
 import { RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist';
-import { Box, Pressable } from 'native-base';
+import { Pressable } from 'native-base';
 import AccommodationCard from '../createTrip/AccommodationCard';
-import { NewAccommodationState } from '../../features/newAccommodation/newAccommodationSlice';
 import { DayAct } from '../../screens/ModifyTrip';
+import ActivityCard from '../ui/ActivityCard';
+import TravelCard from '../createTrip/TravelCard';
 
 function RenderItem({ item, drag, isActive }: RenderItemParams<DayAct>) {
 	return (
@@ -15,12 +16,9 @@ function RenderItem({ item, drag, isActive }: RenderItemParams<DayAct>) {
 				alignItems="center"
 				justifyContent="center"
 			>
-				{/* Need to change this */}
-				{/* <AccommodationCard accommodation={item} /> */}
-
-				{item.accommodationId !== null && <Box height="90%" width="100%" bgColor="amber.200" />}
-				{item.dayActivityId !== null && <Box height="90%" width="100%" bgColor="blue.200" />}
-				{item.travelEventId !== null && <Box height="90%" width="100%" bgColor="red.200" />}
+				{item.accommodationId !== null && <AccommodationCard accommodation={item.accommodation!} />}
+				{item.dayActivityId !== null && <ActivityCard activity={item.dayActivity?.activity!} />}
+				{item.travelEventId !== null && <TravelCard travel={item.travel!} />}
 			</Pressable>
 		</ScaleDecorator>
 	);

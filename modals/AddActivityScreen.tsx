@@ -50,18 +50,21 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 			timeStart: Date.now(),
 			timeEnd: Date.now(),
 			tags: [''],
+			return: null,
 			location: new Location(),
+			imageUrl: '',
 		},
 	});
 
 	const onSubmit = (data: any) => {
-		dispatch(storeNewActivity({ uid: '1', ...data }));
+		dispatch(storeNewActivity({ uid: '1', id: '', ...data }));
 		navigation.goBack();
 	};
 
 	const getLocationData = (_: any, details: GooglePlaceDetail) => {
 		const locationData = parseLocationDetails(details);
 		setValue('location', locationData, { shouldValidate: true });
+		setValue('imageUrl', details.icon, { shouldValidate: true });
 	};
 
 	return (
