@@ -1,6 +1,6 @@
 import { Text, Box, HStack, VStack } from 'native-base';
 import React from 'react';
-import GoogleIcon from '../../assets/icons/GoogleIcon';
+import AccommodationIcon from '../../assets/icons/AccommodationIcon';
 import { NewAccommodationState } from '../../features/newAccommodation/newAccommodationSlice';
 
 type Props = {
@@ -10,27 +10,30 @@ type Props = {
 function AccommodationCard({ accommodation }: Props) {
 	const { startDate, endDate, location } = accommodation;
 
-	const parsedStartDate = new Date(startDate).toISOString().split('T')[0];
-	const parsedEndDate = new Date(endDate).toISOString().split('T')[0];
+	const parsedStartDate = new Date(startDate).toISOString().split('T')[0].replaceAll('-', '/');
+	const parsedEndDate = new Date(endDate).toISOString().split('T')[0].replaceAll('-', '/');
 	return (
-		<HStack height="5/6" width="72" bgColor="blue.300" mr={4} rounded="md">
+		<HStack height="5/6" width="72" bgColor="white" mr={4} rounded="md">
 			<Box
 				width="2/5"
-				height="full"
-				bgColor="amber.300"
+				height="90%"
+				bgColor="gray.100"
 				alignItems="center"
 				justifyContent="center"
+				alignSelf="center"
+				ml={2}
+				rounded="xl"
 			>
-				<GoogleIcon size="80%" />
+				<AccommodationIcon size="80%" color="#c1c1c1" />
 			</Box>
-			<VStack pl={4} py={6} justifyContent="space-evenly">
+			<VStack pl={3} py={6} justifyContent="space-evenly">
 				<Text fontWeight="semibold" fontSize="md">
 					{location.locationName}
 				</Text>
 				<Text maxWidth="32" fontWeight="semibold" fontSize="md" isTruncated>
 					{location.city}
 				</Text>
-				<Text alignSelf="center">
+				<Text alignSelf="center" fontSize="xs">
 					{parsedStartDate}-{parsedEndDate}
 				</Text>
 			</VStack>
