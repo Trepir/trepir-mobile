@@ -8,6 +8,7 @@ import Step2 from '../components/createTrip/Step2';
 import { Location } from '../types';
 import { NewAccommodationState } from '../features/newAccommodation/newAccommodationSlice';
 import { NewTravelState } from '../features/newTravel/newTravelSlice';
+import Step3 from '../components/createTrip/Step3';
 
 export type newTripType = {
 	name: string;
@@ -35,8 +36,8 @@ function CreateScreen() {
 				return <Step1 jumpTo={jumpTo} newTrip={newTrip} setNewTrip={setNewTrip} />;
 			case 'second':
 				return <Step2 jumpTo={jumpTo} newTrip={newTrip} setNewTrip={setNewTrip} />;
-			// case 'third':
-			// 	return <Step3 jumpTo={jumpTo} />;
+			case 'third':
+				return <Step3 jumpTo={jumpTo} />;
 
 			default:
 				return <Step1 jumpTo={jumpTo} newTrip={newTrip} setNewTrip={setNewTrip} />;
@@ -48,6 +49,7 @@ function CreateScreen() {
 	const [routes] = React.useState([
 		{ key: 'first', title: 'Trip Details' },
 		{ key: 'second', title: 'Travel & Stay' },
+		{ key: 'third', title: 'Activity' },
 	]);
 
 	return (

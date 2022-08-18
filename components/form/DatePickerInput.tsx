@@ -1,8 +1,12 @@
-import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { Box, Text } from 'native-base';
+import RNDateTimePicker, {
+	DateTimePickerEvent,
+	DateTimePickerAndroid,
+	AndroidNativeProps,
+} from '@react-native-community/datetimepicker';
+import { Box, Pressable, Text } from 'native-base';
 import React from 'react';
 import { Control, Controller, FieldErrorsImpl } from 'react-hook-form';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 
 type Props = {
@@ -42,16 +46,31 @@ function TimePickerInput({ name, control, errors, date, onChangeFunction }: Prop
 					<Box
 						px={4}
 						py={2}
-						rounded="xl"
+						borderRadius={12}
 						alignItems="center"
 						bgColor={date.touched ? Colors.primary.normal : ''}
 					>
-						<RNDateTimePicker
-							style={styles.timePicker}
-							value={date.value}
-							accentColor={date.touched ? 'white' : Colors.primary.normal}
-							onChange={(e, newDate) => onChangeFunction(e, newDate!)}
-						/>
+						{Platform.OS === 'ios' ? (
+							<RNDateTimePicker
+								style={styles.timePicker}
+								value={date.value}
+								accentColor={date.touched ? 'white' : Colors.primary.normal}
+								onChange={(e, newDate) => onChangeFunction(e, newDate!)}
+							/>
+						) : (
+							<Pressable
+								onPress={() => {
+									DateTimePickerAndroid.open({
+										value: date.value,
+										mode: 'date',
+										onChange: (eFromPicker, dateFromPicker) =>
+											onChangeFunction(eFromPicker, dateFromPicker!),
+									});
+								}}
+							>
+								<Text>{date.value.toLocaleString()}</Text>
+							</Pressable>
+						)}
 					</Box>
 				)}
 			/>
