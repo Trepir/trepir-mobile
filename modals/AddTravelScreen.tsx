@@ -1,4 +1,4 @@
-import { View, Box } from 'native-base';
+import { View, Box, ScrollView } from 'native-base';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
@@ -76,25 +76,7 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	return (
 		<DismissKeyboard>
 			<View flex={1} px="10">
-				<View position="absolute" mt={4} width="100%" alignSelf="center" zIndex={3}>
-					<InputLabel labelText="Origin place" />
-					<GooglePlacesInput
-						pressFunction={assignOrigin}
-						queryType="establishment"
-						placeholder="Origin"
-					/>
-					{/* {errors.origin && <Text color="error.600">This is required.</Text>} */}
-				</View>
-				<View position="absolute" mt={24} width="100%" alignSelf="center" zIndex={2}>
-					<InputLabel labelText="Destination place" />
-					<GooglePlacesInput
-						pressFunction={assignDestination}
-						queryType="establishment"
-						placeholder="Destination"
-					/>
-					{/* {errors.destination && <Text color="error.600">This is required.</Text>} */}
-				</View>
-				<Box mt="48">
+				<Box mt="8">
 					<InputLabel labelText="How are you traveling?" />
 					<DDTravelType
 						dropDownItems={travelTypes}
@@ -121,23 +103,51 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 							errors={errors}
 						/>
 					</Box>
-					{typeValue === 'Flight' && (
-						<TextInput
-							control={control}
-							errors={errors}
-							name="flightNumber"
-							placeholder="Input your flight number..."
-							isRequired={false}
-						/>
+					{typeValue === 'Flight' ? (
+						<View mt="48">
+							<TextInput
+								control={control}
+								errors={errors}
+								name="flight number"
+								placeholder="Input your flight number..."
+								isRequired={false}
+							/>
+							<Box mt="16">
+								<ButtonCustom
+									alignment="center"
+									pressFunction={handleSubmit(onSubmit)}
+									text="Add Travel"
+								/>
+							</Box>
+						</View>
+					) : (
+						<Box mt="56">
+							<ButtonCustom
+								alignment="center"
+								pressFunction={handleSubmit(onSubmit)}
+								text="Add Travel"
+							/>
+						</Box>
 					)}
-					<Box mt="12">
-						<ButtonCustom
-							alignment="center"
-							pressFunction={handleSubmit(onSubmit)}
-							text="Add Travel"
-						/>
-					</Box>
 				</Box>
+				<View position="absolute" mt="48" width="100%" alignSelf="center" zIndex={1}>
+					<InputLabel labelText="Origin place" />
+					<GooglePlacesInput
+						pressFunction={assignOrigin}
+						queryType="establishment"
+						placeholder="Origin"
+					/>
+					{/* {errors.origin && <Text color="error.600">This is required.</Text>} */}
+				</View>
+				<View position="absolute" mt="72" width="100%" alignSelf="center" zIndex={0}>
+					<InputLabel labelText="Destination place" />
+					<GooglePlacesInput
+						pressFunction={assignDestination}
+						queryType="establishment"
+						placeholder="Destination"
+					/>
+					{/* {errors.destination && <Text color="error.600">This is required.</Text>} */}
+				</View>
 			</View>
 		</DismissKeyboard>
 	);

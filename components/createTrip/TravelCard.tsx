@@ -1,7 +1,8 @@
-import { View, Text, Box, HStack, VStack } from 'native-base';
+import { View, Text, Box, HStack, VStack, Divider } from 'native-base';
 import React from 'react';
 import ConditionalTravelIcon from '../../assets/icons/ConditionalTravelIcon';
 import GoogleIcon from '../../assets/icons/GoogleIcon';
+import Colors from '../../constants/Colors';
 import { NewTravelState } from '../../features/newTravel/newTravelSlice';
 
 type Props = {
@@ -12,26 +13,28 @@ function TravelCard({ travel }: Props) {
 	const { type, origin, destination, departure } = travel;
 	const parsedDate = new Date(departure).toISOString().split('T')[0];
 	return (
-		<HStack height="5/6" width="72" bgColor="white" mr={4} rounded="md">
+		<HStack height="5/6" width="72" bgColor="white" mr={4} borderRadius={12}>
 			<Box
 				width="2/5"
-				height="90%"
 				bgColor="gray.100"
 				alignItems="center"
 				justifyContent="center"
-				alignSelf="center"
-				ml={2}
-				rounded="xl"
+				m={2}
+				borderRadius={12}
 			>
 				<ConditionalTravelIcon type={type} size="80%" color="#c1c1c1" />
 			</Box>
-			<VStack pl={4} py={6} justifyContent="space-evenly">
-				<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
-					{origin.locationName}
-				</Text>
-				<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
-					{destination.locationName}
-				</Text>
+
+			<VStack px={3} justifyContent="space-around" alignSelf="center">
+				<VStack justifyContent="center" alignItems="center">
+					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated noOfLines={2} mb={1}>
+						{origin.locationName}
+					</Text>
+					<Divider mb={1} />
+					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
+						{destination.locationName}
+					</Text>
+				</VStack>
 				<Text alignSelf="center">{parsedDate} </Text>
 			</VStack>
 		</HStack>

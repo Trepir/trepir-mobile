@@ -58,15 +58,19 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	return (
 		<DismissKeyboard>
 			<View flex={1} px="10">
-				<InputLabel labelText="Add your trip by Email" />
+				{/* <InputLabel labelText="Add your trip by Email" />
 				<Pressable bgColor="red.400" alignSelf="center" rounded="xl" mt="2">
 					<Text color="white" px={10} py={5} fontSize="lg" fontWeight="bold">
 						Input an Email Reservation{' '}
 					</Text>
 				</Pressable>
 				<Divider mt="8" />
+				
+				@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    MT FOR GOOGLE WAS 40   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
+				
+				*/}
 
-				<View position="absolute" width="100%" alignSelf="center" zIndex={2} mt="40">
+				<View position="absolute" width="100%" alignSelf="center" zIndex={2} mt="4">
 					<InputLabel labelText="Where are you staying" />
 
 					<GooglePlacesInput

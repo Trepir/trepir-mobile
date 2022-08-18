@@ -22,7 +22,7 @@ function AccommodationCard({ accommodation }: Props) {
 				justifyContent="center"
 				alignSelf="center"
 				ml={2}
-				rounded="xl"
+				borderRadius={18}
 			>
 				<AccommodationIcon size="80%" color="#c1c1c1" />
 			</Box>
