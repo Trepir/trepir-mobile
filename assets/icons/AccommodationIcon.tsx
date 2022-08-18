@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
 type Props = {
-	size: number | string;
+	size: number;
 	color: string;
 };
 
