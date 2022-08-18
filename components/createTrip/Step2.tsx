@@ -1,15 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import {
-	View,
-	Text,
-	Heading,
-	HStack,
-	Pressable,
-	Divider,
-	FlatList,
-	Box,
-	ScrollView,
-} from 'native-base';
+import { View, Text, Heading, HStack, Pressable, Divider, FlatList, Box } from 'native-base';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Colors from '../../constants/Colors';
@@ -19,7 +9,6 @@ import {
 } from '../../features/newAccommodation/newAccommodationSlice';
 import { clearTravelState, NewTravelState } from '../../features/newTravel/newTravelSlice';
 import { newTripType } from '../../screens/CreateScreen';
-import TravelCarousel from '../TravelCarousel';
 import ButtonCustom from '../ui/ButtonCustom';
 import AccommodationCard from './AccommodationCard';
 import EmptyList from './EmptyList';

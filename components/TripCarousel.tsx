@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'native-base';
-import Colors from '../constants/Colors';
 import TripItem from './ui/TripItem';
-import { useAppDispatch } from '../app/hooks';
+// import { useAppDispatch } from '../app/hooks';
+import EmptyList from './createTrip/EmptyList';
 
-function TripCarousel({ title }: { title: string }) {
+type CarouselProps = {
+	type: 'upcoming' | 'past' | 'favorites';
+};
+
+function TripCarousel({ type }: CarouselProps) {
 	// const dispatch = useAppDispatch();
 	// TRIPS STORED IN REDUX, THIS FUNCTION GETS THE TRIPS AND SETS THE STATE
 	// useEffect(() => {
@@ -14,6 +18,23 @@ function TripCarousel({ title }: { title: string }) {
 	//   setStartDate(trip.startDate);
 	//   setEndDate(trip.endDate);
 	// }, []);
+
+	let title: string;
+	let empty: string;
+
+	switch (type) {
+		case 'upcoming':
+			title = 'Upcoming trips';
+			empty = 'You have no upcoming trips, create one!';
+			break;
+		case 'past':
+			title = 'Past trips';
+			empty = "You didn't completed any trips on the app yet!";
+			break;
+		default:
+			title = 'Favorites';
+			empty = 'Favorite trips to save them here!';
+	}
 	type Trip = {
 		id: number;
 		name: string;
@@ -41,7 +62,7 @@ function TripCarousel({ title }: { title: string }) {
 		},
 		{
 			id: 2,
-			name: 'Barcelona With Friends',
+			name: 'Barcelona With Friends and Friends and Friends and Friends',
 			startDate: '20/10/2020',
 			endDate: '22/10/2020',
 			photo:
@@ -69,11 +90,15 @@ function TripCarousel({ title }: { title: string }) {
 			<Text paddingX={6} paddingY={2} fontSize="2xl">
 				{title}
 			</Text>
-			<ScrollView horizontal>
-				{trips.map((trip) => (
-					<TripItem key={trip.id} trip={trip} />
-				))}
-			</ScrollView>
+			{trips.length > 0 ? (
+				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+					{trips.map((trip) => (
+						<TripItem key={trip.id} trip={trip} />
+					))}
+				</ScrollView>
+			) : (
+				<EmptyList text={empty} />
+			)}
 		</View>
 	);
 }

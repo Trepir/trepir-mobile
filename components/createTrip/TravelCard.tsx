@@ -1,8 +1,6 @@
-import { View, Text, Box, HStack, VStack, Divider } from 'native-base';
+import { Text, Box, HStack, VStack, Divider } from 'native-base';
 import React from 'react';
 import ConditionalTravelIcon from '../../assets/icons/ConditionalTravelIcon';
-import GoogleIcon from '../../assets/icons/GoogleIcon';
-import Colors from '../../constants/Colors';
 import { NewTravelState } from '../../features/newTravel/newTravelSlice';
 
 type Props = {

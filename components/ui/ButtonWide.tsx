@@ -11,14 +11,13 @@ type Props = {
 };
 
 function ButtonWide({ text, pressFunction, google = false }: Props) {
-	const pSize = google ? 3 : 3;
 	return (
 		<Pressable
 			onPress={pressFunction}
 			bgColor={Colors.primary.normal}
 			width="80%"
 			px={12}
-			py={pSize}
+			py={3}
 			alignSelf="center"
 			rounded="3xl"
 			flexDirection="row"
@@ -28,7 +27,7 @@ function ButtonWide({ text, pressFunction, google = false }: Props) {
 				{text}
 			</Text>
 			{google && (
-				<View marginLeft={4} backgroundColor="white" borderRadius={8} p={2}>
+				<View marginLeft={4} backgroundColor="white" borderRadius={8} p={1}>
 					<GoogleIcon size={24} />
 				</View>
 			)}

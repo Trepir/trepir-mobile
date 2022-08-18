@@ -93,7 +93,7 @@ const tripStack = createNativeStackNavigator<TripStackParamList>();
 function TripStackNavigator() {
 	return (
 		<tripStack.Navigator>
-			<tripStack.Screen name="Trip" component={Trip} />
+			<tripStack.Screen name="Trip" component={Trip} options={{ headerShown: false }} />
 			<tripStack.Screen name="ModifyTrip" component={ModifyTrip} />
 		</tripStack.Navigator>
 	);
