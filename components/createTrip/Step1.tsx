@@ -1,8 +1,7 @@
-import { preventAutoHideAsync } from 'expo-splash-screen';
 import { View, Box } from 'native-base';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
+import { GooglePlaceData, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { parseLocationDetails } from '../../helpers/parseLocationDetails';
 import { newTripType } from '../../screens/CreateScreen';
 import { Location } from '../../types';
@@ -36,12 +35,28 @@ function Step1({ jumpTo, newTrip, setNewTrip }: Props) {
 			name: '',
 			startDate: '',
 			endDate: '',
-			location: new Location(),
+			location: {
+				googlePlaceId: '',
+				latitude: 500,
+				longitude: 500,
+				photoUrl: '',
+				formattedAddress: '',
+				googleLocationName: '',
+			},
 		},
 	});
 
-	const assignLocation = (_: any, details: GooglePlaceDetail) => {
-		const locationData = parseLocationDetails(details);
+	const assignLocation = (_: GooglePlaceData, details: GooglePlaceDetail) => {
+		// const locationData = parseLocationDetails(details);
+		console.log(details);
+		const locationData = {
+			googlePlaceId: details.place_id,
+			latitude: details.geometry.location.lat,
+			longitude: details.geometry.location.lng,
+			photoUrl: details.icon,
+			formattedAddress: details.formatted_address,
+			googleLocationName: details.name,
+		};
 		setValue('location', locationData, { shouldValidate: true });
 	};
 

@@ -45,9 +45,9 @@ const newActivitySlice = createSlice({
 			return { ...action.payload };
 		},
 		// Change Type if necessary
-		clearState: (state: NewAccommodationState) => initialState,
+		clearTravelState: (state: NewAccommodationState) => initialState,
 	},
 });
 
-export const { storeNewTravel, clearState } = newActivitySlice.actions;
+export const { storeNewTravel, clearTravelState } = newActivitySlice.actions;
 export default newActivitySlice.reducer;
