@@ -1,11 +1,22 @@
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, Heading, HStack, Pressable, Divider, FlatList, Box } from 'native-base';
+import {
+	View,
+	Text,
+	Heading,
+	HStack,
+	Pressable,
+	Divider,
+	FlatList,
+	Box,
+	ScrollView,
+} from 'native-base';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import Colors from '../../constants/Colors';
 import { NewAccommodationState } from '../../features/newAccommodation/newAccommodationSlice';
 import { NewTravelState } from '../../features/newTravel/newTravelSlice';
 import { newTripType } from '../../screens/CreateScreen';
+import TravelCarousel from '../TravelCarousel';
 import ButtonCustom from '../ui/ButtonCustom';
 import AccommodationCard from './AccommodationCard';
 import EmptyList from './EmptyList';
@@ -71,7 +82,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 
 			{travelEvents.length > 0 ? (
 				<FlatList
-					maxHeight={180}
+					maxHeight={160}
 					width="full"
 					data={travelEvents}
 					keyExtractor={(item) => item.origin.googleId!}
@@ -81,7 +92,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 			) : (
 				<EmptyList text="You dont have any travel yet." />
 			)}
-			<Divider />
+			<Divider my={2} />
 
 			<HStack alignItems="center" width="full" justifyContent="space-between" mt={4}>
 				<Heading fontSize="xl" fontWeight="medium">

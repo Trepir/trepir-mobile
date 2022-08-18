@@ -1,7 +1,6 @@
 import RNDateTimePicker, {
 	DateTimePickerEvent,
 	DateTimePickerAndroid,
-	AndroidNativeProps,
 } from '@react-native-community/datetimepicker';
 import { Box, Pressable, Text } from 'native-base';
 import React from 'react';

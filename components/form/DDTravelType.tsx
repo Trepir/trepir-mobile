@@ -85,6 +85,7 @@ function DDTravelType({
 						badgeDotColors={Colors.primary.normal}
 						style={styles.input}
 						placeholderStyle={styles.placeholder}
+						zIndex={3}
 					/>
 				)}
 			/>
