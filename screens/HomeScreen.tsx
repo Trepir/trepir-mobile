@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, View, Text, Pressable } from 'native-base';
+import { Box, View, Text, Pressable, VStack } from 'native-base';
 import React, { useEffect, useRef } from 'react';
 
 import * as SecureStore from 'expo-secure-store';
@@ -51,11 +51,11 @@ function HomeScreen({ navigation }: HomePageScreenProps<'HomeScreen'>) {
 	return (
 		<View flex={1} justifyContent="center" alignItems="center" height={height}>
 			<Image source={img} style={Style.image} blurRadius={5} />
-			<View flex={1} justifyContent="center" alignItems="center">
+			<VStack flex={1} justifyContent="center" alignItems="center">
 				<Logo size={100} />
 				<LogoName size={100} />
-			</View>
-			<View flex={0.35} justifyContent="center" alignItems="center" style={Style.bottomNav}>
+			</VStack>
+			<VStack flex={0.35} justifyContent="center" alignItems="center" style={Style.bottomNav}>
 				<Box marginBottom={3} width="100%">
 					<ButtonWide
 						text="Login with email"
@@ -82,7 +82,7 @@ function HomeScreen({ navigation }: HomePageScreenProps<'HomeScreen'>) {
 						Not registered yet? Click here.
 					</Text>
 				</Pressable>
-			</View>
+			</VStack>
 
 			<Login reference={LoginRef} />
 
