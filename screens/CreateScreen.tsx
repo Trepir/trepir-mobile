@@ -5,28 +5,39 @@ import { useWindowDimensions } from 'react-native';
 import Step1 from '../components/createTrip/Step1';
 import Step2 from '../components/createTrip/Step2';
 // import Step3 from '../components/createTrip/Step3';
-import { Location } from '../types';
 import { NewAccommodationState } from '../features/newAccommodation/newAccommodationSlice';
 import { NewTravelState } from '../features/newTravel/newTravelSlice';
 import Step3 from '../components/createTrip/Step3';
 
 export type newTripType = {
+	uid: string;
 	name: string;
-	location: Location;
 	startDate: string;
 	endDate: string;
-	tripTravels: NewTravelState[];
-	tripAccommodations: NewAccommodationState[];
+	googlePlaceId: string;
+	latitude: number;
+	longitude: number;
+	photoUrl: string;
+	formattedAddress: string;
+	googleLocationName: string;
+	accommodation: NewAccommodationState[];
+	travel: NewTravelState[];
 };
 
 function CreateScreen() {
 	const [newTrip, setNewTrip] = useState<newTripType>({
+		uid: '',
 		name: '',
-		location: new Location(),
 		startDate: '',
 		endDate: '',
-		tripTravels: [],
-		tripAccommodations: [],
+		googlePlaceId: '',
+		latitude: 500,
+		longitude: 500,
+		photoUrl: '',
+		formattedAddress: '',
+		googleLocationName: '',
+		travel: [],
+		accommodation: [],
 	});
 
 	// eslint-disable-next-line no-unused-vars

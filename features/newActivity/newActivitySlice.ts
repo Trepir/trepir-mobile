@@ -42,9 +42,9 @@ const newActivitySlice = createSlice({
 		},
 		// Change Type if necessary
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-		clearState: (state: NewActivityState) => initialState,
+		clearActivityState: (state: NewActivityState) => initialState,
 	},
 });
 
-export const { storeNewActivity, clearState } = newActivitySlice.actions;
+export const { storeNewActivity, clearActivityState } = newActivitySlice.actions;
 export default newActivitySlice.reducer;

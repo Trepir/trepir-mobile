@@ -24,7 +24,7 @@ const initialState: NewAccommodationState = {
 	},
 };
 
-const newActivitySlice = createSlice({
+const newAAccommodationSlice = createSlice({
 	name: 'newAccommodation',
 	initialState,
 	reducers: {
@@ -37,9 +37,9 @@ const newActivitySlice = createSlice({
 			return { ...action.payload };
 		},
 		// Change Type if necessary
-		clearState: (state: NewAccommodationState) => initialState,
+		clearAccommodationState: (state: NewAccommodationState) => initialState,
 	},
 });
 
-export const { storeNewAccommodation, clearState } = newActivitySlice.actions;
-export default newActivitySlice.reducer;
+export const { storeNewAccommodation, clearAccommodationState } = newAAccommodationSlice.actions;
+export default newAAccommodationSlice.reducer;

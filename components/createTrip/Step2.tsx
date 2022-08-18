@@ -11,10 +11,13 @@ import {
 	ScrollView,
 } from 'native-base';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Colors from '../../constants/Colors';
-import { NewAccommodationState } from '../../features/newAccommodation/newAccommodationSlice';
-import { NewTravelState } from '../../features/newTravel/newTravelSlice';
+import {
+	clearAccommodationState,
+	NewAccommodationState,
+} from '../../features/newAccommodation/newAccommodationSlice';
+import { clearTravelState, NewTravelState } from '../../features/newTravel/newTravelSlice';
 import { newTripType } from '../../screens/CreateScreen';
 import TravelCarousel from '../TravelCarousel';
 import ButtonCustom from '../ui/ButtonCustom';
@@ -30,6 +33,7 @@ type Props = {
 };
 
 function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
+	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
 	const [travelEvents, setTravelEvents] = useState<NewTravelState[]>([]);
 	const [accommodations, setAccommodations] = useState<NewAccommodationState[]>([]);
@@ -39,19 +43,21 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 	useEffect(() => {
 		if (newTravel.uid !== '') {
 			setTravelEvents([...travelEvents, newTravel]);
+			dispatch(clearTravelState());
 		}
 	}, [newTravel]);
 	useEffect(() => {
 		if (newAccommodation.uid !== '') {
 			setAccommodations([...accommodations, newAccommodation]);
+			dispatch(clearAccommodationState());
 		}
 	}, [newAccommodation]);
 
 	const createTrip = async () => {
 		setNewTrip((prev) => ({
 			...prev,
-			tripTravels: travelEvents,
-			tripAccommodations: accommodations,
+			travel: travelEvents,
+			accommodation: accommodations,
 		}));
 
 		setTimeout(() => {
