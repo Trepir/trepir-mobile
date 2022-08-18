@@ -15,12 +15,19 @@ import DashboardScreen from '../screens/DashboardScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import AddActivityModal from '../modals/AddActivityScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import { HomePageParamList, RootStackParamList, RootTabParamList } from '../types';
+import {
+	HomePageParamList,
+	RootStackParamList,
+	RootTabParamList,
+	TripStackParamList,
+} from '../types';
 import { linkingRoot, linkingAuth } from './LinkingConfiguration';
 import HomeScreen from '../screens/HomeScreen';
 import AddTravelScreen from '../modals/AddTravelScreen';
 import AddAccomScreen from '../modals/AddAccomScreen';
 import { useAppSelector } from '../app/hooks';
+import Trip from '../screens/Trip';
+import ModifyTrip from '../screens/ModifyTrip';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -81,6 +88,16 @@ function BottomTabNavigator() {
 	);
 }
 
+const tripStack = createNativeStackNavigator<TripStackParamList>();
+
+function TripStackNavigator() {
+	return (
+		<tripStack.Navigator>
+			<tripStack.Screen name="Trip" component={Trip} />
+			<tripStack.Screen name="ModifyTrip" component={ModifyTrip} />
+		</tripStack.Navigator>
+	);
+}
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
@@ -93,7 +110,11 @@ function RootNavigator() {
 	return (
 		<Stack.Navigator>
 			<Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-
+			<Stack.Screen
+				name="TripStack"
+				component={TripStackNavigator}
+				options={{ headerShown: false }}
+			/>
 			<Stack.Group screenOptions={{ presentation: 'modal' }}>
 				<Stack.Screen
 					name="NewActivityModal"

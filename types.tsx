@@ -13,8 +13,14 @@ export type RootTabParamList = {
 	Discover: undefined;
 };
 
+export type TripStackParamList = {
+	Trip: undefined;
+	ModifyTrip: undefined;
+};
+
 export type RootStackParamList = {
 	Root: NavigatorScreenParams<RootTabParamList> | undefined;
+	TripStack: NavigatorScreenParams<TripStackParamList> | undefined;
 	NewActivityModal: undefined;
 	NewTravelModal: undefined;
 	NewAccommodationModal: undefined;
@@ -28,6 +34,11 @@ declare global {
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
 	RootStackParamList,
+	Screen
+>;
+
+export type TripStackScreenProps<Screen extends keyof TripStackParamList> = NativeStackScreenProps<
+	TripStackParamList,
 	Screen
 >;
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Colors from '../../constants/Colors';
 import { useAppDispatch } from '../../app/hooks';
 import Arrow from '../../assets/icons/Arrow';
+import { useNavigation } from '@react-navigation/native';
 
 type Trip = {
 	id: number;
@@ -14,9 +15,14 @@ type Trip = {
 
 function TripItem({ trip }: { trip: Trip }) {
 	const { name, startDate, endDate, photo } = trip;
+	const navigation = useNavigation();
 	return (
 		<View borderRadius={18} backgroundColor={Colors.white} width={350} p={2} m={2} shadow={2}>
-			<Pressable>
+			<Pressable
+				onPress={() => {
+					navigation.navigate('TripStack');
+				}}
+			>
 				<View>
 					<Image
 						source={{
