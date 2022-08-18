@@ -1,4 +1,4 @@
-import { View, Heading, Pressable, HStack, Divider } from 'native-base';
+import { View, Heading, Pressable, HStack, Divider, Box } from 'native-base';
 import React, { useEffect, useRef, useState } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {
@@ -14,8 +14,9 @@ import PickEventBS from '../components/modifyTrip/PickEventBS';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTravelState, NewTravelState } from '../features/newTravel/newTravelSlice';
 import { clearActivityState } from '../features/newActivity/newActivitySlice';
-import GoogleIcon from '../assets/icons/GoogleIcon';
 import { Activity } from '../types';
+import AddIcon from '../assets/icons/AddIcon';
+import EmptyList from '../components/createTrip/EmptyList';
 
 export type DayAct = {
 	id: string;
@@ -182,46 +183,51 @@ function ModifyTrip() {
 	};
 
 	return (
-		<View flex={1} pt={4}>
+		<View flex={1} pt={4} pb="16">
 			<Heading alignSelf="center" fontWeight="semibold">
 				Edit your Itinerary
 			</Heading>
 			<NestableScrollContainer style={{ height: '100%' }}>
 				{tripDays.map((tripDay) => (
-					<View key={tripDay.id}>
+					<View key={tripDay.id} mt="4">
 						<Pressable onPress={() => addEventToDay(tripDay.dayIndex)}>
 							<HStack alignItems="center" justifyContent="center">
 								<Heading alignSelf="center" fontWeight="semibold">
-									Day {tripDay.dayIndex}
+									Day {tripDay.dayIndex + 1}
 								</Heading>
 								<Divider width="50%" mx="5" />
-								<GoogleIcon size={30} />
+								<AddIcon size={35} color="#0f0f0f" />
 							</HStack>
 						</Pressable>
-						<NestableDraggableFlatList
-							data={tripDay.tripDayActivities}
-							renderItem={RenderItem}
-							keyExtractor={(item: DayAct) => item.id} // Change this
-							onDragEnd={({ data }) => {
-								setTripDays((prev) => {
-									const newState: any[] = [];
-									prev.forEach((_, index) => {
-										console.log('INSIDE');
-										if (tripDay.dayIndex === index) {
-											newState.push({
-												id: prev[index].id,
-												dayIndex: prev[index].dayIndex,
-												tripId: prev[index].tripId,
-												tripDayActivities: data,
-											});
-										} else {
-											newState.push(prev[index]);
-										}
+						{tripDay.tripDayActivities.length > 0 ? (
+							<NestableDraggableFlatList
+								data={tripDay.tripDayActivities}
+								renderItem={RenderItem}
+								keyExtractor={(item: DayAct) => item.id} // Change this
+								onDragEnd={({ data }) => {
+									setTripDays((prev) => {
+										const newState: any[] = [];
+										prev.forEach((_, index) => {
+											if (tripDay.dayIndex === index) {
+												newState.push({
+													id: prev[index].id,
+													dayIndex: prev[index].dayIndex,
+													tripId: prev[index].tripId,
+													tripDayActivities: data,
+												});
+											} else {
+												newState.push(prev[index]);
+											}
+										});
+										return newState;
 									});
-									return newState;
-								});
-							}}
-						/>
+								}}
+							/>
+						) : (
+							<Box bgColor="#d1d1d1" mx="10" mt={1}>
+								<EmptyList text="Nothing on this trip yet" />
+							</Box>
+						)}
 					</View>
 				))}
 			</NestableScrollContainer>
