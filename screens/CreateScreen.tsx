@@ -1,5 +1,5 @@
 import { View } from 'native-base';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TabView, Route, TabBar } from 'react-native-tab-view';
 import { useWindowDimensions } from 'react-native';
 import Constants from 'expo-constants';
@@ -65,7 +65,20 @@ function CreateScreen() {
 		{ key: 'third', title: 'Activity' },
 	]);
 
-	const renderTabBar = (props) => (
+	// useEffect(() => {
+	// 	const BEtest = async () => {
+	// 		try {
+	// 			const data = await fetch('https://trepir.herokuapp.com/activity/all');
+	// 			const json = await data.json();
+	// 			console.log(json);
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 		}
+	// 	};
+	// 	BEtest();
+	// }, []);
+
+	const renderTabBar = (props: any) => (
 		<TabBar
 			{...props}
 			indicatorStyle={{ backgroundColor: 'white' }}

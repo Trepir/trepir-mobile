@@ -15,9 +15,9 @@ import GoogleIcon from '../assets/icons/GoogleIcon';
 import InputLabel from '../components/ui/InputLabel';
 import { useAppDispatch } from '../app/hooks';
 import { storeNewActivity } from '../features/newActivity/newActivitySlice';
-import TimePickerInput from '../components/form/TimePickerInput';
+// import TimePickerInput from '../components/form/TimePickerInput';
 import DropDown from '../components/form/DropDown';
-import { Location, RootTabScreenProps } from '../types';
+import { Activity, Location, RootTabScreenProps } from '../types';
 import { parseLocationDetails } from '../helpers/parseLocationDetails';
 import { ActivityTags } from '../constants/ActivityTags';
 import ApiKeys from '../constants/ApiKeys';
@@ -30,14 +30,14 @@ import ApiKeys from '../constants/ApiKeys';
 export default function AddActivityModal({ navigation }: RootTabScreenProps<'Create'>) {
 	const dispatch = useAppDispatch();
 
-	const [timeStart, setTimeStart] = useState({
-		value: new Date(),
-		touched: false,
-	});
-	const [timeEnd, setTimeEnd] = useState({
-		value: new Date(),
-		touched: false,
-	});
+	// const [timeStart, setTimeStart] = useState({
+	// 	value: new Date(),
+	// 	touched: false,
+	// });
+	// const [timeEnd, setTimeEnd] = useState({
+	// 	value: new Date(),
+	// 	touched: false,
+	// });
 	const [locationValidation, setLocationValidation] = useState({
 		touched: false,
 		valid: false,
@@ -47,17 +47,16 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 		handleSubmit,
 		formState: { errors },
 		setValue,
-	} = useForm({
+	} = useForm<Activity>({
 		defaultValues: {
 			name: '',
 			duration: 0,
 			description: '',
-			timeStart: Date.now(),
-			timeEnd: Date.now(),
-			tags: [''],
-			return: null,
+			tags: [],
 			location: new Location(),
 			imageUrl: '',
+			// timeStart: Date.now(),
+			// timeEnd: Date.now(),
 		},
 	});
 
@@ -68,11 +67,10 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 		// @ts-ignore
 		const imgWidth = details.photos[0].width;
 		const imgUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${imgWidth}&photoreference=${imgReference}&key=${ApiKeys.googleMapsAPIKey}`;
-
 		setValue('location', locationData, { shouldValidate: true });
 		setValue('imageUrl', imgUrl, { shouldValidate: true });
 	};
-	const onSubmit = (data: any) => {
+	const onSubmit = (data: Activity) => {
 		dispatch(storeNewActivity({ uid: '1', id: '', ...data }));
 		navigation.goBack();
 	};
@@ -85,7 +83,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 
 	return (
 		<DismissKeyboard>
-			<ScrollView flex={1} px="10" keyboardShouldPersistTaps="handled">
+			<View flex={1} px="10" keyboardShouldPersistTaps="handled">
 				{/* WHEN THIS IS ACTIVE I HAVE TO TOP THE SCROLLING OF THE MODAL  */}
 				<HStack alignSelf="center" alignItems="center">
 					<GoogleIcon size={25} />
@@ -122,7 +120,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 
 					<NumberInput name="duration" control={control} errors={errors} placeholder="0" />
 
-					<InputLabel labelText="Pick a time range (Optional)" />
+					{/* <InputLabel labelText="Pick a time range (Optional)" />
 					<HStack alignSelf="center" alignItems="center">
 						<TimePickerInput
 							time={timeStart}
@@ -139,7 +137,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 								setValue('timeEnd', date.getTime(), { shouldValidate: true });
 							}}
 						/>
-					</HStack>
+					</HStack> */}
 
 					<InputLabel labelText="Pick some Tags" />
 					<DropDown
@@ -163,27 +161,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 					{/* Use a light status bar on iOS to account for the black space above the modal */}
 					<StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
 				</View>
-			</ScrollView>
+			</View>
 		</DismissKeyboard>
 	);
 }
-
-/* <Controller
-	control={control}
-	rules={{
-		required: true,
-	}}
-	render={({ field: { onChange, onBlur, value } }) => (
-		<>
-			<Text> Name </Text>
-			<Input
-				bgColor={'white'}
-				width={'70%'}
-				onBlur={onBlur}
-				onChangeText={onChange}
-				value={value}
-			/>
-		</>
-	)}
-	name="name"
-/> */

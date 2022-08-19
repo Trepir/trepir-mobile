@@ -84,6 +84,8 @@ export type Tag =
 
 export class Location {
 	constructor() {
+		this.formattedAddress = '';
+		this.photoUrl = [];
 		this.latitude = 0;
 		this.longitude = 0;
 		this.country = '';
@@ -93,9 +95,13 @@ export class Location {
 		this.googleId = null;
 	}
 
+	formattedAddress: string;
+
 	latitude: number;
 
 	longitude: number;
+
+	photoUrl: string[];
 
 	country: string;
 
@@ -108,15 +114,14 @@ export class Location {
 	googleId: string | null;
 }
 export type Activity = {
-	id: string;
+	id?: string;
 	uid?: string;
 	name: string;
 	duration: number;
 	description: string;
-	timeStart: number;
-	timeEnd: number;
-	rating: number | null;
+	rating?: number | null;
 	tags: Tag[];
 	location: Location;
 	imageUrl: string;
+	time?: Date;
 };

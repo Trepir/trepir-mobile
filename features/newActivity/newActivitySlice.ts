@@ -19,13 +19,15 @@ const initialState: Activity = {
 	name: '',
 	duration: 0,
 	description: '',
-	timeStart: Date.now(), // Date.now(),
-	timeEnd: Date.now(), // Date.now(),
+	// timeStart: Date.now(), // Date.now(),
+	// timeEnd: Date.now(), // Date.now(),
 	uid: '',
 	tags: [],
 	imageUrl: '',
 	rating: null,
 	location: {
+		formattedAddress: '',
+		photoUrl: [],
 		latitude: 0,
 		longitude: 0,
 		country: '',
@@ -41,7 +43,7 @@ const newActivitySlice = createSlice({
 	initialState,
 	reducers: {
 		storeNewActivity: (state: Activity, action: PayloadAction<Activity>) => {
-			console.log(action.payload);
+			console.log('NEW ACTIVITY STORED', action.payload);
 			return { ...action.payload };
 		},
 		// Change Type if necessary

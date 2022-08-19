@@ -1,4 +1,5 @@
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
+import ApiKeys from '../constants/ApiKeys';
 import { Location } from '../types';
 
 export const parseLocationDetails = (details: GooglePlaceDetail) => {
@@ -17,15 +18,23 @@ export const parseLocationDetails = (details: GooglePlaceDetail) => {
 			city = comp.long_name;
 		}
 	});
-	// console.log(data, details);
-	const locData: Location = {
-		latitude: details?.geometry.location.lat,
-		longitude: details?.geometry.location.lng,
-		locationName: details?.name,
-		googleId: details?.place_id,
+
+	// @ts-ignore
+	const imgReference = details.photos[0].photo_reference;
+	// @ts-ignore
+	const imgWidth = details.photos[0].width;
+	const imgUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${imgWidth}&photoreference=${imgReference}&key=${ApiKeys.googleMapsAPIKey}`;
+
+	const locationData: Location = {
+		googleId: details.place_id,
+		latitude: details.geometry.location.lat,
+		longitude: details.geometry.location.lng,
+		photoUrl: [imgUrl],
+		formattedAddress: details.formatted_address,
+		locationName: details.name,
 		country,
 		state,
 		city,
 	};
-	return locData;
+	return locationData;
 };
