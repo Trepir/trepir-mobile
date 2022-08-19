@@ -6,6 +6,8 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NewAccommodationState } from './features/newAccommodation/newAccommodationSlice';
+import { NewTravelState } from './features/newTravel/newTravelSlice';
 
 export type RootTabParamList = {
 	Dashboard: undefined;
@@ -124,4 +126,68 @@ export type Activity = {
 	location: Location;
 	imageUrl: string;
 	time?: Date;
+};
+
+export type UserFromBackend = {
+	createdAt: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	displayName: string;
+	photoUrl: string;
+	emailVerified: boolean;
+};
+
+export type User = {
+	createdAt: string;
+	firstName: string;
+	lastName: string;
+	displayName: string;
+	email: string;
+	photoUrl: string;
+	emailVerified: boolean;
+	favoriteActivities: Activity[];
+	trips: [];
+};
+
+export type UserState = {
+	uid: string;
+	createdAt: string;
+	firstName: string;
+	lastName: string;
+	displayName: string;
+	email: string;
+	photoUrl: string;
+	emailVerified: boolean;
+};
+
+export type DayAct = {
+	id: string;
+	tripDayId: string;
+	order: number;
+	dayActivityId: string | null;
+	accommodationId: string | null;
+	travelEventId: string | null;
+	accommodation: NewAccommodationState | null;
+	travel: NewTravelState | null;
+	dayActivity: {
+		id: string;
+		activity: Activity;
+	} | null;
+};
+export type TripDay = {
+	id: string;
+	dayIndex: number;
+	tripId: string;
+	tripDayActivities: DayAct[];
+};
+
+export type Trip = {
+	id: string;
+	createdAt: string;
+	userId: string;
+	startDate: string;
+	endDate: string;
+	name: string;
+	googlePlaceId: string;
 };

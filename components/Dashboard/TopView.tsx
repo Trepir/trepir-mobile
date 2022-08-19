@@ -2,20 +2,16 @@ import { Text, Image, HStack } from 'native-base';
 import React from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { useAppDispatch } from '../../app/hooks';
-import { storeNewAuth } from '../../features/auth/authSlice';
 import Colors from '../../constants/Colors';
 import CogMenu from './CogMenu';
+import { UserState } from '../../types';
+import { clearUserState } from '../../features/user/userSlice';
 
-type User = {
-	userName: string;
-	photo: string;
-};
-
-function TopView({ user }: { user: User }) {
+function TopView({ user }: { user: UserState }) {
 	const dispatch = useAppDispatch();
 
 	const Logout = async () => {
-		dispatch(storeNewAuth(null));
+		dispatch(clearUserState());
 		try {
 			await SecureStore.deleteItemAsync('user');
 		} catch (error) {
@@ -38,7 +34,7 @@ function TopView({ user }: { user: User }) {
 		>
 			<Image
 				source={{
-					uri: user.photo,
+					uri: user.photoUrl,
 				}}
 				alt="Danny DeVito"
 				width={60}
@@ -55,7 +51,7 @@ function TopView({ user }: { user: User }) {
 				isTruncated
 				textAlign="center"
 			>
-				{user.userName}
+				{user.displayName}
 			</Text>
 			<CogMenu callback={Logout} color={Colors.white} />
 		</HStack>

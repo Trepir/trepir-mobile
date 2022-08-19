@@ -14,34 +14,13 @@ import PickEventBS from '../components/modifyTrip/PickEventBS';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTravelState, NewTravelState } from '../features/newTravel/newTravelSlice';
 import { clearActivityState } from '../features/newActivity/newActivitySlice';
-import { Activity } from '../types';
+import { TripDay, DayAct } from '../types';
 import AddIcon from '../assets/icons/AddIcon';
 import EmptyList from '../components/createTrip/EmptyList';
 
-export type DayAct = {
-	id: string;
-	tripDayId: string;
-	order: number;
-	dayActivityId: string | null;
-	accommodationId: string | null;
-	travelEventId: string | null;
-	accommodation: NewAccommodationState | null;
-	travel: NewTravelState | null;
-	dayActivity: {
-		id: string;
-		activity: Activity;
-	} | null;
-};
-type TripDays = {
-	id: string;
-	dayIndex: number;
-	tripId: string;
-	tripDayActivities: DayAct[];
-};
-
 function ModifyTrip() {
 	const [selectedDay, setSelectedDay] = useState<'' | number>('');
-	const [tripDays, setTripDays] = useState<TripDays[]>([
+	const [tripDays, setTripDays] = useState<TripDay[]>([
 		{
 			id: 'cl6z1r1wk00345y0g7mcdmzwj',
 			dayIndex: 0,
@@ -67,7 +46,7 @@ function ModifyTrip() {
 			console.log('NEW ACTIVITY ==================>', newlyAddedActivity);
 			bottomSheetRef.current?.close();
 			setTripDays((prev) => {
-				const newState: TripDays[] = [];
+				const newState: TripDay[] = [];
 				prev.forEach((_, index) => {
 					if (selectedDay === index) {
 						newState.push({
@@ -107,7 +86,7 @@ function ModifyTrip() {
 			console.log('NEW ACCOMMODATION ===================>', newlyAddedAccommodation);
 			bottomSheetRef.current?.close();
 			setTripDays((prev) => {
-				const newState: TripDays[] = [];
+				const newState: TripDay[] = [];
 				prev.forEach((_, index) => {
 					if (selectedDay === index) {
 						newState.push({
@@ -144,7 +123,7 @@ function ModifyTrip() {
 			console.log('NEW TRAVEL ==================>', newlyAddedTravel);
 			bottomSheetRef.current?.close();
 			setTripDays((prev) => {
-				const newState: TripDays[] = [];
+				const newState: TripDay[] = [];
 				prev.forEach((_, index) => {
 					if (selectedDay === index) {
 						newState.push({

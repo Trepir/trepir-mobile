@@ -150,15 +150,14 @@ function AuthNavigator() {
 	);
 }
 
-type Token = string | null;
-
 export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchemeName } */) {
-	const [isAuthenticated, setIsAuthenticated] = useState<Token>(null);
-	const token = useAppSelector((state) => state.auth.token);
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+	const user = useAppSelector((state) => state.user);
 
 	useEffect(() => {
-		setIsAuthenticated(token);
-	}, [token]);
+		if (user.uid.length > 0) setIsAuthenticated(true);
+		else setIsAuthenticated(false);
+	}, [user]);
 
 	if (isAuthenticated) {
 		return (
@@ -176,27 +175,3 @@ export default function Navigation(/* { colorScheme }: { colorScheme: ColorSchem
 		</NavigationContainer>
 	);
 }
-
-/* <BottomTab.Screen
-  name="TabOne"
-  component={TabOneScreen}
-  options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-    title: 'Tab One',
-    tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-    headerRight: () => (
-      <Pressable
-        onPress={() => navigation.navigate('Modal')}
-        style={({ pressed }) => ({
-          opacity: pressed ? 0.5 : 1,
-        })}
-      >
-        <FontAwesome
-          name="info-circle"
-          size={25}
-          color={Colors[colorScheme].text}
-          style={{ marginRight: 15 }}
-        />
-      </Pressable>
-    ),
-  })}
-/> */
