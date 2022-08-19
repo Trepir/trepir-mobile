@@ -1,4 +1,4 @@
-import { Text } from 'native-base';
+import { Box, Text, View } from 'native-base';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';

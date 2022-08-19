@@ -4,11 +4,12 @@ import {
 	GooglePlacesAutocompleteRef,
 } from 'react-native-google-places-autocomplete';
 import ApiKeys from '../../constants/ApiKeys';
+import Colors from '../../constants/Colors';
 
 type Props = {
 	// eslint-disable-next-line no-unused-vars
 	pressFunction: (data: any, details: any) => void;
-	queryType: 'establishment' | ['(cities)', '(regions)'];
+	queryType: 'establishment' | ['(cities)', '(regions)'] | '(regions)';
 	placeholder: string;
 };
 
@@ -19,7 +20,7 @@ function GooglePlacesInput({ pressFunction, queryType, placeholder }: Props) {
 			textInputProps={{
 				// leftIcon: { type: 'font-awesome', name: 'chevron-left' },
 				errorStyle: { color: 'red' },
-				placeholderTextColor: '#c1c1c1',
+				placeholderTextColor: '#a1a1a1',
 			}}
 			ref={GooglePlacesRef}
 			placeholder={placeholder}
@@ -33,13 +34,17 @@ function GooglePlacesInput({ pressFunction, queryType, placeholder }: Props) {
 			fetchDetails
 			styles={{
 				textInput: {
-					height: 38,
-					color: '#5d5d5d',
-					fontSize: 16,
-					borderColor: '#d6d3d1',
-					borderWidth: 1,
+					height: 45,
+					color: Colors.grey.dark,
+					fontSize: 18,
+					fontWeight: '400',
+					borderColor: Colors.primary.normal,
+					borderWidth: 2,
+					borderRadius: 12,
 				},
 			}}
+			disableScroll
+			isRowScrollable={false}
 		/>
 	);
 }

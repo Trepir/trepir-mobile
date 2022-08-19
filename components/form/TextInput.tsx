@@ -12,6 +12,7 @@ type Props = {
 	placeholder: string;
 	password?: boolean;
 	isRequired?: boolean;
+	errorMargin?: boolean;
 };
 
 function TextInput({
@@ -21,6 +22,7 @@ function TextInput({
 	placeholder,
 	password = false,
 	isRequired = true,
+	errorMargin = false,
 }: Props) {
 	return (
 		<>
@@ -47,7 +49,11 @@ function TextInput({
 					/>
 				)}
 			/>
-			{errors[name] && <Text color="error.600">This is required.</Text>}
+			{errors[name] && (
+				<Text color="error.600" mb={errorMargin ? 4 : 0}>
+					This is required.
+				</Text>
+			)}
 		</>
 	);
 }
@@ -55,6 +61,7 @@ function TextInput({
 TextInput.defaultProps = {
 	password: false,
 	isRequired: true,
+	errorMargin: false,
 };
 
 export default TextInput;

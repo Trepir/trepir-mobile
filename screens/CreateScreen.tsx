@@ -1,13 +1,15 @@
 import { View } from 'native-base';
 import React, { useState } from 'react';
-import { TabView, Route } from 'react-native-tab-view';
+import { TabView, Route, TabBar } from 'react-native-tab-view';
 import { useWindowDimensions } from 'react-native';
+import Constants from 'expo-constants';
 import Step1 from '../components/createTrip/Step1';
 import Step2 from '../components/createTrip/Step2';
 // import Step3 from '../components/createTrip/Step3';
 import { NewAccommodationState } from '../features/newAccommodation/newAccommodationSlice';
 import { NewTravelState } from '../features/newTravel/newTravelSlice';
 import Step3 from '../components/createTrip/Step3';
+import Colors from '../constants/Colors';
 
 export type newTripType = {
 	uid: string;
@@ -63,52 +65,31 @@ function CreateScreen() {
 		{ key: 'third', title: 'Activity' },
 	]);
 
+	const renderTabBar = (props) => (
+		<TabBar
+			{...props}
+			indicatorStyle={{ backgroundColor: 'white' }}
+			style={{ backgroundColor: Colors.primary.normal }}
+		/>
+	);
 	return (
-		<View flex={1}>
+		<View
+			flex={1}
+			bgColor={Colors.primary.normal}
+			style={{
+				paddingTop: Constants.statusBarHeight,
+			}}
+		>
 			<TabView
 				navigationState={{ index, routes }}
 				renderScene={renderScene}
 				onIndexChange={setIndex}
 				initialLayout={{ width: layout.width }}
-				// swipeEnabled={false}
+				swipeEnabled={false}
+				renderTabBar={renderTabBar}
 			/>
 		</View>
 	);
 }
 
 export default CreateScreen;
-
-/**
- * 			<Text>CreateScreen</Text>
-			<Pressable
-				py={5}
-				my={5}
-				bgColor="amber.300"
-				onPress={() => {
-					navigation.navigate('NewTravelModal');
-				}}
-			>
-				<Text>Add Travel Modal</Text>
-			</Pressable>
-			<Pressable
-				py={5}
-				my={5}
-				bgColor="amber.300"
-				onPress={() => {
-					navigation.navigate('NewAccommodationModal');
-				}}
-			>
-				<Text>Add Accommodation Modal</Text>
-			</Pressable>
-			<Pressable
-				py={5}
-				my={5}
-				bgColor="amber.300"
-				onPress={() => {
-					navigation.navigate('NewActivityModal');
-				}}
-			>
-				<Text>Add Activity Modal</Text>
-			</Pressable>
-
- */

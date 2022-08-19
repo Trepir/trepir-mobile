@@ -3,7 +3,7 @@ import RNDateTimePicker, {
 	DateTimePickerAndroid,
 } from '@react-native-community/datetimepicker';
 import { Box, Pressable, Text } from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 import { Control, Controller, FieldErrorsImpl } from 'react-hook-form';
 import { Platform, StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
@@ -29,6 +29,7 @@ function TimePickerInput({ name, control, errors, date, onChangeFunction }: Prop
 			borderRadius: 4,
 		},
 	});
+	const [isValid, setIsValid] = useState(false);
 	return (
 		<>
 			<Controller
@@ -37,7 +38,7 @@ function TimePickerInput({ name, control, errors, date, onChangeFunction }: Prop
 				rules={{
 					required: true,
 					validate: () => {
-						if (date.touched) return true;
+						if (isValid && date.touched) return true;
 						return false;
 					},
 				}}
@@ -53,8 +54,12 @@ function TimePickerInput({ name, control, errors, date, onChangeFunction }: Prop
 							<RNDateTimePicker
 								style={styles.timePicker}
 								value={date.value}
+								minimumDate={new Date(Date.now())}
 								accentColor={date.touched ? 'white' : Colors.primary.normal}
-								onChange={(e, newDate) => onChangeFunction(e, newDate!)}
+								onChange={(e, newDate) => {
+									setIsValid(true);
+									onChangeFunction(e, newDate!);
+								}}
 							/>
 						) : (
 							<Pressable
@@ -62,18 +67,23 @@ function TimePickerInput({ name, control, errors, date, onChangeFunction }: Prop
 									DateTimePickerAndroid.open({
 										value: date.value,
 										mode: 'date',
-										onChange: (eFromPicker, dateFromPicker) =>
-											onChangeFunction(eFromPicker, dateFromPicker!),
+										minimumDate: new Date(Date.now()),
+										onChange: (e, newDate) => {
+											setIsValid(true);
+											onChangeFunction(e, newDate!);
+										},
 									});
 								}}
 							>
-								<Text>{date.value.toLocaleString()}</Text>
+								<Text color={date.touched ? 'white' : ''}>
+									{date.value.toISOString().split('T')[0]}
+								</Text>
 							</Pressable>
 						)}
 					</Box>
 				)}
 			/>
-			{errors[name] && <Text color="error.600">This is required.</Text>}
+			{errors[name] && !isValid && <Text color="error.600">This is required.</Text>}
 		</>
 		// <Box
 		// 	px={4}

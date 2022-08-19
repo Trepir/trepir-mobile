@@ -89,7 +89,11 @@ function DDTravelType({
 					/>
 				)}
 			/>
-			{errors[name] && <Text color="error.600">This is required.</Text>}
+			{errors[name] && (
+				<Text color="error.600" mt={1}>
+					This is required.
+				</Text>
+			)}
 		</>
 	);
 }
