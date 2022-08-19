@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, Image, Pressable, Center, HStack } from 'native-base';
+import { Text, Pressable, HStack } from 'native-base';
 import React from 'react';
 import AddIcon from '../../assets/icons/AddIcon';
 import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
 
-function TopViewTrip({ title, callback }: { title: string; callback: () => void }) {
+function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () => void }) {
 	const navigation = useNavigation();
 
 	return (
@@ -20,7 +20,7 @@ function TopViewTrip({ title, callback }: { title: string; callback: () => void 
 		>
 			<Pressable
 				alignItems="center"
-				width="20%"
+				width="8%"
 				pt={1}
 				onPress={() => navigation.goBack()}
 				style={{ transform: [{ scaleX: -1 }] }}
@@ -28,23 +28,17 @@ function TopViewTrip({ title, callback }: { title: string; callback: () => void 
 				<Arrow size={13} color={Colors.white} />
 			</Pressable>
 			<Text
-				width="60%"
+				// width="70%"
 				color={Colors.white}
 				flexShrink={1}
-				fontSize="3xl"
+				fontSize="2xl"
 				fontWeight="bold"
 				isTruncated
 				textAlign="center"
 			>
 				{title}
 			</Text>
-			<Pressable
-				alignItems="center"
-				width="20%"
-				onPress={callback}
-				alignSelf="center"
-				rounded="3xl"
-			>
+			<Pressable alignItems="center" width="8%" onPress={callback} alignSelf="center" rounded="3xl">
 				<AddIcon size={35} color={Colors.primary.light} />
 			</Pressable>
 		</HStack>

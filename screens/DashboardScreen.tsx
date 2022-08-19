@@ -26,7 +26,7 @@ function DashboardScreen({ navigation }: RootTabScreenProps<'Dashboard'>) {
 	return (
 		<View flex={1} justifyContent="flex-start" flexDirection="column">
 			<TopView user={user} />
-			<View flex={1} backgroundColor={Colors.grey.offWhite}>
+			<View flex={1} zIndex={1} backgroundColor={Colors.grey.offWhite}>
 				<TripCarousel type="upcoming" />
 				<TripCarousel type="past" />
 			</View>
