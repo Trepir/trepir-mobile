@@ -1,4 +1,4 @@
-import { Text, Box, HStack, VStack, Divider, Image } from 'native-base';
+import { Text, Box, HStack, VStack, Image } from 'native-base';
 import React from 'react';
 import { Activity } from '../../types';
 
@@ -7,11 +7,12 @@ type Props = {
 };
 
 function ActivityCard({ activity }: Props) {
-	const { id, name, duration, description, time, rating, tags, imageUrl, locationId } = activity;
+	const { id, name, duration, description, time, rating, tags, imageUrl, location } = activity;
 	return (
-		<HStack width="72" bgColor="white" mr={4} borderRadius={12}>
+		<HStack width="100%" bgColor="white" borderRadius={18}>
 			<Box
-				width="2/5"
+				width={120}
+				height={120}
 				bgColor="gray.100"
 				alignItems="center"
 				justifyContent="center"
@@ -23,23 +24,23 @@ function ActivityCard({ activity }: Props) {
 						uri: imageUrl,
 					}}
 					alt="activity image"
-					width={150}
-					height={150}
+					width={120}
+					height={120}
 					borderRadius={12}
 				/>
 			</Box>
 
-			<VStack px={3} justifyContent="space-around" alignSelf="center">
-				<VStack justifyContent="center" alignItems="center">
-					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated noOfLines={2} mb={1}>
+			<VStack px={3} justifyContent="space-around">
+				<VStack>
+					<Text fontWeight="semibold" fontSize="lg" maxWidth="48" isTruncated noOfLines={2} mb={1}>
 						{name}
 					</Text>
-					<Divider mb={1} />
-					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
+
+					{/* <Text fontWeight="normal" fontSize="md" maxWidth="32" isTruncated>
 						{description}
-					</Text>
+					</Text> */}
 				</VStack>
-				<Text alignSelf="center">{id}</Text>
+				<Text fontSize="md">{location.city}</Text>
 			</VStack>
 		</HStack>
 	);
