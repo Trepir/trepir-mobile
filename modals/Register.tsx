@@ -9,8 +9,9 @@ import { useAppDispatch } from '../app/hooks';
 import ButtonCustom from '../components/ui/ButtonCustom';
 
 import TextInputForm from '../components/form/TextInput';
-import { storeNewAuth } from '../features/auth/authSlice';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
+import { fetchUser } from '../services/user';
+import { storeUser } from '../features/user/userSlice';
 
 export type RegisterFromControl = Control<
 	{
@@ -49,10 +50,30 @@ function Register({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	});
 
 	const onSubmit = async () => {
-		await save('user', '1');
-		dispatch(storeNewAuth({ token: '1' }));
-		// @ts-ignore
-		reference.current.dismiss();
+		const uidFromFirebase = '1';
+		await save('user', uidFromFirebase);
+		// PARSE INFO FROM FIREBASE INTO THE OBJECT USERINFO
+		// const userInfo = {
+		// 	firstName: '',
+		// 	lastName: '',
+		// 	displayName: '',
+		// 	email: '',
+		// 	uid: '',
+		// 	photoURL: '',
+		// 	emailVerified: true,
+		// };
+
+		// const user = signUp(userInfo);
+		// dispatch(storeUser(user));
+		const payload = await fetchUser(uidFromFirebase);
+		if (payload.data) {
+			dispatch(storeUser(payload.data));
+			// @ts-ignore
+			reference.current.dismiss();
+		} else {
+			// SHOW ERROR ON THE SCREEN FIXME
+			console.log('Register.tsx error:', payload.error);
+		}
 	};
 
 	const snapPoints = useMemo(() => ['50%', '90%'], []);

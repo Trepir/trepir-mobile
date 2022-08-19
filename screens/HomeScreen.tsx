@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, View, Text, Pressable, VStack } from 'native-base';
 import React, { useEffect, useRef } from 'react';
 
@@ -6,16 +5,17 @@ import * as SecureStore from 'expo-secure-store';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { Image, StyleSheet, Dimensions } from 'react-native';
 import { HomePageScreenProps } from '../types';
-import Login from '../navigation/Login';
+import Login from '../modals/Login';
+import Register from '../modals/Register';
 // @ts-ignore
 import img from '../assets/images/homescreen_image.png';
 import Logo from '../assets/icons/Logo';
 import LogoName from '../assets/icons/LogoName';
 import ButtonWide from '../components/ui/ButtonWide';
 import Colors from '../constants/Colors';
-import Register from '../navigation/Register';
 import { useAppDispatch } from '../app/hooks';
-import { storeNewAuth } from '../features/auth/authSlice';
+import { storeUser } from '../features/user/userSlice';
+import { fetchUser } from '../services/user';
 
 const { height } = Dimensions.get('window');
 
@@ -42,7 +42,17 @@ function HomeScreen({ navigation }: HomePageScreenProps<'HomeScreen'>) {
 		async function getUser() {
 			const result = await SecureStore.getItemAsync('user');
 			if (result) {
-				dispatch(storeNewAuth(result));
+				try {
+					const payload = await fetchUser(result);
+					if (payload.data) {
+						dispatch(storeUser(payload.data));
+					} else {
+						// SHOW ERROR ON THE SCREEN FIXME
+						console.log('HomeScreen.tsx error:', payload.error);
+					}
+				} catch (error) {
+					console.error(error);
+				}
 			}
 		}
 		getUser();

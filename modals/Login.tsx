@@ -1,16 +1,17 @@
 import { Box } from 'native-base';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Control, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as SecureStore from 'expo-secure-store';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch } from '../app/hooks';
 
 import ButtonCustom from '../components/ui/ButtonCustom';
 
 import TextInputForm from '../components/form/TextInput';
-import { storeNewAuth } from '../features/auth/authSlice';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
+import { fetchUser } from '../services/user';
+import { storeUser } from '../features/user/userSlice';
 
 export type LoginFromControl = Control<
 	{
@@ -48,18 +49,26 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 		},
 	});
 
-	const onSubmit = async (/* data: any */) => {
-		await save('user', '1');
-		dispatch(storeNewAuth('1'));
-		// @ts-ignore
-		reference.current.dismiss();
+	const onSubmit = async () => {
+		const uidFromFirebase = '1';
+		try {
+			console.log('hello');
+			await save('user', uidFromFirebase);
+			const payload = await fetchUser(uidFromFirebase);
+			if (payload.data) {
+				dispatch(storeUser(payload.data));
+				// @ts-ignore
+				reference.current.dismiss();
+			} else {
+				// SHOW ERROR ON THE SCREEN FIXME
+				console.log('Login.tsx error:', payload.error);
+			}
+		} catch (error) {
+			console.log('Login: ', error);
+		}
 	};
 
 	const snapPoints = useMemo(() => ['50%', '80%'], []);
-
-	// const handleSheetChanges = useCallback((index: number) => {
-	// 	console.log('handleSheetChanges', index);
-	// }, []);
 
 	return (
 		<BottomSheetModalProvider>
@@ -70,7 +79,6 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 				enablePanDownToClose
 				keyboardBehavior="fillParent"
 				handleHeight={1000}
-				// isVisible={isModelVisible}
 			>
 				<DismissKeyboard>
 					<KeyboardAvoidingView
