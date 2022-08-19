@@ -55,7 +55,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 	};
 
 	return (
-		<View flex={1} px={10}>
+		<View flex={1} px={10} bgColor={Colors.grey.offWhite}>
 			<Heading alignSelf="center" my={4} fontWeight="semibold">
 				Add yor Travels and Stays
 			</Heading>

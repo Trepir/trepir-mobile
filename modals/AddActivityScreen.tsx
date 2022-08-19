@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform } from 'react-native';
 
-import { Box, Divider, Heading, HStack, Text, View } from 'native-base';
+import { Box, Divider, Heading, HStack, ScrollView, Text, View } from 'native-base';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
@@ -20,6 +20,7 @@ import DropDown from '../components/form/DropDown';
 import { Location, RootTabScreenProps } from '../types';
 import { parseLocationDetails } from '../helpers/parseLocationDetails';
 import { ActivityTags } from '../constants/ActivityTags';
+import ApiKeys from '../constants/ApiKeys';
 
 // For ANDROID => READ THE DOCS
 // DateTimePickerAndroid.open(params: AndroidNativeProps)
@@ -36,6 +37,10 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 	const [timeEnd, setTimeEnd] = useState({
 		value: new Date(),
 		touched: false,
+	});
+	const [locationValidation, setLocationValidation] = useState({
+		touched: false,
+		valid: false,
 	});
 	const {
 		control,
@@ -56,20 +61,31 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 		},
 	});
 
+	const getLocationData = (_: any, details: GooglePlaceDetail) => {
+		const locationData = parseLocationDetails(details);
+		// @ts-ignore
+		const imgReference = details.photos[0].photo_reference;
+		// @ts-ignore
+		const imgWidth = details.photos[0].width;
+		const imgUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${imgWidth}&photoreference=${imgReference}&key=${ApiKeys.googleMapsAPIKey}`;
+
+		setValue('location', locationData, { shouldValidate: true });
+		setValue('imageUrl', imgUrl, { shouldValidate: true });
+	};
 	const onSubmit = (data: any) => {
 		dispatch(storeNewActivity({ uid: '1', id: '', ...data }));
 		navigation.goBack();
 	};
-
-	const getLocationData = (_: any, details: GooglePlaceDetail) => {
-		const locationData = parseLocationDetails(details);
-		setValue('location', locationData, { shouldValidate: true });
-		setValue('imageUrl', details.icon, { shouldValidate: true });
+	const submitFunction = () => {
+		if (!locationValidation.valid) {
+			setLocationValidation({ ...locationValidation, touched: true });
+		}
+		handleSubmit(onSubmit)();
 	};
 
 	return (
 		<DismissKeyboard>
-			<View flex={1} px="10">
+			<ScrollView flex={1} px="10" keyboardShouldPersistTaps="handled">
 				{/* WHEN THIS IS ACTIVE I HAVE TO TOP THE SCROLLING OF THE MODAL  */}
 				<HStack alignSelf="center" alignItems="center">
 					<GoogleIcon size={25} />
@@ -84,9 +100,12 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 						pressFunction={getLocationData}
 						queryType="establishment"
 					/>
+					{locationValidation.touched && !locationValidation.valid && (
+						<Text color="error.600">This is required.</Text>
+					)}
 				</View>
 
-				<View flex={1} mt="16">
+				<View flex={1} mt={locationValidation.touched && !locationValidation.valid ? 24 : 16}>
 					<Divider mb={2} />
 					<TextInputForm
 						name="name"
@@ -133,9 +152,9 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 						min={1}
 						max={3}
 					/>
-					<Box mt={8}>
+					<Box my={8}>
 						<ButtonCustom
-							pressFunction={handleSubmit(onSubmit)}
+							pressFunction={submitFunction}
 							text="Create Activity"
 							alignment="center"
 						/>
@@ -144,7 +163,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 					{/* Use a light status bar on iOS to account for the black space above the modal */}
 					<StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
 				</View>
-			</View>
+			</ScrollView>
 		</DismissKeyboard>
 	);
 }

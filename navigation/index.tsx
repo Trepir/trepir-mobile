@@ -72,6 +72,7 @@ function BottomTabNavigator() {
 				options={{
 					title: 'Create',
 					tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+					headerShown: false,
 				}}
 			/>
 
