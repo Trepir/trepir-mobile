@@ -23,6 +23,8 @@ const initialState: NewTravelState = {
 		locationName: '',
 		city: '',
 		googleId: null,
+		formattedAddress: '',
+		photoUrl: [],
 	},
 	destination: {
 		latitude: 0,
@@ -32,6 +34,8 @@ const initialState: NewTravelState = {
 		locationName: '',
 		city: '',
 		googleId: null,
+		formattedAddress: '',
+		photoUrl: [],
 	},
 	flightNum: null,
 };

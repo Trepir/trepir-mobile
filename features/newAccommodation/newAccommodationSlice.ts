@@ -21,6 +21,8 @@ const initialState: NewAccommodationState = {
 		locationName: '',
 		city: '',
 		googleId: null,
+		formattedAddress: '',
+		photoUrl: [],
 	},
 };
 
@@ -32,7 +34,7 @@ const newAAccommodationSlice = createSlice({
 			state: NewAccommodationState,
 			action: PayloadAction<NewAccommodationState>
 		) => {
-			console.log(action.payload);
+			console.log('NEW ACCOMMODATION STORED =>', action.payload);
 			// eslint-disable-next-line no-param-reassign
 			return { ...action.payload };
 		},

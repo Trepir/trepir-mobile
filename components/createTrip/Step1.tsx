@@ -1,12 +1,11 @@
 import { View, Box, Text } from 'native-base';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Platform } from 'react-native';
 import { GooglePlaceData, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
+import ApiKeys from '../../constants/ApiKeys';
 import Colors from '../../constants/Colors';
-import { parseLocationDetails } from '../../helpers/parseLocationDetails';
 import { newTripType } from '../../screens/CreateScreen';
-import { Location } from '../../types';
 import DateRangePicker from '../form/DateRangePicker';
 import TextInput from '../form/TextInput';
 import ButtonCustom from '../ui/ButtonCustom';
@@ -37,30 +36,32 @@ function Step1({ jumpTo, newTrip, setNewTrip }: Props) {
 		handleSubmit,
 		formState: { errors },
 		setValue,
-	} = useForm({
+	} = useForm<newTripType>({
 		defaultValues: {
 			name: '',
 			startDate: '',
 			endDate: '',
-			location: {
-				googlePlaceId: '',
-				latitude: 500,
-				longitude: 500,
-				photoUrl: '',
-				formattedAddress: '',
-				googleLocationName: '',
-			},
+			googleLocationName: '',
+			googlePlaceId: '',
+			latitude: 500,
+			longitude: 500,
+			photoUrl: '',
+			formattedAddress: '',
 		},
 	});
 
 	const assignLocation = (_: GooglePlaceData, details: GooglePlaceDetail) => {
-		// const locationData = parseLocationDetails(details);
-		console.log(details);
+		// @ts-ignore
+		const imgReference = details.photos[0].photo_reference;
+		// @ts-ignore
+		const imgWidth = details.photos[0].width;
+		const imgUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${imgWidth}&photoreference=${imgReference}&key=${ApiKeys.googleMapsAPIKey}`;
+
 		const locationData = {
 			googlePlaceId: details.place_id,
 			latitude: details.geometry.location.lat,
 			longitude: details.geometry.location.lng,
-			photoUrl: details.icon,
+			photoUrl: imgUrl,
 			formattedAddress: details.formatted_address,
 			googleLocationName: details.name,
 		};
@@ -68,7 +69,12 @@ function Step1({ jumpTo, newTrip, setNewTrip }: Props) {
 			touched: true,
 			valid: true,
 		});
-		setValue('location', locationData, { shouldValidate: true });
+		setValue('googlePlaceId', locationData.googlePlaceId, { shouldValidate: true });
+		setValue('latitude', locationData.latitude, { shouldValidate: true });
+		setValue('longitude', locationData.longitude, { shouldValidate: true });
+		setValue('photoUrl', locationData.photoUrl, { shouldValidate: true });
+		setValue('formattedAddress', locationData.formattedAddress, { shouldValidate: true });
+		setValue('googleLocationName', locationData.googleLocationName, { shouldValidate: true });
 	};
 
 	const onSubmit = (data: any) => {
@@ -83,13 +89,16 @@ function Step1({ jumpTo, newTrip, setNewTrip }: Props) {
 		if (!locationValidation.valid) {
 			setLocationValidation({ ...locationValidation, touched: true });
 		}
+		setValue('startDate', startDate, { shouldValidate: true });
+		setValue('endDate', endDate, { shouldValidate: true });
+
 		handleSubmit(onSubmit)();
 	};
 	return (
 		<DismissKeyboard>
 			<View flex={1} px={10} bgColor={Colors.grey.offWhite}>
 				<TextInput
-					name="Trip name"
+					name="name"
 					control={control}
 					errors={errors}
 					placeholder="Pick a name for your trip..."
