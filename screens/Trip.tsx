@@ -321,21 +321,21 @@ function Trip({ navigation }: TripStackScreenProps<'Trip'>) {
 
 	const styles = StyleSheet.create({
 		list: {
-			justifyContent: 'center',
-			alignItems: 'center',
+			// justifyContent: 'center',
+			// alignItems: 'center',
 		},
 	});
 	return (
 		<View flex={1} width="100%" alignItems="center" justifyContent="flex-start">
 			<TopViewTrip title="Barcelona with friends" callback={ModifyTrip} />
-			<View flex={1} width="100%" bgColor="transparent" py={3}>
+			<View flex={1} width="100%" bgColor="transparent">
 				<FlatList
 					contentContainerStyle={styles.list}
-					width="full"
+					width="100%"
 					data={days}
 					keyExtractor={(item) => item.date!}
 					renderItem={({ item }) => (
-						<View width="100%" m={1}>
+						<View width="100%" my={1}>
 							<HStack alignItems="center" justifyContent="center" py={1}>
 								<Heading alignSelf="center" fontWeight="semibold">
 									{item.date}
@@ -343,12 +343,12 @@ function Trip({ navigation }: TripStackScreenProps<'Trip'>) {
 								<Divider width="50%" mx="5" />
 							</HStack>
 							<FlatList
+								width="100%"
 								contentContainerStyle={styles.list}
-								width="full"
 								data={item.activities}
 								keyExtractor={(act) => act.id!}
 								renderItem={({ item }) => (
-									<View m={1}>
+									<View width="100%" m={1} alignItems="center">
 										<ActivityCard activity={item} />
 									</View>
 								)}

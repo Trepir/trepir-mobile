@@ -9,7 +9,7 @@ type Props = {
 function ActivityCard({ activity }: Props) {
 	const { id, name, duration, description, time, rating, tags, imageUrl, location } = activity;
 	return (
-		<HStack width="100%" bgColor="white" borderRadius={18}>
+		<HStack width="80%" bgColor="white" borderRadius={18}>
 			<Box
 				width={120}
 				height={120}
