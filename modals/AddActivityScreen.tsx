@@ -67,7 +67,6 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 		// @ts-ignore
 		const imgWidth = details.photos[0].width;
 		const imgUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${imgWidth}&photoreference=${imgReference}&key=${ApiKeys.googleMapsAPIKey}`;
-
 		setValue('location', locationData, { shouldValidate: true });
 		setValue('imageUrl', imgUrl, { shouldValidate: true });
 	};

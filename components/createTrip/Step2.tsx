@@ -25,14 +25,14 @@ type Props = {
 function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
-	const [travelEvents, setTravelEvents] = useState<NewTravelState[]>([]);
+	const [travels, setTravels] = useState<NewTravelState[]>([]);
 	const [accommodations, setAccommodations] = useState<NewAccommodationState[]>([]);
 	const newTravel = useAppSelector((state) => state.newTravel);
 	const newAccommodation = useAppSelector((state) => state.newAccommodation);
 
 	useEffect(() => {
 		if (newTravel.uid !== '') {
-			setTravelEvents([...travelEvents, newTravel]);
+			setTravels([...travels, newTravel]);
 			dispatch(clearTravelState());
 		}
 	}, [newTravel]);
@@ -52,13 +52,15 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 			uid: '123456789',
 			startDate: new Date(Date.parse(newTrip.startDate)),
 			endDate: new Date(Date.parse(newTrip.endDate)),
-			travel: travelEvents,
+			travelEvents: travels.map((formattedTravels) => ({
+				...formattedTravels,
+				departure: new Date(formattedTravels.departure),
+			})),
 			// eslint-disable-next-line object-shorthand
 			accommodation: accommodations,
 		};
-		console.log('ACCOMMODATION =>', formattedTrip.accommodation[0]);
 		console.log('TRAVEL =>', formattedTrip.travel[0]);
-		// await createTripApi(formattedTrip);
+		await createTripApi(formattedTrip);
 	};
 
 	/*
@@ -93,11 +95,11 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 			</HStack>
 			<Divider my={2} />
 
-			{travelEvents.length > 0 ? (
+			{travels.length > 0 ? (
 				<FlatList
 					maxHeight={160}
 					width="full"
-					data={travelEvents}
+					data={travels}
 					keyExtractor={(item) => item.origin.googleId!}
 					renderItem={({ item }) => <TravelCard key={item.origin.googleId} travel={item} />}
 					horizontal

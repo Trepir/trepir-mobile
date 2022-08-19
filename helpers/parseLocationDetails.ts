@@ -1,4 +1,5 @@
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
+import ApiKeys from '../constants/ApiKeys';
 import { Location } from '../types';
 
 export const parseLocationDetails = (details: GooglePlaceDetail) => {

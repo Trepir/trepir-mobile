@@ -3,7 +3,7 @@ import { Location } from '../../types';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
 export interface NewTravelState {
-	type: string;
+	travelType: string;
 	departure: number;
 	origin: Location;
 	destination: Location;
@@ -12,7 +12,7 @@ export interface NewTravelState {
 }
 
 const initialState: NewTravelState = {
-	type: '',
+	travelType: '',
 	departure: Date.now(),
 	uid: '',
 	origin: {
