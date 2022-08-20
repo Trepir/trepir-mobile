@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Text, Pressable, HStack } from 'native-base';
 import React from 'react';
+import Constants from 'expo-constants';
 import AddIcon from '../../assets/icons/AddIcon';
 import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
@@ -15,13 +16,12 @@ function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () 
 			alignItems="center"
 			backgroundColor={Colors.primary.dark}
 			width="100%"
-			pt={16}
+			pt={Constants.statusBarHeight + 10}
 			pb={4}
 		>
 			<Pressable
 				alignItems="center"
 				width="8%"
-				pt={1}
 				onPress={() => navigation.goBack()}
 				style={{ transform: [{ scaleX: -1 }] }}
 			>
@@ -39,7 +39,7 @@ function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () 
 				{title}
 			</Text>
 			<Pressable alignItems="center" width="8%" onPress={callback} alignSelf="center" rounded="3xl">
-				<AddIcon size={35} color={Colors.primary.light} />
+				<AddIcon size={36} color={Colors.primary.light} />
 			</Pressable>
 		</HStack>
 	);

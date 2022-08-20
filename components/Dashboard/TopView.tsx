@@ -1,6 +1,7 @@
 import { Text, Image, HStack } from 'native-base';
 import React from 'react';
 import * as SecureStore from 'expo-secure-store';
+import Constants from 'expo-constants';
 import { useAppDispatch } from '../../app/hooks';
 import Colors from '../../constants/Colors';
 import CogMenu from './CogMenu';
@@ -26,11 +27,11 @@ function TopView({ user }: { user: UserState }) {
 			alignItems="center"
 			backgroundColor={Colors.primary.dark}
 			width="100%"
-			pt={16}
+			pt={Constants.statusBarHeight + 10}
 			pb={3}
 			pr={2}
 			shadow={3}
-			zIndex={2}
+			zIndex={3}
 		>
 			{user.photoUrl.length > 0 && (
 				<Image
