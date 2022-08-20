@@ -3,6 +3,10 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../../constants/Colors';
 import Arrow from '../../assets/icons/Arrow';
+import { TripBasicState } from '../../types';
+import { fetchTrip } from '../../services/trip';
+import { useAppDispatch } from '../../app/hooks';
+import { storeCurrentTrip } from '../../features/trip/currentTripSlice';
 
 type Trip = {
 	id: number;
@@ -12,25 +16,43 @@ type Trip = {
 	photo: string;
 };
 
-function TripItem({ trip }: { trip: Trip }) {
-	const { name, startDate, endDate, photo } = trip;
+function TripItem({ trip }: { trip: TripBasicState }) {
+	const { id } = trip;
+	const { name } = trip;
+	// const startDate = trip.startDate.split('T')[0];
+	const startDate = new Date (trip.startDate).toDateString().slice(4);
+	const endDate = new Date (trip.endDate).toDateString().slice(4);
+	// const startDate = new Date (trip.startDate).toLocaleString('en-GB');
+	// const endDate = trip.endDate.split('T')[0];
+	const { photoUrl } = trip;
+	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
 	return (
 		<Pressable
 			borderRadius={18}
 			backgroundColor={Colors.white}
 			width={350}
+			// height={216}
 			p={2}
 			m={2}
 			shadow={2}
-			onPress={() => {
-				navigation.navigate('TripStack',);
+			onPress={async () => {
+				try {
+					const fetchedTrip = await fetchTrip(id);
+					if (fetchedTrip.data) {
+						dispatch(storeCurrentTrip(fetchedTrip.data));
+						// console.log('trip that I save', fetchedTrip.data);
+						navigation.navigate('TripStack' );
+					}
+				} catch (error) {
+					console.error(error);
+				}
 			}}
 		>
 			<VStack>
 				<Image
 					source={{
-						uri: photo,
+						uri: photoUrl,
 					}}
 					alt="trip"
 					width="100%"
@@ -43,7 +65,7 @@ function TripItem({ trip }: { trip: Trip }) {
 							{name}
 						</Text>
 						<Text>
-							{startDate} - {endDate}
+							{startDate} -> {endDate}
 						</Text>
 					</VStack>
 					<Arrow size={11} />

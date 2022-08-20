@@ -143,7 +143,7 @@ export class Activity {
 
 	rating?: number | null;
 
-	tags: Tag;
+	tags: Tag[];
 
 	location: Location;
 
@@ -229,7 +229,7 @@ export type Trip = {
 	formattedAddress: string;
 	googleLocationName: string;
 	photoUrl: string;
-	tripDays: TripDay[];
+	tripDay: TripDay[];
 	favouriteActivities: Activity[];
 };
 

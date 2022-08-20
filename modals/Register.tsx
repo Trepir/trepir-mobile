@@ -12,6 +12,8 @@ import TextInputForm from '../components/form/TextInput';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
 import { fetchUser } from '../services/user';
 import { storeUser } from '../features/user/userSlice';
+import { storeArrayTrip } from '../features/user/tripArraySlice';
+import { storeLikedActivities } from '../features/user/likedActivitiesSlice';
 
 export type RegisterFromControl = Control<
 	{
@@ -52,22 +54,11 @@ function Register({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	const onSubmit = async () => {
 		const uidFromFirebase = '2';
 		await save('user', uidFromFirebase);
-		// PARSE INFO FROM FIREBASE INTO THE OBJECT USERINFO
-		// const userInfo = {
-		// 	firstName: '',
-		// 	lastName: '',
-		// 	displayName: '',
-		// 	email: '',
-		// 	uid: '',
-		// 	photoURL: '',
-		// 	emailVerified: true,
-		// };
-
-		// const user = signUp(userInfo);
-		// dispatch(storeUser(user));
 		const payload = await fetchUser(uidFromFirebase);
 		if (payload.data) {
 			dispatch(storeUser(payload.data));
+			dispatch(storeArrayTrip(payload.data.trips));
+			dispatch(storeLikedActivities(payload.data.favoriteActivities));
 			// @ts-ignore
 			reference.current.dismiss();
 		} else {

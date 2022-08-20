@@ -12,6 +12,8 @@ import TextInputForm from '../components/form/TextInput';
 import { DismissKeyboard } from '../components/utils/DismissKeyboard';
 import { fetchUser } from '../services/user';
 import { storeUser } from '../features/user/userSlice';
+import { storeArrayTrip } from '../features/user/tripArraySlice';
+import { storeLikedActivities } from '../features/user/likedActivitiesSlice';
 
 export type LoginFromControl = Control<
 	{
@@ -57,6 +59,8 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 			const payload = await fetchUser(uidFromFirebase);
 			if (payload.data) {
 				dispatch(storeUser(payload.data));
+				dispatch(storeArrayTrip(payload.data.trips));
+				dispatch(storeLikedActivities(payload.data.favoriteActivities));
 				// @ts-ignore
 				reference.current.dismiss();
 			} else {

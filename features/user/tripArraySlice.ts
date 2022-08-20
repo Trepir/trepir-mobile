@@ -9,7 +9,7 @@ const tripArraySlice = createSlice({
 	reducers: {
 		storeArrayTrip: (state: TripBasicState[], action: PayloadAction<TripBasicState[]>) => {
 			console.log('Payload: ', action.payload);
-			return { ...action.payload };
+			return [...action.payload];
 		},
 		clearArrayTrip: () => initialState,
 	},

@@ -16,6 +16,8 @@ import Colors from '../constants/Colors';
 import { useAppDispatch } from '../app/hooks';
 import { storeUser } from '../features/user/userSlice';
 import { fetchUser } from '../services/user';
+import { storeArrayTrip } from '../features/user/tripArraySlice';
+import { storeLikedActivities } from '../features/user/likedActivitiesSlice';
 
 const { height } = Dimensions.get('window');
 
@@ -46,6 +48,8 @@ function HomeScreen({ navigation }: HomePageScreenProps<'HomeScreen'>) {
 					const payload = await fetchUser(result);
 					if (payload.data) {
 						dispatch(storeUser(payload.data));
+						dispatch(storeArrayTrip(payload.data.trips));
+						dispatch(storeLikedActivities(payload.data.favoriteActivities));
 					} else {
 						// SHOW ERROR ON THE SCREEN FIXME
 						console.log('HomeScreen.tsx error:', payload.error);

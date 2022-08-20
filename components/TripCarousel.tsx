@@ -3,29 +3,22 @@ import { View, Text, ScrollView } from 'native-base';
 import TripItem from './ui/TripItem';
 // import { useAppDispatch } from '../app/hooks';
 import EmptyList from './createTrip/EmptyList';
+import { TripBasicState } from '../types';
 
 type CarouselProps = {
-	type: 'upcoming' | 'past' | 'favorites';
+	type: 'upcoming' | 'past' | 'favorites' | 'current';
+	trips: TripBasicState[];
 };
 type Trip = {
 	id: number;
-	type: 'upcoming' | 'past' | 'favorites';
+	type: 'upcoming' | 'past' | 'favorites' | 'current';
 	name: string;
 	startDate: string;
 	endDate: string;
 	photo: string;
 };
 
-function TripCarousel({ type }: CarouselProps) {
-	// const dispatch = useAppDispatch();
-	// TRIPS STORED IN REDUX, THIS FUNCTION GETS THE TRIPS AND SETS THE STATE
-	// useEffect(() => {
-	//   const trip: Trip = dispatch(hereWeGetTheTrip);
-	//   setPhoto(trip.photo);
-	//   setUserName(trip.name);
-	//   setStartDate(trip.startDate);
-	//   setEndDate(trip.endDate);
-	// }, []);
+function TripCarousel({ type, trips }: CarouselProps) {
 	const Upcoming: Trip[] = [
 		{
 			id: 0,
@@ -78,28 +71,29 @@ function TripCarousel({ type }: CarouselProps) {
 
 	let title: string;
 	let empty: string;
-	let trips: Trip[];
+	// let trips: Trip[];
 
 	switch (type) {
 		case 'upcoming':
 			title = 'Upcoming trips';
 			empty = 'You have no upcoming trips, create one!';
-			trips = Upcoming;
+			break;
+		case 'current':
+			title = 'Current trip';
+			empty = 'You have no current trip.';
 			break;
 		case 'past':
 			title = 'Past trips';
 			empty = "You didn't completed any trips on the app yet!";
-			trips = Past;
 			break;
 		default:
 			title = 'Favorites';
 			empty = 'Favorite trips to save them here!';
-			trips = Upcoming;
 	}
 
 	return (
 		<View>
-			<Text paddingX={6} paddingY={2} fontSize="2xl">
+			<Text paddingX={6} mt={4} fontSize="2xl">
 				{title}
 			</Text>
 			{trips.length > 0 ? (
