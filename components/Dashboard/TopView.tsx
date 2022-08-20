@@ -32,15 +32,18 @@ function TopView({ user }: { user: UserState }) {
 			shadow={3}
 			zIndex={2}
 		>
-			<Image
-				source={{
-					uri: user.photoUrl,
-				}}
-				alt="Danny DeVito"
-				width={60}
-				height={60}
-				borderRadius={50}
-			/>
+			{user.photoUrl.length > 0 && (
+				<Image
+					source={{
+						uri: user.photoUrl,
+					}}
+					alt="Danny DeVito"
+					width={60}
+					height={60}
+					borderRadius={50}
+				/>
+			)}
+
 			<Text
 				color={Colors.white}
 				noOfLines={2}

@@ -24,7 +24,7 @@ function TripItem({ trip }: { trip: Trip }) {
 			m={2}
 			shadow={2}
 			onPress={() => {
-				navigation.navigate('TripStack');
+				navigation.navigate('TripStack',);
 			}}
 		>
 			<VStack>

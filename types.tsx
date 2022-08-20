@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 /**
  * Learn more about using TypeScript with React Navigation:
  * https://reactnavigation.org/docs/typescript/
@@ -115,30 +116,46 @@ export class Location {
 
 	googleId: string | null;
 }
-export type Activity = {
-	id?: string;
-	uid?: string;
-	name: string;
-	duration: number;
-	description: string;
-	rating?: number | null;
-	tags: Tag[];
-	location: Location;
-	imageUrl: string;
-	time?: Date;
-};
 
-export type UserFromBackend = {
-	createdAt: string;
-	firstName: string;
-	lastName: string;
-	email: string;
-	displayName: string;
-	photoUrl: string;
-	emailVerified: boolean;
-};
+export class Activity {
+	constructor() {
+		this.id = '';
+		this.uid = '';
+		this.name = '';
+		this.duration = 0;
+		this.description = '';
+		this.rating = 0;
+		this.tags = 'Landmark';
+		this.location = new Location();
+		this.imageUrl = '';
+		this.time = new Date();
+	}
+
+	id?: string;
+
+	uid?: string;
+
+	name: string;
+
+	duration: number;
+
+	description: string;
+
+	rating?: number | null;
+
+	tags: Tag;
+
+	location: Location;
+
+	imageUrl: string;
+
+	time?: Date;
+}
+
+// USER TYPES -----------------------------------------------------------------------------------------------------------
 
 export type User = {
+	uid: string;
 	createdAt: string;
 	firstName: string;
 	lastName: string;
@@ -150,8 +167,7 @@ export type User = {
 	trips: [];
 };
 
-export type UserState = {
-	uid: string;
+export type UserFromBackend = {
 	createdAt: string;
 	firstName: string;
 	lastName: string;
@@ -159,7 +175,11 @@ export type UserState = {
 	email: string;
 	photoUrl: string;
 	emailVerified: boolean;
+	favoriteActivities: Activity[];
+	trips: [];
 };
+
+// TRIP TYPES -----------------------------------------------------------------------------------------------------------
 
 export type DayAct = {
 	id: string;
@@ -182,6 +202,20 @@ export type TripDay = {
 	tripDayActivities: DayAct[];
 };
 
+export type TripForPost = {
+	name: string;
+	startDate: string;
+	endDate: string;
+	googlePlaceId: string;
+	latitude: number;
+	longitude: number;
+	photoUrl: string;
+	formattedAddress: string;
+	googleLocationName: string;
+	travel: NewTravelState | null;
+	accommodation: NewAccommodationState | null;
+};
+
 export type Trip = {
 	id: string;
 	createdAt: string;
@@ -190,4 +224,39 @@ export type Trip = {
 	endDate: string;
 	name: string;
 	googlePlaceId: string;
+	latitude: number;
+	longitude: number;
+	formattedAddress: string;
+	googleLocationName: string;
+	photoUrl: string;
+	tripDays: TripDay[];
+	favouriteActivities: Activity[];
+};
+
+// STATES TYPES -----------------------------------------------------------------------------------------------------------
+
+export type UserState = {
+	uid: string;
+	createdAt: string;
+	firstName: string;
+	lastName: string;
+	displayName: string;
+	email: string;
+	photoUrl: string;
+	emailVerified: boolean;
+};
+
+export type TripBasicState = {
+	id: string;
+	createdAt: string;
+	userId: string;
+	startDate: string;
+	endDate: string;
+	name: string;
+	googlePlaceId: string;
+	latitude: number;
+	longitude: number;
+	formattedAddress: string;
+	googleLocationName: string;
+	photoUrl: string;
 };

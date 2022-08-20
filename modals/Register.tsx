@@ -50,7 +50,7 @@ function Register({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	});
 
 	const onSubmit = async () => {
-		const uidFromFirebase = '1';
+		const uidFromFirebase = '2';
 		await save('user', uidFromFirebase);
 		// PARSE INFO FROM FIREBASE INTO THE OBJECT USERINFO
 		// const userInfo = {
