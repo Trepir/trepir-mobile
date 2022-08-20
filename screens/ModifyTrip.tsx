@@ -14,7 +14,7 @@ import PickEventBS from '../components/modifyTrip/PickEventBS';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTravelState, NewTravelState } from '../features/newTravel/newTravelSlice';
 import { clearActivityState } from '../features/newActivity/newActivitySlice';
-import { TripDay, DayAct } from '../types';
+import { TripDay, DayAct, Activity } from '../types';
 import AddIcon from '../assets/icons/AddIcon';
 import EmptyList from '../components/createTrip/EmptyList';
 
@@ -41,49 +41,52 @@ function ModifyTrip() {
 	const newlyAddedTravel = useAppSelector((state) => state.newTravel);
 
 	const bottomSheetRef = useRef<BottomSheet>(null);
+
+	const addActivityToDay = (activityAdded: Activity) => {
+		bottomSheetRef.current?.close();
+		setTripDays((prev) => {
+			const newState: TripDay[] = [];
+			prev.forEach((_, index) => {
+				if (selectedDay === index) {
+					newState.push({
+						id: prev[index].id,
+						dayIndex: prev[index].dayIndex,
+						tripId: prev[index].tripId,
+						tripDayActivities: [
+							...prev[index].tripDayActivities,
+							{
+								id: activityAdded.location.googleId!,
+								tripDayId: 'cl6z69iop00104dbsi2rg4i3x',
+								order: 0,
+								dayActivityId: 'cl6z69iq300354dbsso8a6nmx',
+								accommodationId: null,
+								travelEventId: null,
+								accommodation: null,
+								travel: null,
+								dayActivity: {
+									id: 'cl6z69iq300344dbs3q75b9ft80',
+									activity: activityAdded,
+								},
+							},
+						],
+					});
+				} else {
+					newState.push(prev[index]);
+				}
+			});
+			return newState;
+		});
+		setSelectedDay('');
+	};
+
 	useEffect(() => {
 		if (newlyAddedActivity.uid !== '') {
-			console.log('NEW ACTIVITY ==================>', newlyAddedActivity);
-			bottomSheetRef.current?.close();
-			setTripDays((prev) => {
-				const newState: TripDay[] = [];
-				prev.forEach((_, index) => {
-					if (selectedDay === index) {
-						newState.push({
-							id: prev[index].id,
-							dayIndex: prev[index].dayIndex,
-							tripId: prev[index].tripId,
-							tripDayActivities: [
-								...prev[index].tripDayActivities,
-								{
-									id: newlyAddedActivity.location.googleId!,
-									tripDayId: 'cl6z69iop00104dbsi2rg4i3x',
-									order: 0,
-									dayActivityId: 'cl6z69iq300354dbsso8a6nmx',
-									accommodationId: null,
-									travelEventId: null,
-									accommodation: null,
-									travel: null,
-									dayActivity: {
-										id: 'cl6z69iq300344dbs3q75b9ft80',
-										activity: newlyAddedActivity,
-									},
-								},
-							],
-						});
-					} else {
-						newState.push(prev[index]);
-					}
-				});
-				return newState;
-			});
-			setSelectedDay('');
+			addActivityToDay(newlyAddedActivity);
 			dispatch(clearActivityState());
 		}
 	}, [newlyAddedActivity]);
 	useEffect(() => {
 		if (newlyAddedAccommodation.uid !== '') {
-			console.log('NEW ACCOMMODATION ===================>', newlyAddedAccommodation);
 			bottomSheetRef.current?.close();
 			setTripDays((prev) => {
 				const newState: TripDay[] = [];
@@ -210,7 +213,7 @@ function ModifyTrip() {
 					</View>
 				))}
 			</NestableScrollContainer>
-			<PickEventBS bottomSheetRef={bottomSheetRef} />
+			<PickEventBS bottomSheetRef={bottomSheetRef} addActivityToDay={addActivityToDay} />
 		</View>
 	);
 }

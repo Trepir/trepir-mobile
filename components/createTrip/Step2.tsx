@@ -59,7 +59,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 			// eslint-disable-next-line object-shorthand
 			accommodation: accommodations,
 		};
-		console.log('TRAVEL =>', formattedTrip.travel[0]);
+		console.log('TRAVEL =>', formattedTrip.travelEvents[0]);
 		await createTripApi(formattedTrip);
 	};
 
