@@ -1,8 +1,9 @@
-import { Box, Text, View } from 'native-base';
+import { Text } from 'native-base';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { DateData, Theme } from 'react-native-calendars/src/types';
+import { useAppSelector } from '../../app/hooks';
 import Colors from '../../constants/Colors';
 import { generateDateRange } from '../../helpers/generateDayRange';
 import InputLabel from '../ui/InputLabel';
@@ -45,6 +46,8 @@ function DateRangePicker({ name, startDate, setStartDate, setEndDate, isValid }:
 	const [dateToggle, setDateToggle] = useState(true);
 	const [dateRange, setDateRange] = useState({});
 
+	const { startingDate, endingDate } = useAppSelector((state) => state.datesValidation);
+
 	const selectDay = (day: DateData) => {
 		console.log(day);
 		if (dateToggle) {
@@ -69,7 +72,10 @@ function DateRangePicker({ name, startDate, setStartDate, setEndDate, isValid }:
 				style={styles.calendar}
 				theme={calendarTheme}
 				initialDate={new Date(Date.now()).toISOString().split('T')[0]}
-				minDate={new Date(Date.now()).toISOString().split('T')[0]}
+				minDate={
+					startingDate === '' ? new Date(Date.now()).toISOString().split('T')[0] : startingDate
+				}
+				maxDate={endingDate === '' ? '' : endingDate}
 				onDayPress={(day) => selectDay(day)}
 				markingType="period"
 				markedDates={dateRange}

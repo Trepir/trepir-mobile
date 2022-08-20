@@ -10,6 +10,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 
+import { Text } from 'native-base';
+import Constants from 'expo-constants';
+import { Platform } from 'expo-modules-core';
 import CreateScreen from '../screens/CreateScreen';
 import DashboardScreen from '../screens/DashboardScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
@@ -28,16 +31,13 @@ import AddAccomScreen from '../modals/AddAccomScreen';
 import { useAppSelector } from '../app/hooks';
 import Trip from '../screens/Trip';
 import ModifyTrip from '../screens/ModifyTrip';
+import AddIcon from '../assets/icons/AddIcon';
+import SuitcaseIcon from '../assets/icons/SuitcaseIcon';
+import CompassIcon from '../assets/icons/CompassIcon';
+import Colors from '../constants/Colors';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-// JUST AN ICON THAT WE ARE GONNA OVERRIDE
-function TabBarIcon(props: {
-	name: React.ComponentProps<typeof FontAwesome>['name'];
-	color: string;
-}) {
-	return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-}
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -55,6 +55,11 @@ function BottomTabNavigator() {
 			initialRouteName="Dashboard"
 			screenOptions={{
 				tabBarActiveTintColor: 'black',
+				tabBarStyle: {
+					height: Platform.OS === 'ios' ? 85 : 65,
+					paddingBottom: Platform.OS === 'ios' ? 28 : 10,
+					paddingTop: 10,
+				},
 			}}
 		>
 			<BottomTab.Screen
@@ -63,7 +68,14 @@ function BottomTabNavigator() {
 				options={() => ({
 					title: 'Dashboard',
 					headerShown: false,
-					tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+					tabBarIcon: ({ focused }) => (
+						<SuitcaseIcon color={focused ? Colors.primary.normal : Colors.grey.medium} size={32} />
+					),
+					tabBarLabel: ({ focused }) => (
+						<Text color={focused ? Colors.primary.normal : Colors.grey.medium} fontSize="xs">
+							Dashboard
+						</Text>
+					),
 				})}
 			/>
 			<BottomTab.Screen
@@ -71,7 +83,14 @@ function BottomTabNavigator() {
 				component={CreateScreen}
 				options={{
 					title: 'Create',
-					tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+					tabBarIcon: ({ focused }) => (
+						<AddIcon color={focused ? Colors.primary.normal : Colors.grey.medium} size={34} />
+					),
+					tabBarLabel: ({ focused }) => (
+						<Text color={focused ? Colors.primary.normal : Colors.grey.medium} fontSize="xs">
+							Create
+						</Text>
+					),
 					headerShown: false,
 				}}
 			/>
@@ -82,7 +101,14 @@ function BottomTabNavigator() {
 				options={{
 					title: 'Discover',
 					headerShown: false,
-					tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+					tabBarIcon: ({ focused }) => (
+						<CompassIcon color={focused ? Colors.primary.normal : Colors.grey.medium} size={28} />
+					),
+					tabBarLabel: ({ focused }) => (
+						<Text color={focused ? Colors.primary.normal : Colors.grey.medium} fontSize="xs">
+							Discover
+						</Text>
+					),
 				}}
 			/>
 		</BottomTab.Navigator>

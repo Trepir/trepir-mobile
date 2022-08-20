@@ -8,10 +8,10 @@ type Props = {
 };
 
 function TravelCard({ travel }: Props) {
-	const { type, origin, destination, departure } = travel;
+	const { travelType, origin, destination, departure } = travel;
 	const parsedDate = new Date(departure).toISOString().split('T')[0];
 	return (
-		<HStack height="5/6" width="72" bgColor="white" mr={4} borderRadius={12}>
+		<HStack height="5/6" width="72" bgColor="white" borderRadius={12}>
 			<Box
 				width="2/5"
 				bgColor="gray.100"
@@ -20,7 +20,7 @@ function TravelCard({ travel }: Props) {
 				m={2}
 				borderRadius={12}
 			>
-				<ConditionalTravelIcon type={type} size="80%" color="#c1c1c1" />
+				<ConditionalTravelIcon type={travelType} size="80%" color="#c1c1c1" />
 			</Box>
 
 			<VStack px={3} justifyContent="space-around" alignSelf="center">

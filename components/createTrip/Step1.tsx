@@ -3,8 +3,10 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Platform } from 'react-native';
 import { GooglePlaceData, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
+import { useAppDispatch } from '../../app/hooks';
 import ApiKeys from '../../constants/ApiKeys';
 import Colors from '../../constants/Colors';
+import { addDates } from '../../features/createTripValidation/CTValidationSlice';
 import { newTripType } from '../../screens/CreateScreen';
 import DateRangePicker from '../form/DateRangePicker';
 import TextInput from '../form/TextInput';
@@ -30,6 +32,8 @@ function Step1({ jumpTo, newTrip, setNewTrip }: Props) {
 		touched: false,
 		valid: false,
 	});
+
+	const dispatch = useAppDispatch();
 
 	const {
 		control,
@@ -91,12 +95,12 @@ function Step1({ jumpTo, newTrip, setNewTrip }: Props) {
 		}
 		setValue('startDate', startDate, { shouldValidate: true });
 		setValue('endDate', endDate, { shouldValidate: true });
-
+		dispatch(addDates({ startingDate: startDate, endingDate: endDate }));
 		handleSubmit(onSubmit)();
 	};
 	return (
 		<DismissKeyboard>
-			<View flex={1} px={10} bgColor={Colors.grey.offWhite}>
+			<View flex={1} px={10} pt={1} bgColor={Colors.grey.offWhite}>
 				<TextInput
 					name="name"
 					control={control}

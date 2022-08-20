@@ -6,6 +6,7 @@ import { Box, Pressable, Text } from 'native-base';
 import React, { useState } from 'react';
 import { Control, Controller, FieldErrorsImpl } from 'react-hook-form';
 import { Platform, StyleSheet } from 'react-native';
+import { useAppSelector } from '../../app/hooks';
 import Colors from '../../constants/Colors';
 
 type Props = {
@@ -29,6 +30,9 @@ function TimePickerInput({ name, control, errors, date, onChangeFunction }: Prop
 			borderRadius: 4,
 		},
 	});
+
+	const { startingDate, endingDate } = useAppSelector((state) => state.datesValidation);
+
 	const [isValid, setIsValid] = useState(false);
 	return (
 		<>
@@ -54,7 +58,8 @@ function TimePickerInput({ name, control, errors, date, onChangeFunction }: Prop
 							<RNDateTimePicker
 								style={styles.timePicker}
 								value={date.value}
-								minimumDate={new Date(Date.now())}
+								minimumDate={startingDate === '' ? new Date(Date.now()) : new Date(startingDate)}
+								maximumDate={endingDate === '' ? undefined : new Date(endingDate)}
 								accentColor={date.touched ? 'white' : Colors.primary.normal}
 								onChange={(e, newDate) => {
 									setIsValid(true);
