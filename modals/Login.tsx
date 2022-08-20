@@ -50,7 +50,7 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	});
 
 	const onSubmit = async () => {
-		const uidFromFirebase = '1';
+		const uidFromFirebase = '2';
 		try {
 			console.log('hello');
 			await save('user', uidFromFirebase);

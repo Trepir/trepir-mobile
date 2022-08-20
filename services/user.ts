@@ -1,6 +1,6 @@
-import { UserFromBackend, UserState } from '../types';
+import { UserFromBackend, User, UserState } from '../types';
 
-export const fetchUser = async (id: string): Promise<{ data: UserState | null; error: any }> => {
+export const fetchUser = async (id: string): Promise<{ data: User | null; error: any }> => {
 	try {
 		const data = await fetch('https://trepir.herokuapp.com/user/signin', {
 			method: 'POST',
@@ -12,7 +12,7 @@ export const fetchUser = async (id: string): Promise<{ data: UserState | null; e
 			}),
 		});
 		const user: UserFromBackend = await data.json();
-		const returnUser: UserState = {
+		const returnUser: User = {
 			...user,
 			uid: id,
 		};
