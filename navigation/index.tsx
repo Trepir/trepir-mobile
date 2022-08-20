@@ -12,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Text } from 'native-base';
 import Constants from 'expo-constants';
+import { Platform } from 'expo-modules-core';
 import CreateScreen from '../screens/CreateScreen';
 import DashboardScreen from '../screens/DashboardScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
@@ -34,17 +35,9 @@ import AddIcon from '../assets/icons/AddIcon';
 import SuitcaseIcon from '../assets/icons/SuitcaseIcon';
 import CompassIcon from '../assets/icons/CompassIcon';
 import Colors from '../constants/Colors';
-import { Platform } from 'expo-modules-core';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-// JUST AN ICON THAT WE ARE GONNA OVERRIDE
-function TabBarIcon(props: {
-	name: React.ComponentProps<typeof FontAwesome>['name'];
-	color: string;
-}) {
-	return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-}
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
