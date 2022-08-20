@@ -4,6 +4,9 @@ import newActivityReducer from '../features/newActivity/newActivitySlice';
 import userReducer from '../features/user/userSlice';
 import newAccommodationReducer from '../features/newAccommodation/newAccommodationSlice';
 import newTravelReducer from '../features/newTravel/newTravelSlice';
+import currentTripReducer from '../features/trip/currentTripSlice';
+import tripArrayReducer from '../features/user/tripArraySlice';
+import likedActivitiesReducer from '../features/user/likedActivitiesSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -12,6 +15,9 @@ export const store = configureStore({
 		user: userReducer,
 		newAccommodation: newAccommodationReducer,
 		newTravel: newTravelReducer,
+		currentTrip: currentTripReducer,
+		tripArray: tripArrayReducer,
+		likedActivities: likedActivitiesReducer,
 	},
 });
 
