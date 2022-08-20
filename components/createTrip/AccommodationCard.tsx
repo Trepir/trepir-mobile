@@ -13,7 +13,7 @@ function AccommodationCard({ accommodation }: Props) {
 	const parsedStartDate = new Date(startDate).toISOString().split('T')[0].replaceAll('-', '/');
 	const parsedEndDate = new Date(endDate).toISOString().split('T')[0].replaceAll('-', '/');
 	return (
-		<HStack height="5/6" width="72" bgColor="white" mr={4} rounded="md">
+		<HStack height="5/6" width="72" bgColor="white" rounded="md">
 			<Box
 				width="2/5"
 				height="90%"

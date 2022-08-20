@@ -64,10 +64,10 @@ function NumberInput({
 							onChangeText={(text) => {
 								if (text.length <= 1) {
 									setDuration(text);
-									onChange(+text);
+									onChange(+text * 60);
 								} else if (+text[0] < 3 && +text[1] < 5) {
 									setDuration(text);
-									onChange(+text);
+									onChange(+text * 60);
 								}
 							}}
 						/>
