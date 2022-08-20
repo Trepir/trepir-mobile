@@ -56,9 +56,9 @@ function BottomTabNavigator() {
 			screenOptions={{
 				tabBarActiveTintColor: 'black',
 				tabBarStyle: {
-					height: Constants.statusBarHeight + 40,
+					height: Platform.OS === 'ios' ? 85 : 65,
 					paddingBottom: Platform.OS === 'ios' ? 28 : 10,
-					paddingTop: 5,
+					paddingTop: 10,
 				},
 			}}
 		>

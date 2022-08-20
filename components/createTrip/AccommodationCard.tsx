@@ -10,8 +10,9 @@ type Props = {
 function AccommodationCard({ accommodation }: Props) {
 	const { startDate, endDate, location } = accommodation;
 
-	const parsedStartDate = new Date(startDate).toISOString().split('T')[0].replaceAll('-', '/');
-	const parsedEndDate = new Date(endDate).toISOString().split('T')[0].replaceAll('-', '/');
+	const parsedStartDate = new Date(startDate).toISOString().split('T')[0];
+	const parsedEndDate = new Date(endDate).toISOString().split('T')[0];
+
 	return (
 		<HStack height="5/6" width="72" bgColor="white" rounded="md">
 			<Box
@@ -34,7 +35,7 @@ function AccommodationCard({ accommodation }: Props) {
 					{location.city}
 				</Text>
 				<Text alignSelf="center" fontSize="xs">
-					{parsedStartDate}-{parsedEndDate}
+					{parsedStartDate} to {parsedEndDate}
 				</Text>
 			</VStack>
 		</HStack>
