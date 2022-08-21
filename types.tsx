@@ -16,6 +16,10 @@ export type RootTabParamList = {
 	Discover: undefined;
 };
 
+export type CreateTripParamList = {
+	CreateTrip: undefined;
+	BeforeCreateTrip: undefined;
+};
 export type TripStackParamList = {
 	Trip: undefined;
 	ModifyTrip: undefined;
@@ -23,6 +27,7 @@ export type TripStackParamList = {
 
 export type RootStackParamList = {
 	Root: NavigatorScreenParams<RootTabParamList> | undefined;
+	CreateStack: NavigatorScreenParams<CreateTripParamList> | undefined;
 	TripStack: NavigatorScreenParams<TripStackParamList> | undefined;
 	NewActivityModal: undefined;
 	NewTravelModal: undefined;
@@ -44,6 +49,9 @@ export type TripStackScreenProps<Screen extends keyof TripStackParamList> = Nati
 	TripStackParamList,
 	Screen
 >;
+
+export type CreateStackScreenProps<Screen extends keyof CreateTripParamList> =
+	NativeStackScreenProps<CreateTripParamList, Screen>;
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
 	BottomTabScreenProps<RootTabParamList, Screen>,
@@ -217,6 +225,7 @@ export type TripForPost = {
 };
 
 export type Trip = {
+	uid: string;
 	id: string;
 	createdAt: string;
 	userId: string;

@@ -4,14 +4,12 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { getFocusedRouteNameFromRoute, NavigationContainer, Route } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 
 import { Text } from 'native-base';
-import Constants from 'expo-constants';
 import { Platform } from 'expo-modules-core';
 import CreateScreen from '../screens/CreateScreen';
 import DashboardScreen from '../screens/DashboardScreen';
@@ -19,6 +17,7 @@ import DiscoverScreen from '../screens/DiscoverScreen';
 import AddActivityModal from '../modals/AddActivityScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import {
+	CreateTripParamList,
 	HomePageParamList,
 	RootStackParamList,
 	RootTabParamList,
@@ -35,6 +34,8 @@ import AddIcon from '../assets/icons/AddIcon';
 import SuitcaseIcon from '../assets/icons/SuitcaseIcon';
 import CompassIcon from '../assets/icons/CompassIcon';
 import Colors from '../constants/Colors';
+import StartCTScreen from '../screens/StartCTScreen';
+import hideBottomBar from '../helpers/hideBottomBar';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -43,13 +44,38 @@ import Colors from '../constants/Colors';
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
+
+const CreateTripStack = createNativeStackNavigator<CreateTripParamList>();
+
+function CreateTripFlowStack() {
+	return (
+		<CreateTripStack.Navigator>
+			<CreateTripStack.Screen
+				name="BeforeCreateTrip"
+				component={StartCTScreen}
+				options={{ headerShown: false }}
+			/>
+			<CreateTripStack.Screen
+				name="CreateTrip"
+				component={CreateScreen}
+				options={{ headerShown: false }}
+			/>
+		</CreateTripStack.Navigator>
+	);
+}
+
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-// THE BOTTOM TAB NAVIGATION
-// BASICALLY THE SURFACE NAVIGATION OF THE APP
 function BottomTabNavigator() {
-	// const colorScheme = useColorScheme();
-
+	// const hideBottomTab = ({ route }: { route: Partial<Route<string, object | undefined>> }) => ({
+	// 	tabBarStyle: ((route) => {
+	// 		const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+	// 		if (hideBottomBar(routeName)) {
+	// 			return { display: 'none' };
+	// 		}
+	// 		return { backgroundColor: 'white', height: 85 };
+	// 	})(route),
+	// });
 	return (
 		<BottomTab.Navigator
 			initialRouteName="Dashboard"
@@ -80,9 +106,21 @@ function BottomTabNavigator() {
 			/>
 			<BottomTab.Screen
 				name="Create"
-				component={CreateScreen}
-				options={{
+				component={CreateTripFlowStack}
+				options={({ route }: { route: Partial<Route<string, object | undefined>> }) => ({
 					title: 'Create',
+					tabBarStyle: (() => {
+						const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+						if (hideBottomBar(routeName)) {
+							return { display: 'none' };
+						}
+						return {
+							height: Platform.OS === 'ios' ? 85 : 65,
+							paddingBottom: Platform.OS === 'ios' ? 28 : 10,
+							paddingTop: 10,
+						};
+					})(),
+
 					tabBarIcon: ({ focused }) => (
 						<AddIcon color={focused ? Colors.primary.normal : Colors.grey.medium} size={34} />
 					),
@@ -92,7 +130,7 @@ function BottomTabNavigator() {
 						</Text>
 					),
 					headerShown: false,
-				}}
+				})}
 			/>
 
 			<BottomTab.Screen

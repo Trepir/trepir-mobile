@@ -28,9 +28,6 @@ function DashboardScreen() {
 			setUpcomingTrips(upcomingT);
 			setPastTrips(pastT);
 			setCurrentTrips(currentT);
-			console.log(upcomingT);
-			console.log(pastT);
-			console.log(currentT);
 		}
 	}, [trips]);
 

@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, Heading, HStack, Pressable, Divider, FlatList, Box } from 'native-base';
+import { View, Heading, HStack, Pressable, Divider, FlatList, Box } from 'native-base';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import AddIcon from '../../assets/icons/AddIcon';
@@ -46,22 +46,26 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 	}, [newAccommodation]);
 
 	const createTrip = async () => {
-		console.log(newTrip);
-
-		const formattedTrip: any = {
-			...newTrip,
-			uid: '2',
-			startDate: newTrip.startDate,
-			endDate: newTrip.endDate,
-			travelEvents: travels.map((formattedTravels) => ({
-				...formattedTravels,
-				departure: new Date(formattedTravels.departure),
-			})),
-			accommodation: accommodations,
-		};
-		dispatch(clearDates());
-		await createTripApi(formattedTrip);
-		jumpTo('third');
+		try {
+			const formattedTrip: any = {
+				...newTrip,
+				uid: '2',
+				startDate: newTrip.startDate,
+				endDate: newTrip.endDate,
+				travelEvents: travels.map((formattedTravels) => ({
+					...formattedTravels,
+					departure: new Date(formattedTravels.departure),
+				})),
+				accommodation: accommodations,
+			};
+			setNewTrip(formattedTrip);
+			dispatch(clearDates());
+			const createdTrip = await createTripApi(formattedTrip);
+			console.log(createdTrip.data);
+			jumpTo('third');
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (
@@ -87,7 +91,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 					keyExtractor={(item) => item.origin.googleId!}
 					renderItem={({ item, index }) => (
 						<Box ml={index === 0 ? '8' : '0'} mr="4" alignSelf="center">
-							<TravelCard key={item.origin.googleId} travel={item} />
+							<TravelCard key={item.origin.googleId} travel={item} isModify={false} />
 						</Box>
 					)}
 					horizontal
@@ -123,9 +127,14 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 				<EmptyList text="You dont have any stays yet." />
 			)}
 			<Divider my={2} w="80%" />
-			<Box mt="8">
-				<ButtonCustom text="Create Trip" pressFunction={createTrip} alignment="center" />
-			</Box>
+			<HStack mt="8" justifyContent="space-between" w="80%">
+				<Box>
+					<ButtonCustom text="Back" pressFunction={() => jumpTo('first')} alignment="flex-start" />
+				</Box>
+				<Box>
+					<ButtonCustom text="Create Trip" pressFunction={createTrip} alignment="flex-end" />
+				</Box>
+			</HStack>
 		</View>
 	);
 }
