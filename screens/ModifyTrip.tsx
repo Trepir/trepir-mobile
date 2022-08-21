@@ -17,23 +17,19 @@ import { clearActivityState } from '../features/newActivity/newActivitySlice';
 import { TripDay, DayAct, Activity } from '../types';
 import AddIcon from '../assets/icons/AddIcon';
 import EmptyList from '../components/createTrip/EmptyList';
+import {
+	addAccommodationToTrip,
+	addActivityToTrip,
+	addTravelToTrip,
+} from '../services/ModifyTripService';
+import { addDates } from '../features/createTripValidation/CTValidationSlice';
+import { createActivityApi } from '../services/ActivityService';
 
 function ModifyTrip() {
+	const trip = useAppSelector((state) => state.currentTrip);
+
 	const [selectedDay, setSelectedDay] = useState<'' | number>('');
-	const [tripDays, setTripDays] = useState<TripDay[]>([
-		{
-			id: 'cl6z1r1wk00345y0g7mcdmzwj',
-			dayIndex: 0,
-			tripId: 'cl6z1r1wk00335y0gexv91hgv',
-			tripDayActivities: [],
-		},
-		{
-			id: 'cl6z1r1wk00355y0ge14khmxx',
-			dayIndex: 1,
-			tripId: 'cl6z1r1wk00335y0gexv91hgv',
-			tripDayActivities: [],
-		},
-	]);
+	const [tripDays, setTripDays] = useState<TripDay[]>(trip.tripDay);
 
 	const dispatch = useAppDispatch();
 	const newlyAddedActivity = useAppSelector((state) => state.newActivity);
@@ -41,6 +37,10 @@ function ModifyTrip() {
 	const newlyAddedTravel = useAppSelector((state) => state.newTravel);
 
 	const bottomSheetRef = useRef<BottomSheet>(null);
+
+	useEffect(() => {
+		dispatch(addDates({ startingDate: trip.startDate, endingDate: trip.endDate }));
+	}, []);
 
 	const addActivityToDay = (activityAdded: Activity) => {
 		bottomSheetRef.current?.close();
@@ -81,79 +81,135 @@ function ModifyTrip() {
 
 	useEffect(() => {
 		if (newlyAddedActivity.uid !== '') {
-			addActivityToDay(newlyAddedActivity);
+			const createActivity = async () => {
+				const newActivity = {
+					...newlyAddedActivity,
+				};
+				const createdActivity = await createActivityApi(newActivity);
+				await addActivityToTrip({
+					tripDayId: trip.id,
+					activityId: createdActivity.data!.id!,
+				});
+			};
+			createActivity();
+
+			// addActivityToDay(newlyAddedActivity);
+			// const addActivity = async () => {
+			// 	try {
+			// 	} catch (error) {
+			// 		console.error(error);
+			// 	}
+			// 	// try {
+			// 	// 	const fetchedTrip = await fetchTrip(id);
+			// 	// 	if (fetchedTrip.data) {
+			// 	// 		dispatch(storeCurrentTrip(fetchedTrip.data));
+			// 	// 		// console.log('trip that I save', fetchedTrip.data);
+			// 	// 		navigation.navigate('TripStack' );
+			// 	// 	}
+			// 	// } catch (error) {
+			// 	// 	console.error(error);
+			// 	// }
+			// };
+
 			dispatch(clearActivityState());
 		}
 	}, [newlyAddedActivity]);
+
 	useEffect(() => {
 		if (newlyAddedAccommodation.uid !== '') {
 			bottomSheetRef.current?.close();
-			setTripDays((prev) => {
-				const newState: TripDay[] = [];
-				prev.forEach((_, index) => {
-					if (selectedDay === index) {
-						newState.push({
-							id: prev[index].id,
-							dayIndex: prev[index].dayIndex,
-							tripId: prev[index].tripId,
-							tripDayActivities: [
-								...prev[index].tripDayActivities,
-								{
-									id: newlyAddedAccommodation.location.googleId!,
-									tripDayId: 'cl6z69iop00104dbsi2rg4i3x',
-									order: 0,
-									dayActivityId: null,
-									accommodationId: 'cl6z69iq300354dbsso8a6nmx',
-									travelEventId: null,
-									accommodation: newlyAddedAccommodation,
-									travel: null,
-									dayActivity: null,
-								},
-							],
-						});
-					} else {
-						newState.push(prev[index]);
-					}
-				});
-				return newState;
-			});
+
+			const addAccommodationToCurrentTrip = async () => {
+				const newAccommodation = {
+					...newlyAddedAccommodation,
+					startDate: new Date(newlyAddedAccommodation.startDate).toISOString(),
+					endDate: new Date(newlyAddedAccommodation.endDate).toISOString(),
+					tripId: trip.id,
+				};
+				await addAccommodationToTrip(newAccommodation);
+			};
+			addAccommodationToCurrentTrip();
+
+			// setTripDays((prev) => {
+			// 	const newState: TripDay[] = [];
+			// 	prev.forEach((_, index) => {
+			// 		if (selectedDay === index) {
+			// 			newState.push({
+			// 				id: prev[index].id,
+			// 				dayIndex: prev[index].dayIndex,
+			// 				tripId: prev[index].tripId,
+			// 				tripDayActivities: [
+			// 					...prev[index].tripDayActivities,
+			// 					{
+			// 						id: newlyAddedAccommodation.location.googleId!,
+			// 						tripDayId: 'cl6z69iop00104dbsi2rg4i3x',
+			// 						order: 0,
+			// 						dayActivityId: null,
+			// 						accommodationId: 'cl6z69iq300354dbsso8a6nmx',
+			// 						travelEventId: null,
+			// 						accommodation: newlyAddedAccommodation,
+			// 						travel: null,
+			// 						dayActivity: null,
+			// 					},
+			// 				],
+			// 			});
+			// 		} else {
+			// 			newState.push(prev[index]);
+			// 		}
+			// 	});
+			// 	return newState;
+			// });
 			setSelectedDay('');
 			dispatch(clearAccommodationState());
 		}
 	}, [newlyAddedAccommodation]);
+
 	useEffect(() => {
 		if (newlyAddedTravel.uid !== '') {
-			console.log('NEW TRAVEL ==================>', newlyAddedTravel);
 			bottomSheetRef.current?.close();
-			setTripDays((prev) => {
-				const newState: TripDay[] = [];
-				prev.forEach((_, index) => {
-					if (selectedDay === index) {
-						newState.push({
-							id: prev[index].id,
-							dayIndex: prev[index].dayIndex,
-							tripId: prev[index].tripId,
-							tripDayActivities: [
-								...prev[index].tripDayActivities,
-								{
-									id: newlyAddedTravel.origin.googleId!,
-									tripDayId: 'cl6z69iop00104dbsi2rg4i3x',
-									order: 0,
-									dayActivityId: null,
-									accommodationId: null,
-									travelEventId: 'cl6z69iq300354dbsso8a6nmx',
-									accommodation: null,
-									travel: newlyAddedTravel,
-									dayActivity: null,
-								},
-							],
+			const addTravelToCurrentTrip = async () => {
+				const newTravel = {
+					...newlyAddedTravel,
+					tripId: trip.id,
+					departure: new Date(newlyAddedTravel.departure).toISOString(),
+				};
+				try {
+					const addedTravel = await addTravelToTrip(newTravel);
+					setTripDays((prev) => {
+						const newState: TripDay[] = [];
+						prev.forEach((_, index) => {
+							if (selectedDay === index) {
+								newState.push({
+									id: prev[index].id,
+									dayIndex: prev[index].dayIndex,
+									tripId: prev[index].tripId,
+									tripDayActivities: [
+										...prev[index].tripDayActivities,
+										{
+											id: addedTravel.data!.id, // WHAT IS THIS ID
+											tripDayId: addedTravel.data!.tripDayId,
+											order: 0,
+											dayActivityId: null,
+											accommodationId: null,
+											travelEventId: addedTravel.data!.id,
+											accommodation: null,
+											travel: { ...newlyAddedTravel, id: addedTravel.data!.id },
+											dayActivity: null,
+										},
+									],
+								});
+							} else {
+								newState.push(prev[index]);
+							}
 						});
-					} else {
-						newState.push(prev[index]);
-					}
-				});
-				return newState;
-			});
+						return newState;
+					});
+				} catch (error) {
+					console.error(error);
+				}
+			};
+			addTravelToCurrentTrip();
+
 			setSelectedDay('');
 			dispatch(clearTravelState());
 		}

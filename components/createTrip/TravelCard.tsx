@@ -4,12 +4,17 @@ import ConditionalTravelIcon from '../../assets/icons/ConditionalTravelIcon';
 import { NewTravelState } from '../../features/newTravel/newTravelSlice';
 
 type Props = {
-	travel: NewTravelState; // Change tp type if needed
+	// travel: NewTravelState; // Change tp type if needed
+	travel: any; // Change tp type if needed
+	isModify: boolean;
 };
 
-function TravelCard({ travel }: Props) {
-	const { travelType, origin, destination, departure } = travel;
-	const parsedDate = new Date(departure).toISOString().split('T')[0];
+function TravelCard({ travel, isModify = false }: Props) {
+	const { travelType, departure } = travel;
+
+	const parseTravelDate = () =>
+		isModify ? departure.split('T')[0] : new Date(departure).toISOString().split('T')[0];
+
 	return (
 		<HStack height="5/6" width="72" bgColor="white" borderRadius={12}>
 			<Box
@@ -26,14 +31,14 @@ function TravelCard({ travel }: Props) {
 			<VStack px={3} justifyContent="space-around" alignSelf="center">
 				<VStack justifyContent="center" alignItems="center">
 					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated noOfLines={2} mb={1}>
-						{origin.locationName}
+						{isModify ? travel.originLocation.locationName : travel.origin.locationName}
 					</Text>
 					<Divider mb={1} />
 					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
-						{destination.locationName}
+						{isModify ? travel.destinationLocation.locationName : travel.destination.locationName}
 					</Text>
 				</VStack>
-				<Text alignSelf="center">{parsedDate} </Text>
+				<Text alignSelf="center"> {parseTravelDate()} </Text>
 			</VStack>
 		</HStack>
 	);

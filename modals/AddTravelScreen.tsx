@@ -11,7 +11,7 @@ import DatePickerInput from '../components/form/DatePickerInput';
 import { Location, RootTabScreenProps } from '../types';
 import TextInput from '../components/form/TextInput';
 import { storeNewTravel } from '../features/newTravel/newTravelSlice';
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { parseLocationDetails } from '../helpers/parseLocationDetails';
 
 function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
@@ -37,7 +37,7 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 			value: 'Train',
 		},
 	];
-
+	const userId = useAppSelector((state) => state.user.uid);
 	const dispatch = useAppDispatch();
 
 	const [date, setDate] = useState({ value: new Date(), touched: false });
@@ -84,7 +84,7 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	};
 
 	const onSubmit = (data: any) => {
-		dispatch(storeNewTravel({ uid: '123456789', ...data }));
+		dispatch(storeNewTravel({ uid: userId, ...data }));
 		navigation.goBack();
 	};
 

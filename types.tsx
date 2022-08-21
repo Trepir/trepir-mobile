@@ -125,7 +125,7 @@ export class Activity {
 		this.duration = 0;
 		this.description = '';
 		this.rating = 0;
-		this.tags = 'Landmark';
+		this.tags = ['Landmark'];
 		this.location = new Location();
 		this.imageUrl = '';
 		this.time = new Date();
@@ -231,6 +231,16 @@ export type Trip = {
 	photoUrl: string;
 	tripDay: TripDay[];
 	favouriteActivities: Activity[];
+};
+
+export type Accommodation = {
+	id: string;
+	date: string;
+	state: string;
+	eventType: string;
+	locationId: string;
+	tripDayActivityId: string;
+	location: Location;
 };
 
 // STATES TYPES -----------------------------------------------------------------------------------------------------------

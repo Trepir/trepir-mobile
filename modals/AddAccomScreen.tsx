@@ -9,12 +9,13 @@ import GooglePlacesInput from '../components/utils/GooglePlacesInput';
 import ButtonCustom from '../components/ui/ButtonCustom';
 import { Location, RootTabScreenProps } from '../types';
 import { parseLocationDetails } from '../helpers/parseLocationDetails';
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { storeNewAccommodation } from '../features/newAccommodation/newAccommodationSlice';
 import DateRangePicker from '../components/form/DateRangePicker';
 
 function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	const dispatch = useAppDispatch();
+	const userId = useAppSelector((state) => state.user.uid);
 
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
@@ -45,7 +46,7 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 		} else {
 			dispatch(
 				storeNewAccommodation({
-					uid: '1',
+					uid: userId,
 					startDate: new Date(startDate).getTime(),
 					endDate: new Date(endDate).getTime(),
 					location,

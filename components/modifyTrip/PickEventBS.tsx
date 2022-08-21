@@ -118,7 +118,7 @@ function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 					Select from you own Activities
 				</Text>
 
-				<ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+				{/* <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
 					{activities.map((activity, index) => (
 						<Pressable
 							onPress={() => addActivityToDay(activity)}
@@ -129,7 +129,7 @@ function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 							<ActivityCard activity={activity} />
 						</Pressable>
 					))}
-				</ScrollView>
+				</ScrollView> */}
 			</View>
 		</BottomSheet>
 	);
