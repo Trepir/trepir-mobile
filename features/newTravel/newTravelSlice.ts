@@ -7,7 +7,8 @@ export interface NewTravelState {
 	departure: string;
 	originLocation: Location;
 	destinationLocation: Location;
-	flightNum?: number | null;
+	flightNum?: string | null;
+	id?: string;
 	uid: string;
 }
 

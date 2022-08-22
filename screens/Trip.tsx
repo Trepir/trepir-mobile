@@ -31,7 +31,6 @@ function getDate(startDate: string, index: number) {
 
 function Trip({ navigation }: TripStackScreenProps<'Trip'>) {
 	const trip = useAppSelector((state) => state.currentTrip);
-	// console.log('What I get on Trip Screen', trip.id);
 
 	const ModifyTrip = () => {
 		navigation.navigate('ModifyTrip');

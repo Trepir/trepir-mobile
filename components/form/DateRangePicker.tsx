@@ -49,7 +49,6 @@ function DateRangePicker({ name, startDate, setStartDate, setEndDate, isValid }:
 	const { startingDate, endingDate } = useAppSelector((state) => state.datesValidation);
 
 	const selectDay = (day: DateData) => {
-		console.log(day);
 		if (dateToggle) {
 			setStartDate(day.dateString);
 			setDateRange({

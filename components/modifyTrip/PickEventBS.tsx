@@ -15,96 +15,6 @@ type Props = {
 function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 	const snapPoints = useMemo(() => ['60%', '80%'], []);
 
-	const activities: Activity[] = [
-		{
-			id: 'cl6yulnyy00133z4kc749ystla',
-			name: 'Go to the beach asdjfa ljasdnfp asdjnfas asdfna asdlfjkasd asjkldfnas',
-			duration: 120000,
-			imageUrl:
-				'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg',
-			description: 'Swim in the ocean',
-			rating: null,
-			location: {
-				latitude: 0,
-				formattedAddress: '',
-				photoUrl: [''],
-				longitude: 0,
-				country: '',
-				state: '',
-				locationName: '',
-				city: 'Barcelona',
-				googleId: '1',
-			},
-			tags: [],
-		},
-		{
-			id: 'cl6yulnyy00133z4kc749ystld',
-			name: 'Go to the beach',
-			duration: 120000,
-			imageUrl:
-				'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg',
-			description: 'Swim in the ocean',
-
-			rating: null,
-			location: {
-				latitude: 0,
-				formattedAddress: '',
-				photoUrl: [''],
-				longitude: 0,
-				country: '',
-				state: '',
-				locationName: '',
-				city: 'Barcelona',
-				googleId: '2',
-			},
-			tags: [],
-		},
-		{
-			id: 'cl6yulnyy00133z4kc749ystlf',
-			name: 'Go to the beach',
-			duration: 120000,
-			imageUrl:
-				'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg',
-			description: 'Swim in the ocean',
-			rating: null,
-			location: {
-				latitude: 0,
-				formattedAddress: '',
-				photoUrl: [''],
-				longitude: 0,
-				country: '',
-				state: '',
-				locationName: '',
-				city: 'Barcelona',
-				googleId: '3',
-			},
-			tags: [],
-		},
-
-		{
-			id: 'cl6yulnyy00133z4kc749ystla',
-			name: 'Go to the beach',
-			duration: 120000,
-			imageUrl:
-				'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg',
-			description: 'Swim in the ocean',
-
-			rating: null,
-			location: {
-				latitude: 0,
-				formattedAddress: '',
-				photoUrl: [''],
-				longitude: 0,
-				country: '',
-				state: '',
-				locationName: '',
-				city: 'Barcelona',
-				googleId: '4',
-			},
-			tags: [],
-		},
-	];
-
 	return (
 		<BottomSheet ref={bottomSheetRef} index={-1} snapPoints={snapPoints} enablePanDownToClose>
 			<View alignItems="center">
@@ -118,7 +28,7 @@ function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 					Select from you own Activities
 				</Text>
 
-				<ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+				{/* <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
 					{activities.map((activity, index) => (
 						<Pressable
 							onPress={() => addActivityToDay(activity)}
@@ -129,7 +39,7 @@ function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 							<ActivityCard activity={activity} />
 						</Pressable>
 					))}
-				</ScrollView>
+				</ScrollView> */}
 			</View>
 		</BottomSheet>
 	);

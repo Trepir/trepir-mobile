@@ -1,5 +1,5 @@
 import { View } from 'native-base';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TabView, Route, TabBar } from 'react-native-tab-view';
 import { useWindowDimensions } from 'react-native';
 import Constants from 'expo-constants';
@@ -10,6 +10,8 @@ import { NewAccommodationState } from '../features/newAccommodation/newAccommoda
 import { NewTravelState } from '../features/newTravel/newTravelSlice';
 import Step3 from '../components/createTrip/Step3';
 import Colors from '../constants/Colors';
+import { useAppDispatch } from '../app/hooks';
+import { clearDates } from '../features/createTripValidation/CTValidationSlice';
 
 export type newTripType = {
 	uid: string;
@@ -41,6 +43,11 @@ function CreateScreen() {
 		travel: [],
 		accommodation: [],
 	});
+
+	const dispatch = useAppDispatch();
+	useEffect(() => {
+		dispatch(clearDates());
+	}, []);
 
 	// eslint-disable-next-line no-unused-vars
 	const renderScene = ({ route, jumpTo }: { route: Route; jumpTo: (key: string) => void }) => {

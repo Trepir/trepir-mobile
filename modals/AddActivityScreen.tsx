@@ -13,7 +13,7 @@ import GooglePlacesInput from '../components/utils/GooglePlacesInput';
 import ButtonCustom from '../components/ui/ButtonCustom';
 import GoogleIcon from '../assets/icons/GoogleIcon';
 import InputLabel from '../components/ui/InputLabel';
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { storeNewActivity } from '../features/newActivity/newActivitySlice';
 // import TimePickerInput from '../components/form/TimePickerInput';
 import DropDown from '../components/form/DropDown';
@@ -29,6 +29,7 @@ import ApiKeys from '../constants/ApiKeys';
 // FULLSCREEN MODAL
 export default function AddActivityModal({ navigation }: RootTabScreenProps<'Create'>) {
 	const dispatch = useAppDispatch();
+	const userId = useAppSelector((state) => state.user.uid);
 
 	// const [timeStart, setTimeStart] = useState({
 	// 	value: new Date(),
@@ -71,7 +72,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 		setValue('imageUrl', imgUrl, { shouldValidate: true });
 	};
 	const onSubmit = (data: Activity) => {
-		dispatch(storeNewActivity({ uid: '1', id: '', ...data }));
+		dispatch(storeNewActivity({ uid: userId, ...data }));
 		navigation.goBack();
 	};
 	const submitFunction = () => {
