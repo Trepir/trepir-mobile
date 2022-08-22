@@ -16,6 +16,7 @@ function filterActivity(dayAct: DayAct) {
 	if (dayAct.accommodationId && dayAct.accommodation)
 		return <AccommodationCard accommodation={dayAct.accommodation} />;
 	if (dayAct.travelEventId && dayAct.travel) return <TravelCard travel={dayAct.travel} />;
+	return null;
 }
 
 // create a function that with a starting date and and index will return the actual date
