@@ -9,9 +9,9 @@ type Props = {
 	isModify: boolean;
 };
 
-function TravelCard({ travel, isModify = false }: Props) {
-	const { travelType, departure } = travel;
 
+function TravelCard({ travel, isModify = false }: Props) {
+	const { type, originLocation, destinationLocation, departure } = travel;
 	const parseTravelDate = () =>
 		isModify ? departure.split('T')[0] : new Date(departure).toISOString().split('T')[0];
 
@@ -25,17 +25,17 @@ function TravelCard({ travel, isModify = false }: Props) {
 				m={2}
 				borderRadius={12}
 			>
-				<ConditionalTravelIcon type={travelType} size="80%" color="#c1c1c1" />
+				<ConditionalTravelIcon type={type} size="80%" color="#c1c1c1" />
 			</Box>
 
 			<VStack px={3} justifyContent="space-around" alignSelf="center">
 				<VStack justifyContent="center" alignItems="center">
 					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated noOfLines={2} mb={1}>
-						{isModify ? travel.originLocation.locationName : travel.origin.locationName}
+						{originLocation.locationName}
 					</Text>
 					<Divider mb={1} />
 					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
-						{isModify ? travel.destinationLocation.locationName : travel.destination.locationName}
+						{destinationLocation.locationName}
 					</Text>
 				</VStack>
 				<Text alignSelf="center"> {parseTravelDate()} </Text>

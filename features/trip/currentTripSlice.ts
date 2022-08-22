@@ -14,7 +14,7 @@ const initialState: Trip = {
 	photoUrl: '',
 	formattedAddress: '',
 	googleLocationName: '',
-	tripDays: [],
+	tripDay: [],
 	favouriteActivities: [],
 };
 

@@ -3,20 +3,20 @@ import { Location } from '../../types';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
 export interface NewTravelState {
+	type: string;
+	departure: string;
+	originLocation: Location;
+	destinationLocation: Location;
+	flightNum?: string | null;
 	id?: string;
-	travelType: string;
-	departure: number;
-	origin: Location;
-	destination: Location;
-	flightNum?: string | number | null | undefined;
 	uid: string;
 }
 
 const initialState: NewTravelState = {
-	travelType: '',
-	departure: Date.now(),
+	type: '',
+	departure: '',
 	uid: '',
-	origin: {
+	originLocation: {
 		latitude: 0,
 		longitude: 0,
 		country: '',
@@ -27,7 +27,7 @@ const initialState: NewTravelState = {
 		formattedAddress: '',
 		photoUrl: [],
 	},
-	destination: {
+	destinationLocation: {
 		latitude: 0,
 		longitude: 0,
 		country: '',

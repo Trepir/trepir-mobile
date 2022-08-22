@@ -133,7 +133,7 @@ export class Activity {
 		this.duration = 0;
 		this.description = '';
 		this.rating = 0;
-		this.tags = ['Landmark'];
+		this.tags = [] as Tag[];
 		this.location = new Location();
 		this.imageUrl = '';
 		this.time = new Date();
@@ -193,11 +193,8 @@ export type DayAct = {
 	id: string;
 	tripDayId: string;
 	order: number;
-	dayActivityId: string | null;
-	accommodationId: string | null;
-	travelEventId: string | null;
 	accommodation: NewAccommodationState | null;
-	travel: NewTravelState | null;
+	travelEvent: NewTravelState | null;
 	dayActivity: {
 		id: string;
 		activity: Activity;
