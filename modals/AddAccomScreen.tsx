@@ -47,8 +47,8 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 			dispatch(
 				storeNewAccommodation({
 					uid: userId,
-					startDate: new Date(startDate).getTime(),
-					endDate: new Date(endDate).getTime(),
+					startDate,
+					endDate,
 					location,
 				})
 			);
