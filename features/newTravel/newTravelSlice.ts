@@ -3,11 +3,12 @@ import { Location } from '../../types';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
 export interface NewTravelState {
+	id?: string;
 	travelType: string;
 	departure: number;
 	origin: Location;
 	destination: Location;
-	flightNum?: number | null;
+	flightNum?: string | number | null | undefined;
 	uid: string;
 }
 

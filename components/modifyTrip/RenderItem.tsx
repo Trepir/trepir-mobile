@@ -5,6 +5,7 @@ import AccommodationCard from '../createTrip/AccommodationCard';
 import { DayAct } from '../../screens/ModifyTrip';
 import ActivityCard from '../ui/ActivityCard';
 import TravelCard from '../createTrip/TravelCard';
+import ModifyAccomCard from './ModifyAccomCard';
 
 function RenderItem({ item, drag, isActive }: RenderItemParams<DayAct>) {
 	return (
@@ -16,9 +17,9 @@ function RenderItem({ item, drag, isActive }: RenderItemParams<DayAct>) {
 				alignItems="center"
 				justifyContent="center"
 			>
-				{item.accommodationId !== null && <AccommodationCard accommodation={item.accommodation!} />}
-				{item.dayActivityId !== null && <ActivityCard activity={item.dayActivity?.activity!} />}
-				{item.travelEventId !== null && <TravelCard travel={item.travel!} />}
+				{item.accommodation !== null && <ModifyAccomCard accommodation={item.accommodation!} />}
+				{item.dayActivity !== null && <ActivityCard activity={item.dayActivity?.activity!} />}
+				{item.travelEvent !== null && <TravelCard isModify travel={item.travelEvent!} />}
 			</Pressable>
 		</ScaleDecorator>
 	);
