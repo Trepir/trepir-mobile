@@ -7,6 +7,8 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import GooglePlacesInput from '../components/utils/GooglePlacesInput';
 import Colors from '../constants/Colors';
 import InputSearchContainer from '../components/discover/InputSearchContainer';
+import { Activity, Viewport } from '../types';
+import { activitiesFromViewport } from '../services/DiscoverService';
 // import { parseLocationDetails } from '../helpers/parseLocationDetails';
 
 // type Props = {};
@@ -39,9 +41,26 @@ const edgePadding = {
 };
 function DiscoverScreen() {
 	const [startedSearch, setStartedSearch] = useState(false);
+	const [activitiesFromLocation, setActivitiesFromLocation] = useState<Activity[]>([]);
 
 	const mapRef = useRef<MapView>(null);
 	const bottomSheetRef = useRef<BottomSheet>(null);
+
+	const getActivitiesFromLocation = async (details: GooglePlaceDetail) => {
+		try {
+			const viewport: Viewport = {
+				latitudeHigh: details.geometry.viewport.northeast.lat,
+				latitudeLow: details.geometry.viewport.southwest.lat,
+				longitudeHigh: details.geometry.viewport.northeast.lng,
+				longitudeLow: details.geometry.viewport.southwest.lng,
+			};
+
+			const activities = await activitiesFromViewport(viewport);
+			setActivitiesFromLocation([...activities.data!]);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	const goToDestination = async (_: any, details: GooglePlaceDetail) => {
 		console.log(details.geometry.viewport.northeast, details.geometry.viewport.southwest);
@@ -60,6 +79,7 @@ function DiscoverScreen() {
 			mapRef.current?.fitToCoordinates([viewPortNE, viewPortSW], { edgePadding });
 			setStartedSearch(true);
 			bottomSheetRef.current?.snapToIndex(1);
+			await getActivitiesFromLocation(details);
 		}
 	};
 
@@ -90,7 +110,11 @@ function DiscoverScreen() {
 					/>
 				</Box>
 			) : (
-				<InputSearchContainer goToDestination={goToDestination} bottomSheetRef={bottomSheetRef} />
+				<InputSearchContainer
+					goToDestination={goToDestination}
+					bottomSheetRef={bottomSheetRef}
+					activities={activitiesFromLocation}
+				/>
 			)}
 		</View>
 	);

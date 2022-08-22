@@ -27,7 +27,7 @@ function ModifyAccomCard({ accommodation }: Props) {
 				<AccommodationIcon size="80%" color="#c1c1c1" />
 			</Box>
 			<VStack pl={3} py={6} justifyContent="space-evenly">
-				<Text fontWeight="semibold" fontSize="md">
+				<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
 					{location.locationName}
 				</Text>
 				<Text maxWidth="32" fontWeight="semibold" fontSize="md" isTruncated>

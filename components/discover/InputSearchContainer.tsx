@@ -1,13 +1,15 @@
 import React, { Ref, useMemo, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Constants from 'expo-constants';
-import { Box, Text, View } from 'native-base';
+import { Box, Pressable, ScrollView, Text, View } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { ActivityTags } from '../../constants/ActivityTags';
 import GooglePlacesInput from '../utils/GooglePlacesInput';
 import Colors from '../../constants/Colors';
+import { Activity } from '../../types';
+import ActivityCard from '../ui/ActivityCard';
 
 const styles = StyleSheet.create({
 	input: {
@@ -24,25 +26,18 @@ type Props = {
 	// eslint-disable-next-line no-unused-vars
 	goToDestination: (_: any, details: GooglePlaceDetail) => void;
 	bottomSheetRef: Ref<BottomSheet>;
+	activities: Activity[];
 };
 
-function InputSearchContainer({ goToDestination, bottomSheetRef }: Props) {
+function InputSearchContainer({ goToDestination, bottomSheetRef, activities }: Props) {
 	const [openDropDown, setOpenDropDown] = useState(false);
-	const [valueDropDown, setValueDropDown] = useState([]);
+	const [valueDropDown, setValueDropDown] = useState<string[]>([]);
 	const [itemsDropDown, setItemsDropDown] = useState(ActivityTags);
 
-	const snapPoints = useMemo(() => ['10%', '50%'], []);
+	const snapPoints = useMemo(() => ['10%', '30%', '50%'], []);
 
-	const showActivities = async (_: any, details: GooglePlaceDetail) => {
-		await goToDestination(_, details);
-		const viewPort = {
-			latitudeHigh: details.geometry.viewport.northeast.lat,
-			latitudeLow: details.geometry.viewport.southwest.lat,
-			longitudeHigh: details.geometry.viewport.northeast.lng,
-			longitudeLow: details.geometry.viewport.southwest.lng,
-		};
-		console.log(viewPort);
-	};
+	const filterByActivity = (tags: string[]) =>
+		valueDropDown.length === 0 ? true : tags.some((tag) => valueDropDown.includes(tag));
 
 	return (
 		<>
@@ -77,7 +72,21 @@ function InputSearchContainer({ goToDestination, bottomSheetRef }: Props) {
 					<Text fontSize="xl" fontWeight="medium" mb={2}>
 						Activities
 					</Text>
-					{/* ACTIVITY FILTER HAPPENS HERE */}
+					<ScrollView w="full">
+						{activities.map((activity, index) => (
+							<Box w="full" alignItems="center" key={activity.id}>
+								{filterByActivity(activity.tags) && (
+									<Pressable
+										// onPress={() => addActivityToDay(activity)}
+										shadow={1}
+										mb={index + 1 === activities.length ? '20' : 4}
+									>
+										<ActivityCard activity={activity} />
+									</Pressable>
+								)}
+							</Box>
+						))}
+					</ScrollView>
 				</View>
 			</BottomSheet>
 		</>

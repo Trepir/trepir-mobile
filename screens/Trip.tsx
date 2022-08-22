@@ -8,8 +8,8 @@ import { TripStackScreenProps } from '../types';
 
 function Trip({ navigation }: TripStackScreenProps<'Trip'>) {
 	const trip = useAppSelector((state) => state.currentTrip);
-	console.log('What I get on Trip Screen', trip.tripDay);
-	console.log('TRIP INFO', trip);
+	// console.log('What I get on Trip Screen', trip.tripDay);
+	// console.log('TRIP INFO', trip);
 
 	const ModifyTrip = () => {
 		navigation.navigate('ModifyTrip');

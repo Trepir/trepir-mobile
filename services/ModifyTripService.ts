@@ -1,6 +1,6 @@
 // import { Trip } from '../types';
 
-import { Activity, Location } from '../types';
+import { Activity, DayAct, Location } from '../types';
 
 const url = 'https://trepir.herokuapp.com';
 // const url = 'http://192.168.1.215:4000';
@@ -13,7 +13,8 @@ type AddActivityType = {
 
 export const addActivityToTrip = async (
 	activityInfo: AddActivityType
-): Promise<{ data: AddActivityType | null; error: any }> => {
+): Promise<{ data: DayAct | null; error: any }> => {
+	console.log('WHAT I SEND activity =>>>>>>', activityInfo);
 	try {
 		const result = await fetch(`${url}/trip/addActivity`, {
 			method: 'POST',
@@ -21,9 +22,11 @@ export const addActivityToTrip = async (
 			body: JSON.stringify(activityInfo),
 		});
 		const linkedActivity = await result.json();
-		console.log(linkedActivity);
+		console.log('ADD ACTIVITY DATA', linkedActivity);
+		return { data: linkedActivity, error: null };
 	} catch (error) {
 		console.error(error);
+		return { data: null, error };
 	}
 };
 
@@ -38,6 +41,7 @@ type AddAccommodationType = {
 export const addAccommodationToTrip = async (
 	newAccommodation: AddAccommodationType
 ): Promise<any> => {
+	console.log('WHAT I SEND ACCOMMODATION =>>>>>>', newAccommodation);
 	try {
 		const result = await fetch(`${url}/trip/addAccommodation`, {
 			method: 'POST',
@@ -71,6 +75,8 @@ type addTravelResultType = {
 export const addTravelToTrip = async (
 	newTravel: AddTravelType
 ): Promise<{ data: addTravelResultType | null; error: any }> => {
+	console.log('WHAT I SEND TRAVEL =>>>>>>', newTravel);
+
 	try {
 		const result = await fetch(`${url}/trip/addTravelEvent`, {
 			method: 'POST',

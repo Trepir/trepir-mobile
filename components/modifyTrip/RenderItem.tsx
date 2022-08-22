@@ -18,7 +18,7 @@ function RenderItem({ item, drag, isActive }: RenderItemParams<DayAct>) {
 				justifyContent="center"
 			>
 				{item.accommodation !== null && <ModifyAccomCard accommodation={item.accommodation!} />}
-				{/* {item.dayActivity !== null && <ActivityCard activity={item.dayActivity?.activity!} />} */}
+				{item.dayActivity !== null && <ActivityCard activity={item.dayActivity?.activity!} />}
 				{item.travelEvent !== null && <TravelCard isModify travel={item.travelEvent!} />}
 			</Pressable>
 		</ScaleDecorator>

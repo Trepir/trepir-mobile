@@ -252,6 +252,12 @@ export type Accommodation = {
 	location: Location;
 };
 
+export type Viewport = {
+	latitudeHigh: number;
+	latitudeLow: number;
+	longitudeHigh: number;
+	longitudeLow: number;
+};
 // STATES TYPES -----------------------------------------------------------------------------------------------------------
 
 export type UserState = {
