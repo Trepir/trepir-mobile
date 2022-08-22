@@ -1,5 +1,5 @@
 import { View } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TabView, Route, TabBar } from 'react-native-tab-view';
 import { useWindowDimensions } from 'react-native';
 import Constants from 'expo-constants';
@@ -62,27 +62,17 @@ function CreateScreen() {
 	const [routes] = React.useState([
 		{ key: 'first', title: 'Trip Details' },
 		{ key: 'second', title: 'Travel & Stay' },
-		{ key: 'third', title: 'Activity' },
+		{ key: 'third', title: 'Activities' },
 	]);
-
-	// useEffect(() => {
-	// 	const BEtest = async () => {
-	// 		try {
-	// 			const data = await fetch('https://trepir.herokuapp.com/activity/all');
-	// 			const json = await data.json();
-	// 			console.log(json);
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 		}
-	// 	};
-	// 	BEtest();
-	// }, []);
 
 	const renderTabBar = (props: any) => (
 		<TabBar
 			{...props}
 			indicatorStyle={{ backgroundColor: 'white' }}
 			style={{ backgroundColor: Colors.primary.normal }}
+			// onTabPress={({ _, preventDefault }) => {
+			// 	preventDefault();
+			// }}
 		/>
 	);
 	return (

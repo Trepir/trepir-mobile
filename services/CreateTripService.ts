@@ -1,7 +1,7 @@
 import { newTripType } from '../screens/CreateScreen';
 
-// const url = 'https://trepir.herokuapp.com/';
-const url = 'http://192.168.1.215:4000';
+const url = 'https://trepir.herokuapp.com';
+// const url = 'http://192.168.1.215:4000';
 
 export const createTripApi = async (trip: newTripType) => {
 	const createdTrip = await fetch(`${url}/trip/create`, {

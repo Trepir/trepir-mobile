@@ -8,6 +8,7 @@ import currentTripReducer from '../features/trip/currentTripSlice';
 import tripArrayReducer from '../features/user/tripArraySlice';
 import likedActivitiesReducer from '../features/user/likedActivitiesSlice';
 import currentActivityReducer from '../features/currentActivity/currentActivitySlice';
+import tripValidationReducer from '../features/createTripValidation/CTValidationSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
 		tripArray: tripArrayReducer,
 		likedActivities: likedActivitiesReducer,
 		currentActivity: currentActivityReducer,
+		datesValidation: tripValidationReducer,
 	},
 });
 
