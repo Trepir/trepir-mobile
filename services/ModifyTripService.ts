@@ -104,3 +104,53 @@ export const deleteEventFromTrip = async (
 		return { data: null, error };
 	}
 };
+
+type ReorderDay = {
+	newOrder: number;
+	tripDayId: string;
+	tripDayActivityId: string;
+};
+
+export const reorderTripDay = async (
+	reorderData: ReorderDay
+): Promise<{ data: TripDay | null; error: any }> => {
+	try {
+		const result = await fetch(`${url}/trip/reorderDay`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(reorderData),
+		});
+		const newDay: TripDay = await result.json();
+		newDay.tripDayActivities.sort((a, b) => a.order - b.order);
+		console.log(newDay.tripDayActivities);
+		return { data: newDay, error: null };
+	} catch (error) {
+		console.error(error);
+		return { data: null, error };
+	}
+};
+type ChangeDay = {
+	activityId: string;
+	newOrder: number;
+	newTripDayId: string;
+	previousTripDayId: string;
+	tripDayActivityId: string;
+};
+
+export const changeTripDay = async (
+	changeData: ChangeDay
+): Promise<{ data: TripDay[] | null; error: any }> => {
+	try {
+		const result = await fetch(`${url}/trip/activityChangeDay`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(changeData),
+		});
+		const newDays: TripDay[] = await result.json();
+
+		return { data: newDays, error: null };
+	} catch (error) {
+		console.error(error);
+		return { data: null, error };
+	}
+};
