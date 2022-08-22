@@ -4,7 +4,6 @@ import React from 'react';
 import { useAppSelector } from '../app/hooks';
 import TopViewActivity from '../components/activity/TopViewActivity';
 import ImagePlaceholder from '../components/ImagePlaceholder';
-import Tag from '../components/ui/Tag';
 import TagArray from '../components/ui/TagArray';
 import Colors from '../constants/Colors';
 import { DayAct } from '../types';
