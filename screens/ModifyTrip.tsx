@@ -1,37 +1,41 @@
 import { View, Heading, Pressable, HStack, Divider, Box } from 'native-base';
 import React, { useEffect, useRef, useState } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
-import {
-	NestableScrollContainer,
-	NestableDraggableFlatList,
-	RenderItemParams,
-} from 'react-native-draggable-flatlist';
+import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
 import RenderItem from '../components/modifyTrip/RenderItem';
-import {
-	clearAccommodationState,
-	NewAccommodationState,
-} from '../features/newAccommodation/newAccommodationSlice';
+import { clearAccommodationState } from '../features/newAccommodation/newAccommodationSlice';
 import PickEventBS from '../components/modifyTrip/PickEventBS';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { clearTravelState, NewTravelState } from '../features/newTravel/newTravelSlice';
+import { clearTravelState } from '../features/newTravel/newTravelSlice';
 import { clearActivityState } from '../features/newActivity/newActivitySlice';
-import { TripDay, DayAct, ActivityEvent, Trip } from '../types';
+import { TripDay, DayAct } from '../types';
 import AddIcon from '../assets/icons/AddIcon';
-import EmptyList from '../components/createTrip/EmptyList';
 import {
 	addAccommodationToTrip,
 	addActivityToTrip,
 	addTravelToTrip,
+	changeTripDay,
 	deleteEventFromTrip,
+	reorderTripDay,
 } from '../services/ModifyTripService';
 import { addDates } from '../features/createTripValidation/CTValidationSlice';
 import { createActivityApi } from '../services/ActivityService';
+
+const spreadTripDays = (tripDays: TripDay[]) => {
+	const spreadedDays = tripDays.map((day) => [
+		{ id: day.id, dayIndex: day.dayIndex, tripId: day.tripId },
+		...day.tripDayActivities,
+	]);
+	const spreadedAll = spreadedDays.flat();
+	return spreadedAll;
+};
 
 function ModifyTrip() {
 	const trip = useAppSelector((state) => state.currentTrip);
 
 	const [selectedDay, setSelectedDay] = useState<'' | number>('');
 	const [tripDays, setTripDays] = useState<TripDay[]>(trip.tripDay);
+	const [tripDaysSpread, setTripDaysSpread] = useState<any[]>(spreadTripDays(trip.tripDay));
 
 	const dispatch = useAppDispatch();
 	const newlyAddedActivity = useAppSelector((state) => state.newActivity);
@@ -50,27 +54,29 @@ function ModifyTrip() {
 	};
 
 	const replaceDayState = (day: TripDay) => {
-		setTripDays(
-			tripDays.map((tripDay) => {
-				if (tripDay.id === day.id) {
-					return day;
-				}
-				return tripDay;
-			})
-		);
+		const newTripDaysState = tripDays.map((tripDay) => {
+			if (tripDay.id === day.id) {
+				return day;
+			}
+			return tripDay;
+		});
+
+		setTripDays(newTripDaysState);
+		setTripDaysSpread(spreadTripDays(newTripDaysState));
 	};
 	const replaceTwoDayState = (day: TripDay[]) => {
-		setTripDays(
-			tripDays.map((tripDay) => {
-				if (tripDay.id === day[0].id) {
-					return day[0];
-				}
-				if (tripDay.id === day[1].id) {
-					return day[1];
-				}
-				return tripDay;
-			})
-		);
+		const newTripDaysState = tripDays.map((tripDay) => {
+			if (tripDay.id === day[0].id) {
+				return day[0];
+			}
+			if (tripDay.id === day[1].id) {
+				return day[1];
+			}
+			return tripDay;
+		});
+
+		setTripDays(newTripDaysState);
+		setTripDaysSpread(spreadTripDays(newTripDaysState));
 	};
 	const addActivityToDay = (newDay: TripDay) => {
 		bottomSheetRef.current?.close();
@@ -102,7 +108,6 @@ function ModifyTrip() {
 			dispatch(clearAccommodationState());
 		}
 	}, [newlyAddedAccommodation]);
-
 	useEffect(() => {
 		if (newlyAddedTravel.uid !== '') {
 			bottomSheetRef.current?.close();
@@ -160,16 +165,105 @@ function ModifyTrip() {
 				...dayEvent,
 				order: index,
 			}));
-			setTripDays(
-				tripDays.map((tripDay) => {
-					if (tripDay.id === deleteInfo.data!.tripDayId) {
-						return { ...tripDay, tripDayActivities: orderedDayActivities! };
-					}
-					return tripDay;
-				})
-			);
+			const newTripDaysState = tripDays.map((tripDay) => {
+				if (tripDay.id === deleteInfo.data!.tripDayId) {
+					return { ...tripDay, tripDayActivities: orderedDayActivities! };
+				}
+				return tripDay;
+			});
+
+			setTripDays(newTripDaysState);
+			setTripDaysSpread(spreadTripDays(newTripDaysState));
 		} catch (error) {
 			console.error(error);
+		}
+	};
+	const reestructureSpreadTripDays = (spreadData: any[]) => {
+		const reestructuredArray = [];
+
+		while (spreadData.length > 0) {
+			if (spreadData[0].dayIndex !== undefined) {
+				reestructuredArray.push({ ...spreadData.shift(), tripDayActivities: [] });
+			} else {
+				reestructuredArray[reestructuredArray.length - 1].tripDayActivities.push(
+					spreadData.shift()
+				);
+			}
+		}
+		return reestructuredArray;
+	};
+
+	const isSameDay = (spreadData: any[]) => {
+		let auxDay: { dayIndex: number; id: string; tripId: string } = {
+			dayIndex: -1,
+			id: '',
+			tripId: '',
+		};
+
+		while (spreadData.length > 0) {
+			if (spreadData[0].dayIndex !== undefined) {
+				auxDay = spreadData.shift();
+			} else {
+				if (auxDay.id !== spreadData[0].tripDayId) {
+					return {
+						// sameDay: false,
+						activityId: spreadData[0].dayActivity?.activity.id,
+						// newOrder: number,
+						newTripDayId: auxDay.id,
+						previousTripDayId: spreadData[0].tripDayId,
+						tripDayActivityId: spreadData[0].id,
+					};
+				}
+				spreadData.shift();
+			}
+		}
+		return true;
+	};
+
+	const getOrderOnDay = (tripDaysData: TripDay[], dayActivityId: string, tripDayId: string) => {
+		const dayOfChange = tripDaysData.find((dayOfTrip: TripDay) => dayOfTrip.id === tripDayId);
+		let newOrder = -1;
+		dayOfChange?.tripDayActivities.forEach((activity, index) => {
+			if (activity.id === dayActivityId) {
+				newOrder = index;
+			}
+		});
+		return newOrder;
+	};
+
+	const endDrag = async ({ data, from, to }: { data: any[]; from: number; to: number }) => {
+		// Check if its trip or accommodation
+		if (from !== to) {
+			const spreadData = [tripDaysSpread[0], ...data];
+			const movedOnSameDay = isSameDay([...spreadData]);
+			const reestructuredData = reestructureSpreadTripDays([...spreadData]);
+			if (movedOnSameDay === true) {
+				const reorderData = {
+					newOrder: getOrderOnDay(reestructuredData, data[to].id, data[to].tripDayId),
+					tripDayId: data[to].tripDayId,
+					tripDayActivityId: data[to].id,
+				};
+				try {
+					// setTripDaysSpread([...data]); // ORDER BEFORE SETTING DO IT DOESNT CHANGE
+					const newDayData = await reorderTripDay(reorderData);
+					console.log('NEW DAY DATA =======>', newDayData.data);
+					replaceDayState(newDayData.data!);
+				} catch (error) {
+					console.error(error);
+				}
+			} else {
+				const changeDayOrder = {
+					...movedOnSameDay,
+					newOrder: getOrderOnDay(reestructuredData, data[to].id, movedOnSameDay.newTripDayId),
+				};
+				try {
+					const tripDaysData = await changeTripDay(changeDayOrder);
+					console.log('CHANGE ORDER DATA =======>', tripDaysData.data);
+					replaceTwoDayState(tripDaysData.data!);
+				} catch (error) {
+					console.error(error);
+				}
+			}
 		}
 	};
 
@@ -178,55 +272,27 @@ function ModifyTrip() {
 			<Heading alignSelf="center" fontWeight="semibold">
 				Edit your Itinerary
 			</Heading>
-			<NestableScrollContainer style={{ height: '100%' }}>
-				{tripDays.map((tripDay) => (
-					<View key={tripDay.id} mt="4">
-						<Pressable onPress={() => addEventToDay(tripDay.dayIndex)}>
-							<HStack alignItems="center" justifyContent="center">
-								<Heading alignSelf="center" fontWeight="semibold">
-									Day {tripDay.dayIndex + 1}
-								</Heading>
-								<Divider width="50%" mx="5" />
-								<AddIcon size={35} color="#0f0f0f" />
-							</HStack>
-						</Pressable>
-						{tripDay.tripDayActivities.length > 0 ? (
-							<NestableDraggableFlatList
-								data={tripDay.tripDayActivities}
-								renderItem={(renderItemParams: RenderItemParams<DayAct>) => (
-									<RenderItem
-										renderItemParams={renderItemParams}
-										deleteTripEvent={deleteTripEvent}
-									/>
-								)}
-								keyExtractor={(item: DayAct) => item.id} // Change this
-								onDragEnd={({ data }) => {
-									setTripDays((prev) => {
-										const newState: any[] = [];
-										prev.forEach((_, index) => {
-											if (tripDay.dayIndex === index) {
-												newState.push({
-													id: prev[index].id,
-													dayIndex: prev[index].dayIndex,
-													tripId: prev[index].tripId,
-													tripDayActivities: data,
-												});
-											} else {
-												newState.push(prev[index]);
-											}
-										});
-										return newState;
-									});
-								}}
-							/>
-						) : (
-							<Box bgColor="#d1d1d1" mx="10" mt={1}>
-								<EmptyList text="Nothing on this trip yet" />
-							</Box>
-						)}
-					</View>
-				))}
-			</NestableScrollContainer>
+			<Pressable onPress={() => addEventToDay(tripDaysSpread[0].dayIndex)}>
+				<HStack alignItems="center" justifyContent="center">
+					<Heading alignSelf="center" fontWeight="semibold">
+						Day {tripDaysSpread[0].dayIndex + 1}
+					</Heading>
+					<Divider width="50%" mx="5" />
+					<AddIcon size={35} color="#0f0f0f" />
+				</HStack>
+			</Pressable>
+			<DraggableFlatList
+				data={tripDaysSpread.slice(1)}
+				onDragEnd={endDrag}
+				keyExtractor={(item) => item.id}
+				renderItem={(renderItemParams: RenderItemParams<DayAct>) => (
+					<RenderItem
+						renderItemParams={renderItemParams}
+						deleteTripEvent={deleteTripEvent}
+						addEventToDay={addEventToDay}
+					/>
+				)}
+			/>
 			<PickEventBS bottomSheetRef={bottomSheetRef} addActivityToDay={addActivityToDay} />
 		</View>
 	);
