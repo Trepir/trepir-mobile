@@ -1,28 +1,32 @@
 import { Text, Box, HStack, VStack, Image } from 'native-base';
 import React from 'react';
+import Colors from '../../constants/Colors';
 import { ActivityEvent } from '../../types';
+import ImagePlaceholder from '../ImagePlaceholder';
+import TagArray from './TagArray';
 
 type Props = {
 	activity: ActivityEvent;
 };
 
 function ActivityCard({ activity }: Props) {
-	const { id, name, duration, description, time, rating, tags, imageUrl, location } = activity;
+	const { name, location, tags } = activity;
+	console.log(activity);
 	return (
-		<HStack width="80%" bgColor="white" borderRadius={18}>
+		<HStack width="80%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
 			<Box
 				width={120}
 				height={120}
-				bgColor="gray.100"
+				bgColor={Colors.grey.extraLight}
 				alignItems="center"
 				justifyContent="center"
-				m={2}
 				borderRadius={12}
 			>
 				<Image
 					source={{
-						uri: imageUrl,
+						uri: location.photoUrl[0],
 					}}
+					fallbackElement={<ImagePlaceholder />}
 					alt="activity image"
 					width={120}
 					height={120}
@@ -30,17 +34,25 @@ function ActivityCard({ activity }: Props) {
 				/>
 			</Box>
 
-			<VStack px={3} justifyContent="space-around">
+			<VStack pl={3} justifyContent="space-around" width="58%">
 				<VStack>
-					<Text fontWeight="semibold" fontSize="lg" maxWidth="48" isTruncated noOfLines={2} mb={1}>
+					<Text
+						fontWeight="semibold"
+						fontSize="lg"
+						isTruncated
+						noOfLines={2}
+						mb={1}
+						color={Colors.black}
+					>
 						{name}
 					</Text>
-
-					{/* <Text fontWeight="normal" fontSize="md" maxWidth="32" isTruncated>
-						{description}
-					</Text> */}
 				</VStack>
-				<Text fontSize="md">{location.city}</Text>
+				<VStack>
+					<Text fontSize="md" isTruncated color={Colors.black}>
+						{location.city}
+					</Text>
+					<TagArray tags={tags} short />
+				</VStack>
 			</VStack>
 		</HStack>
 	);

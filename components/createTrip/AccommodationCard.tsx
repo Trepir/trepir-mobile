@@ -1,42 +1,65 @@
+/* eslint-disable react/require-default-props */
 import { Text, Box, HStack, VStack } from 'native-base';
 import React from 'react';
 import AccommodationIcon from '../../assets/icons/AccommodationIcon';
-import { NewAccommodationState } from '../../features/newAccommodation/newAccommodationSlice';
+import Colors from '../../constants/Colors';
+import { AccommodationEvent } from '../../types';
 
 type Props = {
-	accommodation: NewAccommodationState; // Change tp type if needed
+	accommodation: AccommodationEvent;
+	isInTripView?: boolean;
+	isCheckIn?: boolean;
 };
 
-function AccommodationCard({ accommodation }: Props) {
+function AccommodationCard({ accommodation, isInTripView = false, isCheckIn = false }: Props) {
 	const { date, location } = accommodation;
-
-	const parsedStartDate = new Date(date).toISOString().split('T')[0];
-	// const parsedEndDate = new Date(endDate).toISOString().split('T')[0];
+	const parseCheckDate = () => {
+		if (isInTripView) return date.split('T')[1].slice(0, 5);
+		return date.split('T')[0];
+	};
 
 	return (
-		<HStack height={100} width="72" bgColor="white" rounded="md">
+		<HStack width="80%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
 			<Box
-				width="2/5"
-				height="100%"
-				bgColor="gray.100"
+				width={120}
+				height={120}
+				bgColor={Colors.primary.softIconBackground}
 				alignItems="center"
 				justifyContent="center"
-				alignSelf="center"
-				ml={2}
-				borderRadius={18}
+				borderRadius={12}
 			>
-				<AccommodationIcon size="80%" color="#c1c1c1" />
+				<AccommodationIcon size="80%" color={Colors.primary.softIcon} />
 			</Box>
-			<VStack pl={3} py={6} justifyContent="space-evenly">
-				<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
+
+			<VStack pl={3} justifyContent="space-around" width="58%">
+				<Text
+					fontWeight="semibold"
+					textAlign="center"
+					fontSize="md"
+					bgColor={Colors.black}
+					isTruncated
+					noOfLines={2}
+					mb={1}
+				>
 					{location.locationName}
 				</Text>
-				<Text maxWidth="32" fontWeight="semibold" fontSize="md" isTruncated>
-					{location.city}
-				</Text>
-				<Text alignSelf="center" fontSize="xs">
-					{parsedStartDate}
-				</Text>
+				<VStack width="100%">
+					<Text
+						fontWeight="semibold"
+						textAlign="center"
+						fontSize="md"
+						bgColor={Colors.black}
+						isTruncated
+						noOfLines={2}
+						mb={1}
+					>
+						{location.city}
+					</Text>
+					<Text alignSelf="center" bgColor={Colors.grey.dark}>
+						{isCheckIn ? 'CheckIn at: ' : 'Checkout at: '}
+						{parseCheckDate()}
+					</Text>
+				</VStack>
 			</VStack>
 		</HStack>
 	);

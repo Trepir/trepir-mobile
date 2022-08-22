@@ -1,34 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ActivityEvent } from '../../types';
+import { DayAct } from '../../types';
 
-const initialState: ActivityEvent = {
+const initialState: DayAct = {
 	id: '',
-	uid: '',
-	name: '',
-	duration: 0,
-	description: '',
-	rating: 0,
-	tags: [],
-	location: {
-		latitude: 0,
-		longitude: 0,
-		formattedAddress: '',
-		photoUrl: [],
-		country: '',
-		state: '',
-		locationName: '',
-		city: '',
-		googleId: null,
-	},
-	imageUrl: '',
-	time: undefined,
+	tripDayId: '',
+	order: 0,
+	accommodation: null,
+	travelEvent: null,
+	dayActivity: null,
 };
 
 const currentActivitySlice = createSlice({
 	name: 'currentActivity',
 	initialState,
 	reducers: {
-		storeCurrentActivity: (state: ActivityEvent, action: PayloadAction<ActivityEvent>) => {
+		storeCurrentActivity: (state: DayAct, action: PayloadAction<DayAct>) => {
 			console.log('Payload: ', action.payload);
 			return { ...action.payload };
 		},

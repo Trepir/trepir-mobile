@@ -18,7 +18,7 @@ const initialState: AccommodationState = {
 	},
 };
 
-const newAAccommodationSlice = createSlice({
+const newAccommodationSlice = createSlice({
 	name: 'newAccommodation',
 	initialState,
 	reducers: {
@@ -35,5 +35,5 @@ const newAAccommodationSlice = createSlice({
 	},
 });
 
-export const { storeNewAccommodation, clearAccommodationState } = newAAccommodationSlice.actions;
-export default newAAccommodationSlice.reducer;
+export const { storeNewAccommodation, clearAccommodationState } = newAccommodationSlice.actions;
+export default newAccommodationSlice.reducer;

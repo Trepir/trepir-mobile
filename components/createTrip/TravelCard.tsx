@@ -1,44 +1,67 @@
-import { Text, Box, HStack, VStack, Divider } from 'native-base';
+import { Text, Box, HStack, VStack, View } from 'native-base';
 import React from 'react';
+import Arrow from '../../assets/icons/Arrow';
 import ConditionalTravelIcon from '../../assets/icons/ConditionalTravelIcon';
-import { NewTravelState } from '../../features/newTravel/newTravelSlice';
+import Colors from '../../constants/Colors';
+import { TravelEvent } from '../../types';
 
 type Props = {
-	// travel: NewTravelState; // Change tp type if needed
-	travel: any; // Change tp type if needed
-	isModify: boolean;
+	travel: TravelEvent;
+	// eslint-disable-next-line react/require-default-props
+	isInTripView?: boolean;
 };
 
-
-function TravelCard({ travel, isModify = false }: Props) {
+function TravelCard({ travel, isInTripView = false }: Props) {
 	const { type, originLocation, destinationLocation, departure } = travel;
-	const parseTravelDate = () =>
-		isModify ? departure.split('T')[0] : new Date(departure).toISOString().split('T')[0];
+	const parseDepartureDate = () => {
+		if (isInTripView) return departure.split('T')[1].slice(0, 5);
+		return departure.split('T')[0];
+	};
 
 	return (
-		<HStack height="5/6" width="72" bgColor="white" borderRadius={12}>
+		<HStack width="80%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
 			<Box
-				width="2/5"
-				bgColor="gray.100"
+				width={120}
+				height={120}
+				bgColor={Colors.primary.softIconBackground}
 				alignItems="center"
 				justifyContent="center"
-				m={2}
 				borderRadius={12}
 			>
-				<ConditionalTravelIcon type={type} size="80%" color="#c1c1c1" />
+				<ConditionalTravelIcon type={type} size="80%" color={Colors.primary.softIcon} />
 			</Box>
 
-			<VStack px={3} justifyContent="space-around" alignSelf="center">
-				<VStack justifyContent="center" alignItems="center">
-					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated noOfLines={2} mb={1}>
+			<VStack pl={3} justifyContent="space-around" width="58%">
+				<VStack width="100%">
+					<Text
+						fontWeight="semibold"
+						textAlign="center"
+						fontSize="md"
+						bgColor={Colors.black}
+						isTruncated
+						noOfLines={1}
+						mb={1}
+					>
 						{originLocation.locationName}
 					</Text>
-					<Divider mb={1} />
-					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
+					<View alignSelf="center" style={{ transform: [{ rotate: '90deg' }] }}>
+						<Arrow size={8} color={Colors.primary.normal} />
+					</View>
+					<Text
+						fontWeight="semibold"
+						textAlign="center"
+						fontSize="md"
+						bgColor={Colors.black}
+						isTruncated
+						noOfLines={2}
+						mb={1}
+					>
 						{destinationLocation.locationName}
 					</Text>
 				</VStack>
-				<Text alignSelf="center"> {parseTravelDate()} </Text>
+				<Text alignSelf="center" bgColor={Colors.grey.dark}>
+					Departure: {parseDepartureDate()}
+				</Text>
 			</VStack>
 		</HStack>
 	);
