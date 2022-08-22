@@ -11,15 +11,18 @@ import { NewTravelState } from '../features/newTravel/newTravelSlice';
 import { Activity, DayAct, TripStackScreenProps } from '../types';
 
 function filterActivity(dayAct: DayAct) {
-	if (dayAct.dayActivityId && dayAct.dayActivity?.activity)
+	console.log('ONE DAY', dayAct);
+	if (dayAct.dayActivity?.activity) {
 		return <ActivityCard activity={dayAct.dayActivity.activity} />;
-	if (dayAct.accommodationId && dayAct.accommodation)
+	}
+	if (dayAct.accommodation) {
+		console.log('Accommodation', dayAct.accommodation);
 		return <AccommodationCard accommodation={dayAct.accommodation} />;
-	if (dayAct.travelEventId && dayAct.travel) return <TravelCard travel={dayAct.travel} />;
+	}
+	if (dayAct.travelEvent) return <TravelCard travel={dayAct.travelEvent} />;
 	return null;
 }
 
-// create a function that with a starting date and and index will return the actual date
 function getDate(startDate: string, index: number) {
 	const date = new Date(startDate);
 	date.setDate(date.getDate() + index);
@@ -28,7 +31,7 @@ function getDate(startDate: string, index: number) {
 
 function Trip({ navigation }: TripStackScreenProps<'Trip'>) {
 	const trip = useAppSelector((state) => state.currentTrip);
-	console.log('What I get on Trip Screen', trip.tripDay);
+	// console.log('What I get on Trip Screen', trip.id);
 
 	const ModifyTrip = () => {
 		navigation.navigate('ModifyTrip');
@@ -52,16 +55,13 @@ function Trip({ navigation }: TripStackScreenProps<'Trip'>) {
 							</HStack>
 							<FlatList
 								width="100%"
-								height={200}
 								data={item.tripDayActivities}
 								keyExtractor={(act) => act.id!}
-								renderItem={({ item }) =>
-									item.dayActivity && (
-										<View width="100%" m={1} alignItems="center" bgColor="amber.100">
-											{filterActivity(item)}
-										</View>
-									)
-								}
+								renderItem={({ item }) => (
+									<View width="100%" m={1} alignItems="center">
+										{filterActivity(item)}
+									</View>
+								)}
 							/>
 						</View>
 					)}

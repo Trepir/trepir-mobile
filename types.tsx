@@ -185,11 +185,8 @@ export type DayAct = {
 	id: string;
 	tripDayId: string;
 	order: number;
-	dayActivityId: string | null;
-	accommodationId: string | null;
-	travelEventId: string | null;
 	accommodation: NewAccommodationState | null;
-	travel: NewTravelState | null;
+	travelEvent: NewTravelState | null;
 	dayActivity: {
 		id: string;
 		activity: Activity;

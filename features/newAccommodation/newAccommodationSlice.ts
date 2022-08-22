@@ -3,15 +3,15 @@ import { Location } from '../../types';
 
 // THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
 export interface NewAccommodationState {
-	startDate: number;
-	endDate: number;
+	date: string;
+	// endDate: string;
 	location: Location;
 	uid: string;
 }
 
 const initialState: NewAccommodationState = {
-	startDate: Date.now(),
-	endDate: Date.now(),
+	date: '',
+	// endDate: '',
 	uid: '',
 	location: {
 		latitude: 0,

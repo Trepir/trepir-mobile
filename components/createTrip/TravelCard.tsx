@@ -8,7 +8,7 @@ type Props = {
 };
 
 function TravelCard({ travel }: Props) {
-	const { travelType, origin, destination, departure } = travel;
+	const { type, originLocation, destinationLocation, departure } = travel;
 	const parsedDate = new Date(departure).toISOString().split('T')[0];
 	return (
 		<HStack height="5/6" width="72" bgColor="white" borderRadius={12}>
@@ -20,17 +20,17 @@ function TravelCard({ travel }: Props) {
 				m={2}
 				borderRadius={12}
 			>
-				<ConditionalTravelIcon type={travelType} size="80%" color="#c1c1c1" />
+				<ConditionalTravelIcon type={type} size="80%" color="#c1c1c1" />
 			</Box>
 
 			<VStack px={3} justifyContent="space-around" alignSelf="center">
 				<VStack justifyContent="center" alignItems="center">
 					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated noOfLines={2} mb={1}>
-						{origin.locationName}
+						{originLocation.locationName}
 					</Text>
 					<Divider mb={1} />
 					<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
-						{destination.locationName}
+						{destinationLocation.locationName}
 					</Text>
 				</VStack>
 				<Text alignSelf="center">{parsedDate} </Text>

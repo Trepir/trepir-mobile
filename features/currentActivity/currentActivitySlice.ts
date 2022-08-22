@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Activity, Location } from '../../types';
+import { Activity } from '../../types';
 
 const initialState: Activity = {
 	id: '',
@@ -9,9 +9,19 @@ const initialState: Activity = {
 	description: '',
 	rating: 0,
 	tags: [],
-	location: new Location(),
+	location: {
+		latitude: 0,
+		longitude: 0,
+		formattedAddress: '',
+		photoUrl: [],
+		country: '',
+		state: '',
+		locationName: '',
+		city: '',
+		googleId: null,
+	},
 	imageUrl: '',
-	time: new Date(),
+	time: undefined,
 };
 
 const currentActivitySlice = createSlice({
