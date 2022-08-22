@@ -1,6 +1,6 @@
 // import { Trip } from '../types';
 
-import { ActivityEvent, DayAct, Location } from '../types';
+import { Location, TripDay } from '../types';
 
 const url = 'https://trepir.herokuapp.com';
 // const url = 'http://192.168.1.215:4000';
@@ -13,17 +13,15 @@ type AddActivityType = {
 
 export const addActivityToTrip = async (
 	activityInfo: AddActivityType
-): Promise<{ data: DayAct | null; error: any }> => {
-	console.log('WHAT I SEND activity =>>>>>>', activityInfo);
+): Promise<{ data: TripDay | null; error: any }> => {
 	try {
 		const result = await fetch(`${url}/trip/addActivity`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(activityInfo),
 		});
-		const linkedActivity = await result.json();
-		console.log('ADD ACTIVITY DATA', linkedActivity);
-		return { data: linkedActivity, error: null };
+		const newTripDay: TripDay = await result.json();
+		return { data: newTripDay, error: null };
 	} catch (error) {
 		console.error(error);
 		return { data: null, error };
@@ -40,7 +38,7 @@ type AddAccommodationType = {
 
 export const addAccommodationToTrip = async (
 	newAccommodation: AddAccommodationType
-): Promise<any> => {
+): Promise<{ data: TripDay[] | null; error: any }> => {
 	console.log('WHAT I SEND ACCOMMODATION =>>>>>>', newAccommodation);
 	try {
 		const result = await fetch(`${url}/trip/addAccommodation`, {
@@ -48,11 +46,11 @@ export const addAccommodationToTrip = async (
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(newAccommodation),
 		});
-		console.log('ADD ACCOMMODATION RESULT', result);
-		const data = await result.text();
-		console.log('ADD ACCOMMODATION DATA', data);
+		const newDays: TripDay[] = await result.json();
+		return { data: newDays, error: null };
 	} catch (error) {
 		console.error(error);
+		return { data: null, error };
 	}
 };
 
@@ -65,46 +63,44 @@ type AddTravelType = {
 	departure: string;
 	flightNum?: string | number | null | undefined;
 };
-
-type addTravelResultType = {
-	id: string;
-	tripDayId: string;
-	order: number;
-};
-
 export const addTravelToTrip = async (
 	newTravel: AddTravelType
-): Promise<{ data: addTravelResultType | null; error: any }> => {
-	console.log('WHAT I SEND TRAVEL =>>>>>>', newTravel);
-
+): Promise<{ data: TripDay | null; error: any }> => {
 	try {
 		const result = await fetch(`${url}/trip/addTravelEvent`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(newTravel),
 		});
-		const travel: addTravelResultType = await result.json();
-		console.log('ADD TRAVEL DATA', travel);
+		const newTripDay: TripDay = await result.json();
 
-		return { data: travel, error: null };
+		return { data: newTripDay, error: null };
 	} catch (error) {
 		console.error(error);
 		return { data: null, error };
 	}
 };
 
-// export const fetchTrip = async (id: string): Promise<{ data: Trip | null; error: any }> => {
-// 	try {
-// 		const data = await fetch(`https://trepir.herokuapp.com/trip/tripById/${id}`, {
-// 			method: 'GET',
-// 			headers: {
-// 				'Content-Type': 'application/json',
-// 			},
-// 		});
-// 		const trip: Trip = await data.json();
-// 		return { data: trip, error: null };
-// 	} catch (error) {
-// 		console.log('services/user/FetchUser', error);
-// 		return { data: null, error };
-// 	}
-// };
+type DeleteInfo = {
+	id: string;
+	order: number;
+	tripDayId: string;
+};
+
+export const deleteEventFromTrip = async (
+	id: string
+): Promise<{ data: DeleteInfo | null; error: any }> => {
+	try {
+		const result = await fetch(`${url}/trip/deleteEvent`, {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ id }),
+		});
+		const deleteResult: DeleteInfo = await result.json();
+		console.log('DELETE RESULT ========>', deleteResult);
+		return { data: deleteResult, error: null };
+	} catch (error) {
+		console.error(error);
+		return { data: null, error };
+	}
+};
