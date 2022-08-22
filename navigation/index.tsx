@@ -36,6 +36,7 @@ import CompassIcon from '../assets/icons/CompassIcon';
 import Colors from '../constants/Colors';
 import StartCTScreen from '../screens/StartCTScreen';
 import hideBottomBar from '../helpers/hideBottomBar';
+import ActivityScreen from '../screens/ActivityScreen';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -196,6 +197,11 @@ function RootNavigator() {
 					component={AddAccomScreen}
 					options={{ title: 'Add an Accommodation' }}
 				/>
+				<Stack.Screen
+					name="ActivityScreen"
+					component={ActivityScreen}
+					options={{ headerShown: false }}
+				/>
 			</Stack.Group>
 			<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 		</Stack.Navigator>
@@ -208,8 +214,6 @@ function AuthNavigator() {
 	return (
 		<AuthStack.Navigator>
 			<AuthStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
-			{/* <AuthStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-			<AuthStack.Screen name="Register" component={Login} options={{ headerShown: false }} /> */}
 		</AuthStack.Navigator>
 	);
 }

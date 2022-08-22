@@ -17,9 +17,6 @@ function DashboardScreen() {
 	useEffect(() => {
 		if (trips) {
 			const currentDate = new Date().toISOString();
-			// const index = currentDate.indexOf('T');
-			// const currentDateString = currentDate.substring(0, index);
-			console.log(currentDate);
 			const pastT = trips.filter((trip) => trip.endDate < currentDate);
 			const upcomingT = trips.filter((trip) => trip.startDate > currentDate);
 			const currentT = trips.filter(

@@ -16,12 +16,13 @@ function CogMenu({ callback, color }: { callback: () => void; color: string }) {
 						<CogIcon size={25} color={color} />
 					</Pressable>
 				)}
+				shadow={5}
 			>
 				<Menu.Item borderRadius={4} alignSelf="center">
-					Profile
+					🌘 Dark Mode
 				</Menu.Item>
 				<Menu.Item textAlign="center" onPress={callback} bgColor="red.400" borderRadius={4}>
-					<Text color={Colors.white} fontWeight="black">
+					<Text color="white" fontWeight="black" textAlign="center">
 						LOGOUT
 					</Text>
 				</Menu.Item>

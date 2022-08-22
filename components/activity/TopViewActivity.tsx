@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { Text, Pressable, HStack } from 'native-base';
+import { View, Text, Pressable, HStack } from 'native-base';
 import React from 'react';
 import Constants from 'expo-constants';
-import AddIcon from '../../assets/icons/AddIcon';
 import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
 
-function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () => void }) {
+function TopViewActivity({ title = 'ups' }: { title: string }) {
 	const navigation = useNavigation();
 
 	return (
@@ -16,7 +15,7 @@ function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () 
 			alignItems="center"
 			backgroundColor={Colors.primary.dark}
 			width="100%"
-			pt={Constants.statusBarHeight + 16}
+			pt={Constants.statusBarHeight + 14}
 			pb={4}
 		>
 			<Pressable
@@ -28,22 +27,22 @@ function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () 
 				<Arrow size={13} color={Colors.white} />
 			</Pressable>
 			<Text
-				// width="70%"
 				color={Colors.white}
+				width="60%"
 				flexShrink={1}
 				fontSize="2xl"
 				fontWeight="bold"
 				isTruncated
 				textAlign="center"
-				pb={1}
 			>
 				{title}
 			</Text>
-			<Pressable alignItems="center" width="8%" onPress={callback} alignSelf="center" rounded="3xl">
+			<View width="8%" />
+			{/* <Pressable alignItems="center" width="8%" onPress={callback} alignSelf="center" rounded="3xl">
 				<AddIcon size={36} color={Colors.primary.light} />
-			</Pressable>
+			</Pressable> */}
 		</HStack>
 	);
 }
 
-export default TopViewTrip;
+export default TopViewActivity;

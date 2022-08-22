@@ -34,8 +34,8 @@ const userSlice = createSlice({
 				photoUrl: newPhotoUrl,
 				emailVerified,
 			};
-			console.log('Payload: ', action.payload);
-			console.log('New State: ', newState);
+			// console.log('Payload: ', action.payload);
+			// console.log('New State: ', newState);
 
 			return { ...newState };
 		},

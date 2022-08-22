@@ -8,7 +8,7 @@ const likedActivitiesSlice = createSlice({
 	initialState,
 	reducers: {
 		storeLikedActivities: (state: ActivityEvent[], action: PayloadAction<ActivityEvent[]>) => {
-			console.log('Payload (storeLikedActivities): ', action.payload);
+			// console.log('Payload (storeLikedActivities): ', action.payload);
 			return [...action.payload];
 		},
 		clearLikedActivities: () => initialState,

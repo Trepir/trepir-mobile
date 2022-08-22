@@ -1,14 +1,7 @@
 /* eslint-disable max-classes-per-file */
-/**
- * Learn more about using TypeScript with React Navigation:
- * https://reactnavigation.org/docs/typescript/
- */
-
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NewAccommodationState } from './features/newAccommodation/newAccommodationSlice';
-import { NewTravelState } from './features/newTravel/newTravelSlice';
 
 export type RootTabParamList = {
 	Dashboard: undefined;
@@ -29,6 +22,7 @@ export type RootStackParamList = {
 	Root: NavigatorScreenParams<RootTabParamList> | undefined;
 	CreateStack: NavigatorScreenParams<CreateTripParamList> | undefined;
 	TripStack: NavigatorScreenParams<TripStackParamList> | undefined;
+	ActivityScreen: undefined;
 	NewActivityModal: undefined;
 	NewTravelModal: undefined;
 	NewAccommodationModal: undefined;
@@ -207,6 +201,7 @@ export type TravelEvent = {
 	departure: string;
 	eventType: string;
 	tripDayActivityId: string;
+	travelInfo: string;
 	originLocation: Location;
 	destinationLocation: Location;
 };
@@ -220,63 +215,6 @@ export type AccommodationEvent = {
 	locationId: string;
 	tripDayActivityId: string;
 	location: Location;
-};
-
-// TRIP TYPES -----------------------------------------------------------------------------------------------------------
-
-export type DayAct = {
-	id: string;
-	tripDayId: string;
-	order: number;
-	accommodation: NewAccommodationState | null;
-	travelEvent: NewTravelState | null;
-	dayActivity: DayActivityEvent | null;
-};
-
-export type TripDay = {
-	id: string;
-	dayIndex: number;
-	tripId: string;
-	tripDayActivities: DayAct[];
-};
-
-export type TripForPost = {
-	name: string;
-	startDate: string;
-	endDate: string;
-	googlePlaceId: string;
-	latitude: number;
-	longitude: number;
-	photoUrl: string;
-	formattedAddress: string;
-	googleLocationName: string;
-	travel: NewTravelState | null;
-	accommodation: NewAccommodationState | null;
-};
-
-export type Trip = {
-	uid: string;
-	id: string;
-	createdAt: string;
-	userId: string;
-	startDate: string;
-	endDate: string;
-	name: string;
-	googlePlaceId: string;
-	latitude: number;
-	longitude: number;
-	formattedAddress: string;
-	googleLocationName: string;
-	photoUrl: string;
-	tripDay: TripDay[];
-	favouriteActivities: ActivityEvent[];
-};
-
-export type Viewport = {
-	latitudeHigh: number;
-	latitudeLow: number;
-	longitudeHigh: number;
-	longitudeLow: number;
 };
 
 // STATES TYPES -----------------------------------------------------------------------------------------------------------
@@ -334,3 +272,60 @@ export interface NewActivityState {
 	// rating: number: null
 	location: Location;
 }
+
+// TRIP TYPES -----------------------------------------------------------------------------------------------------------
+
+export type DayAct = {
+	id: string;
+	tripDayId: string;
+	order: number;
+	accommodation: AccommodationEvent | null;
+	travelEvent: TravelEvent | null;
+	dayActivity: DayActivityEvent | null;
+};
+
+export type TripDay = {
+	id: string;
+	dayIndex: number;
+	tripId: string;
+	tripDayActivities: DayAct[];
+};
+
+export type TripForPost = {
+	name: string;
+	startDate: string;
+	endDate: string;
+	googlePlaceId: string;
+	latitude: number;
+	longitude: number;
+	photoUrl: string;
+	formattedAddress: string;
+	googleLocationName: string;
+	travel: TravelState | null;
+	accommodation: AccommodationState | null;
+};
+
+export type Trip = {
+	uid: string;
+	id: string;
+	createdAt: string;
+	userId: string;
+	startDate: string;
+	endDate: string;
+	name: string;
+	googlePlaceId: string;
+	latitude: number;
+	longitude: number;
+	formattedAddress: string;
+	googleLocationName: string;
+	photoUrl: string;
+	tripDay: TripDay[];
+	favouriteActivities: ActivityEvent[];
+};
+
+export type Viewport = {
+	latitudeHigh: number;
+	latitudeLow: number;
+	longitudeHigh: number;
+	longitudeLow: number;
+};

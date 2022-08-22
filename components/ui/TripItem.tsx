@@ -8,31 +8,21 @@ import { fetchTrip } from '../../services/trip';
 import { useAppDispatch } from '../../app/hooks';
 import { storeCurrentTrip } from '../../features/trip/currentTripSlice';
 
-type Trip = {
-	id: number;
-	name: string;
-	startDate: string;
-	endDate: string;
-	photo: string;
-};
-
 function TripItem({ trip }: { trip: TripBasicState }) {
-	const { id } = trip;
-	const { name } = trip;
-	// const startDate = trip.startDate.split('T')[0];
-	const startDate = new Date (trip.startDate).toDateString().slice(4);
-	const endDate = new Date (trip.endDate).toDateString().slice(4);
-	// const startDate = new Date (trip.startDate).toLocaleString('en-GB');
-	// const endDate = trip.endDate.split('T')[0];
-	const { photoUrl } = trip;
 	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
+
+	const { id } = trip;
+	const { name } = trip;
+	const startDate = new Date(trip.startDate).toDateString().slice(4);
+	const endDate = new Date(trip.endDate).toDateString().slice(4);
+	const { photoUrl } = trip;
+
 	return (
 		<Pressable
 			borderRadius={18}
 			backgroundColor={Colors.white}
 			width={350}
-			// height={216}
 			p={2}
 			m={2}
 			shadow={2}
@@ -41,8 +31,7 @@ function TripItem({ trip }: { trip: TripBasicState }) {
 					const fetchedTrip = await fetchTrip(id);
 					if (fetchedTrip.data) {
 						dispatch(storeCurrentTrip(fetchedTrip.data));
-						// console.log('trip that I save', fetchedTrip.data);
-						navigation.navigate('TripStack' );
+						navigation.navigate('TripStack', { screen: 'Trip' });
 					}
 				} catch (error) {
 					console.error(error);
@@ -65,7 +54,7 @@ function TripItem({ trip }: { trip: TripBasicState }) {
 							{name}
 						</Text>
 						<Text>
-							{startDate} -> {endDate}
+							{startDate} -&gt; {endDate}
 						</Text>
 					</VStack>
 					<Arrow size={11} />

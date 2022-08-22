@@ -24,7 +24,7 @@ const currentTripSlice = createSlice({
 	initialState,
 	reducers: {
 		storeCurrentTrip: (state: Trip, action: PayloadAction<Trip>) => {
-			console.log('Payload: ', action.payload);
+			// console.log('Payload: ', action.payload);
 			return { ...action.payload };
 		},
 		clearCurrentTrip: () => initialState,
