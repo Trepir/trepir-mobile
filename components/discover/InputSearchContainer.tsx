@@ -8,7 +8,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import { ActivityTags } from '../../constants/ActivityTags';
 import GooglePlacesInput from '../utils/GooglePlacesInput';
 import Colors from '../../constants/Colors';
-import { Activity } from '../../types';
+import { ActivityEvent } from '../../types';
 import ActivityCard from '../ui/ActivityCard';
 
 const styles = StyleSheet.create({
@@ -26,7 +26,7 @@ type Props = {
 	// eslint-disable-next-line no-unused-vars
 	goToDestination: (_: any, details: GooglePlaceDetail) => void;
 	bottomSheetRef: Ref<BottomSheet>;
-	activities: Activity[];
+	activities: ActivityEvent[];
 };
 
 function InputSearchContainer({ goToDestination, bottomSheetRef, activities }: Props) {

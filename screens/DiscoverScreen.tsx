@@ -7,7 +7,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import GooglePlacesInput from '../components/utils/GooglePlacesInput';
 import Colors from '../constants/Colors';
 import InputSearchContainer from '../components/discover/InputSearchContainer';
-import { Activity, Viewport } from '../types';
+import { ActivityEvent, Viewport } from '../types';
 import { activitiesFromViewport } from '../services/DiscoverService';
 // import { parseLocationDetails } from '../helpers/parseLocationDetails';
 
@@ -41,7 +41,7 @@ const edgePadding = {
 };
 function DiscoverScreen() {
 	const [startedSearch, setStartedSearch] = useState(false);
-	const [activitiesFromLocation, setActivitiesFromLocation] = useState<Activity[]>([]);
+	const [activitiesFromLocation, setActivitiesFromLocation] = useState<ActivityEvent[]>([]);
 
 	const mapRef = useRef<MapView>(null);
 	const bottomSheetRef = useRef<BottomSheet>(null);

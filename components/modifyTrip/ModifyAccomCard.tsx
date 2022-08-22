@@ -1,10 +1,10 @@
 import { Text, Box, HStack, VStack } from 'native-base';
 import React from 'react';
 import AccommodationIcon from '../../assets/icons/AccommodationIcon';
-import { Accommodation } from '../../types';
+import { AccommodationEvent } from '../../types';
 
 type Props = {
-	accommodation: Accommodation; // Change tp type if needed
+	accommodation: AccommodationEvent; // Change tp type if needed
 };
 
 function ModifyAccomCard({ accommodation }: Props) {

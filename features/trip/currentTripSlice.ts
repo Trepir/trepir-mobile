@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Trip } from '../../types';
 
 const initialState: Trip = {
+	uid: '',
 	id: '',
 	createdAt: '',
 	userId: '',

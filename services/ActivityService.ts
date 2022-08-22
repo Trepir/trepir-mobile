@@ -1,11 +1,11 @@
-import { Activity } from '../types';
+import { ActivityEvent } from '../types';
 
 const url = 'https://trepir.herokuapp.com';
 // const url = 'http://192.168.1.215:4000';
 
 export const createActivityApi = async (
-	activity: Activity
-): Promise<{ data: Activity | null; error: any }> => {
+	activity: ActivityEvent
+): Promise<{ data: ActivityEvent | null; error: any }> => {
 	try {
 		const result = await fetch(`${url}/activity/create`, {
 			method: 'POST',

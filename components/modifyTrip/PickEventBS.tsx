@@ -4,12 +4,12 @@ import { View, Text, Divider, Pressable } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import ButtonGroup from './ButtonGroup';
 import ActivityCard from '../ui/ActivityCard';
-import { Activity } from '../../types';
+import { ActivityEvent } from '../../types';
 
 type Props = {
 	bottomSheetRef: Ref<BottomSheet>;
 	// eslint-disable-next-line no-unused-vars
-	addActivityToDay: (activity: Activity) => void;
+	addActivityToDay: (activity: ActivityEvent) => void;
 };
 
 function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {

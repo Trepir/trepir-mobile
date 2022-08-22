@@ -3,7 +3,7 @@ import { View, Heading, Divider, ScrollView, Box, Pressable } from 'native-base'
 import React, { useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import Colors from '../../constants/Colors';
-import { Activity } from '../../types';
+import { ActivityEvent } from '../../types';
 import ActivityCard from '../ui/ActivityCard';
 import ButtonCustom from '../ui/ButtonCustom';
 import EmptyList from './EmptyList';
@@ -15,7 +15,7 @@ type Props = {
 function Step3({ jumpTo }: Props) {
 	const navigation = useNavigation();
 	const likedActivities = useAppSelector((state) => state.likedActivities);
-	const activities: Activity[] = [
+	const activities: ActivityEvent[] = [
 		{
 			id: 'cl6yulnyy00133z4kc749ystla',
 			name: 'Go to the beach asdjfa ljasdnfp asdjnfas asdfna asdlfjkasd asjkldfnas',

@@ -1,17 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Location } from '../../types';
+import { AccommodationState } from '../../types';
 
-// THIS WILL MAYBE CHANGE OUT MOVED OUT OF HERE
-export interface NewAccommodationState {
-	date: string;
-	// endDate: string;
-	location: Location;
-	uid: string;
-}
-
-const initialState: NewAccommodationState = {
-	date: '',
-	// endDate: '',
+const initialState: AccommodationState = {
+	startDate: '',
+	endDate: '',
 	uid: '',
 	location: {
 		latitude: 0,
@@ -31,15 +23,15 @@ const newAAccommodationSlice = createSlice({
 	initialState,
 	reducers: {
 		storeNewAccommodation: (
-			state: NewAccommodationState,
-			action: PayloadAction<NewAccommodationState>
+			state: AccommodationState,
+			action: PayloadAction<AccommodationState>
 		) => {
 			console.log('NEW ACCOMMODATION STORED =>', action.payload);
 			// eslint-disable-next-line no-param-reassign
 			return { ...action.payload };
 		},
 		// Change Type if necessary
-		clearAccommodationState: (state: NewAccommodationState) => initialState,
+		clearAccommodationState: (state: AccommodationState) => initialState,
 	},
 });
 

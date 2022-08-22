@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Activity } from '../../types';
+import { ActivityEvent } from '../../types';
 
-const initialState: Activity = {
+const initialState: ActivityEvent = {
 	id: '',
 	uid: '',
 	name: '',
@@ -28,7 +28,7 @@ const currentActivitySlice = createSlice({
 	name: 'currentActivity',
 	initialState,
 	reducers: {
-		storeCurrentActivity: (state: Activity, action: PayloadAction<Activity>) => {
+		storeCurrentActivity: (state: ActivityEvent, action: PayloadAction<ActivityEvent>) => {
 			console.log('Payload: ', action.payload);
 			return { ...action.payload };
 		},

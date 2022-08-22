@@ -8,7 +8,7 @@ import TravelCard from '../components/createTrip/TravelCard';
 import TopViewTrip from '../components/Trip/TopViewTrip';
 import ActivityCard from '../components/ui/ActivityCard';
 import { NewTravelState } from '../features/newTravel/newTravelSlice';
-import { Activity, DayAct, TripStackScreenProps } from '../types';
+import { ActivityEvent, DayAct, TripStackScreenProps } from '../types';
 
 function filterActivity(dayAct: DayAct) {
 	console.log('ONE DAY', dayAct);

@@ -14,7 +14,7 @@ import PickEventBS from '../components/modifyTrip/PickEventBS';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTravelState, NewTravelState } from '../features/newTravel/newTravelSlice';
 import { clearActivityState } from '../features/newActivity/newActivitySlice';
-import { TripDay, DayAct, Activity } from '../types';
+import { TripDay, DayAct, ActivityEvent } from '../types';
 import AddIcon from '../assets/icons/AddIcon';
 import EmptyList from '../components/createTrip/EmptyList';
 import {

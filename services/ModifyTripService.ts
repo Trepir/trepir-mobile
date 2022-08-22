@@ -1,6 +1,6 @@
 // import { Trip } from '../types';
 
-import { Activity, DayAct, Location } from '../types';
+import { ActivityEvent, DayAct, Location } from '../types';
 
 const url = 'https://trepir.herokuapp.com';
 // const url = 'http://192.168.1.215:4000';
