@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { storeNewActivity } from '../features/newActivity/newActivitySlice';
 // import TimePickerInput from '../components/form/TimePickerInput';
 import DropDown from '../components/form/DropDown';
-import { Activity, Location, RootTabScreenProps } from '../types';
+import { ActivityEvent, Location, RootTabScreenProps } from '../types';
 import { parseLocationDetails } from '../helpers/parseLocationDetails';
 import { ActivityTags } from '../constants/ActivityTags';
 import ApiKeys from '../constants/ApiKeys';
@@ -48,7 +48,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 		handleSubmit,
 		formState: { errors },
 		setValue,
-	} = useForm<Activity>({
+	} = useForm<ActivityEvent>({
 		defaultValues: {
 			name: '',
 			duration: 0,
@@ -71,7 +71,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 		setValue('location', locationData, { shouldValidate: true });
 		setValue('imageUrl', imgUrl, { shouldValidate: true });
 	};
-	const onSubmit = (data: Activity) => {
+	const onSubmit = (data: ActivityEvent) => {
 		dispatch(storeNewActivity({ uid: userId, ...data }));
 		navigation.goBack();
 	};

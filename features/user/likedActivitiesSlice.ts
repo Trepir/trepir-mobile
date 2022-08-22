@@ -1,26 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Activity } from '../../types';
+import { ActivityEvent } from '../../types';
 
-const initialState: Activity[] = [];
+const initialState: ActivityEvent[] = [];
 
 const likedActivitiesSlice = createSlice({
 	name: 'likedActivities',
 	initialState,
 	reducers: {
-		storeLikedActivities: (state: Activity[], action: PayloadAction<Activity[]>) => {
+		storeLikedActivities: (state: ActivityEvent[], action: PayloadAction<ActivityEvent[]>) => {
 			console.log('Payload (storeLikedActivities): ', action.payload);
 			return [...action.payload];
 		},
 		clearLikedActivities: () => initialState,
-		addLikedActivity: (state: Activity[], action: PayloadAction<Activity>) => {
+		addLikedActivity: (state: ActivityEvent[], action: PayloadAction<ActivityEvent>) => {
 			console.log('Payload (addLikedActivity): ', action.payload);
 			return [...state, action.payload];
 		},
-		removeLikedActivity: (state: Activity[], action: PayloadAction<Activity>) => {
+		removeLikedActivity: (state: ActivityEvent[], action: PayloadAction<ActivityEvent>) => {
 			console.log('Payload (removeLikedActivity): ', action.payload);
 			return state.filter((activity) => activity.id !== action.payload.id);
 		},
-		modifyLikedActivity: (state: Activity[], action: PayloadAction<Activity>) => {
+		modifyLikedActivity: (state: ActivityEvent[], action: PayloadAction<ActivityEvent>) => {
 			console.log('Payload (modifyLikedActivity): ', action.payload);
 			return state.map((activity) =>
 				activity.id === action.payload.id ? action.payload : activity

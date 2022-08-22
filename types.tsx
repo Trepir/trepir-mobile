@@ -125,7 +125,7 @@ export class Location {
 	googleId: string | null;
 }
 
-export class Activity {
+export class ActivityEvent {
 	constructor() {
 		this.id = '';
 		this.uid = '';
@@ -136,7 +136,7 @@ export class Activity {
 		this.tags = [] as Tag[];
 		this.location = new Location();
 		this.imageUrl = '';
-		this.time = new Date();
+		this.time = '';
 	}
 
 	id?: string;
@@ -157,7 +157,7 @@ export class Activity {
 
 	imageUrl: string;
 
-	time?: Date;
+	time?: string;
 }
 
 // USER TYPES -----------------------------------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ export type User = {
 	email: string;
 	photoUrl: string;
 	emailVerified: boolean;
-	favoriteActivities: Activity[];
+	favoriteActivities: ActivityEvent[];
 	trips: [];
 };
 
@@ -183,8 +183,43 @@ export type UserFromBackend = {
 	email: string;
 	photoUrl: string;
 	emailVerified: boolean;
-	favoriteActivities: Activity[];
+	favoriteActivities: ActivityEvent[];
 	trips: [];
+};
+
+// EVENT TYPES -----------------------------------------------------------------------------------------------------------
+
+export type DayActivityEvent = {
+	id: string;
+	createdAt: string;
+	activityId: string;
+	time: string;
+	tripDayActivityId: string;
+	activity: ActivityEvent;
+};
+
+export type TravelEvent = {
+	id: string;
+	createdAt: string;
+	originLocationId: string;
+	destinationLocationId: string;
+	type: string;
+	departure: string;
+	eventType: string;
+	tripDayActivityId: string;
+	originLocation: Location;
+	destinationLocation: Location;
+};
+
+export type AccommodationEvent = {
+	id: string;
+	createdAt: string;
+	date: string;
+	state: string;
+	eventType: string;
+	locationId: string;
+	tripDayActivityId: string;
+	location: Location;
 };
 
 // TRIP TYPES -----------------------------------------------------------------------------------------------------------
@@ -195,11 +230,9 @@ export type DayAct = {
 	order: number;
 	accommodation: NewAccommodationState | null;
 	travelEvent: NewTravelState | null;
-	dayActivity: {
-		id: string;
-		activity: Activity;
-	} | null;
+	dayActivity: DayActivityEvent | null;
 };
+
 export type TripDay = {
 	id: string;
 	dayIndex: number;
@@ -236,17 +269,7 @@ export type Trip = {
 	googleLocationName: string;
 	photoUrl: string;
 	tripDay: TripDay[];
-	favouriteActivities: Activity[];
-};
-
-export type Accommodation = {
-	id: string;
-	date: string;
-	state: string;
-	eventType: string;
-	locationId: string;
-	tripDayActivityId: string;
-	location: Location;
+	favouriteActivities: ActivityEvent[];
 };
 
 export type Viewport = {
@@ -255,6 +278,7 @@ export type Viewport = {
 	longitudeHigh: number;
 	longitudeLow: number;
 };
+
 // STATES TYPES -----------------------------------------------------------------------------------------------------------
 
 export type UserState = {
@@ -282,3 +306,31 @@ export type TripBasicState = {
 	googleLocationName: string;
 	photoUrl: string;
 };
+
+export interface TravelState {
+	type: string;
+	departure: string;
+	originLocation: Location;
+	destinationLocation: Location;
+	flightNum?: string | null;
+	id?: string;
+	uid: string;
+}
+
+export interface AccommodationState {
+	startDate: string;
+	endDate: string;
+	location: Location;
+	uid: string;
+}
+
+export interface NewActivityState {
+	name: string;
+	duration: number;
+	description: string;
+	time: number;
+	uid: string;
+	tags: string[];
+	// rating: number: null
+	location: Location;
+}

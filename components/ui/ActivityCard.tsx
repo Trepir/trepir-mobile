@@ -1,9 +1,9 @@
 import { Text, Box, HStack, VStack, Image } from 'native-base';
 import React from 'react';
-import { Activity } from '../../types';
+import { ActivityEvent } from '../../types';
 
 type Props = {
-	activity: Activity;
+	activity: ActivityEvent;
 };
 
 function ActivityCard({ activity }: Props) {
