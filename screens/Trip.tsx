@@ -11,12 +11,10 @@ import { NewTravelState } from '../features/newTravel/newTravelSlice';
 import { ActivityEvent, DayAct, TripStackScreenProps } from '../types';
 
 function filterActivity(dayAct: DayAct) {
-	console.log('ONE DAY', dayAct);
 	if (dayAct.dayActivity?.activity) {
 		return <ActivityCard activity={dayAct.dayActivity.activity} />;
 	}
 	if (dayAct.accommodation) {
-		console.log('Accommodation', dayAct.accommodation);
 		return <AccommodationCard accommodation={dayAct.accommodation} />;
 	}
 	if (dayAct.travelEvent) return <TravelCard travel={dayAct.travelEvent} />;

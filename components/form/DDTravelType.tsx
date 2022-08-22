@@ -68,7 +68,7 @@ function DDTravelType({
 						setValue={setValueDropDown}
 						onSelectItem={(item) => {
 							if (item) {
-								setValue('travelType', item[0].value);
+								setValue('type', item[0].value);
 								trackValue(item[0].value as string);
 							}
 							setOpenDropDown(false);
