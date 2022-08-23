@@ -131,12 +131,13 @@ function Step3({ jumpTo }: Props) {
 								} else {
 									setSelectedActivities(selectedActivities.filter((id) => activity.id !== id));
 								}
+								console.log(selectedActivities);
 							}}
 							alignSelf="center"
+							p={0.5}
+							bgColor={isActivitySelected(activity.id!) ? Colors.primary.light : Colors.white}
 							my={2}
-							borderRadius={18}
-							borderWidth={isActivitySelected(activity.id!) ? 2 : 0}
-							borderColor={isActivitySelected(activity.id!) ? Colors.primary.light : 'rgb(0,0,0,0)'}
+							borderRadius={20}
 						>
 							<ActivityCard activity={activity} />
 						</Pressable>

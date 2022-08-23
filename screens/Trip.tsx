@@ -19,6 +19,7 @@ function filterActivity(dayAct: DayAct) {
 	if (dayAct.accommodation)
 		return <AccommodationCard isInTripView accommodation={dayAct.accommodation} />;
 	if (dayAct.travelEvent) return <TravelCard isInTripView travel={dayAct.travelEvent} />;
+
 	return null;
 }
 

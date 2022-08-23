@@ -58,7 +58,7 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 		setValue,
 	} = useForm({
 		defaultValues: {
-			travelType: '',
+			type: '',
 			departure: Date.now(),
 			origin: new Location(),
 			destination: new Location(),
@@ -84,7 +84,14 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	};
 
 	const onSubmit = (data: any) => {
-		dispatch(storeNewTravel({ uid: userId, ...data }));
+		const submitData = {
+			uid: userId,
+			originLocation: data.origin,
+			destinationLocation: data.destination,
+			// departure: new Date(data.departure).toISOString(),
+			...data,
+		};
+		dispatch(storeNewTravel(submitData));
 		navigation.goBack();
 	};
 
@@ -149,7 +156,7 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 				<InputLabel labelText="How are you traveling?" />
 				<DDTravelType
 					dropDownItems={travelTypes}
-					name="travelType"
+					name="type"
 					control={control}
 					errors={errors}
 					placeholder="Type of Travel"

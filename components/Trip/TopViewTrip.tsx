@@ -16,7 +16,8 @@ function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () 
 			alignItems="center"
 			backgroundColor={Colors.primary.dark}
 			width="100%"
-			pt={Constants.statusBarHeight + 16}
+			// pt={Constants.statusBarHeight + 16}
+			style={{ paddingTop: Constants.statusBarHeight + 16 }}
 			pb={4}
 		>
 			<Pressable

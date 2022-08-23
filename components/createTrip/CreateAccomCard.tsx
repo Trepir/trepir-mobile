@@ -1,25 +1,19 @@
-/* eslint-disable react/require-default-props */
 import { Text, Box, HStack, VStack } from 'native-base';
 import React from 'react';
 import AccommodationIcon from '../../assets/icons/AccommodationIcon';
+import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
-import { AccommodationEvent } from '../../types';
+import { AccommodationState } from '../../types';
 
 type Props = {
-	accommodation: AccommodationEvent;
-	isInTripView?: boolean;
-	isCheckIn?: boolean;
+	accommodation: AccommodationState; // Change tp type if needed
 };
 
-function AccommodationCard({ accommodation, isInTripView = false, isCheckIn = false }: Props) {
-	const { date, location } = accommodation;
-	const parseCheckDate = () => {
-		if (isInTripView) return date.split('T')[1].slice(0, 5);
-		return date.split('T')[0];
-	};
+function CreateAccomCard({ accommodation }: Props) {
+	const { startDate, endDate, location } = accommodation;
 
 	return (
-		<HStack width="80%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
+		<HStack width="100%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
 			<Box
 				width={120}
 				height={120}
@@ -36,7 +30,7 @@ function AccommodationCard({ accommodation, isInTripView = false, isCheckIn = fa
 					fontWeight="semibold"
 					textAlign="center"
 					fontSize="md"
-					bgColor={Colors.black}
+					bgColor={Colors.grey.light}
 					isTruncated
 					noOfLines={2}
 					mb={1}
@@ -55,14 +49,15 @@ function AccommodationCard({ accommodation, isInTripView = false, isCheckIn = fa
 					>
 						{location.city}
 					</Text>
-					<Text alignSelf="center" bgColor={Colors.grey.dark} fontSize="xs">
-						{isCheckIn ? 'CheckIn at: ' : 'Checkout at: '}
-						{parseCheckDate()}
-					</Text>
+					<HStack alignSelf="center" alignItems="center">
+						<Text>{startDate} </Text>
+						<Arrow size={5} color={Colors.primary.normal} />
+						<Text> {endDate}</Text>
+					</HStack>
 				</VStack>
 			</VStack>
 		</HStack>
 	);
 }
 
-export default AccommodationCard;
+export default CreateAccomCard;
