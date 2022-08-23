@@ -1,10 +1,12 @@
-import { View, Text } from 'native-base';
-import React from 'react';
+import { View, Text, ScrollView, Pressable } from 'native-base';
+import React, { useMemo } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useAppSelector } from '../../app/hooks';
+import TripItem from '../ui/TripItem';
 
-function LikeActivityModal() {
+function LikeActivityModal({ bottomSheetRef }: { bottomSheetRef: React.Ref<BottomSheet> }) {
 	const trips = useAppSelector((state) => state.tripArray);
+	const snapPoints = useMemo(() => ['50%'], []);
 	return (
 		<BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
 			<View alignItems="center">
@@ -12,18 +14,10 @@ function LikeActivityModal() {
 					Activities
 				</Text>
 				<ScrollView w="full">
-					{trips.map((trip, index) => (
-						<Box w="full" alignItems="center" key={trip.id}>
-							{filterByActivity(trip.tags) && (
-								<Pressable
-									// onPress={() => addActivityToDay(activity)}
-									shadow={1}
-									mb={index + 1 === activities.length ? '20' : 4}
-								>
-									<ActivityCard activity={activity} />
-								</Pressable>
-							)}
-						</Box>
+					{trips.map((trip) => (
+						<Pressable key={trip.id}>
+							<TripItem trip={trip} />
+						</Pressable>
 					))}
 				</ScrollView>
 			</View>

@@ -1,4 +1,4 @@
-import React, { Dispatch, Ref, SetStateAction, useMemo, useState } from 'react';
+import React, { Ref, useMemo, useState } from 'react';
 import DropDownPicker, { ValueType } from 'react-native-dropdown-picker';
 import Constants from 'expo-constants';
 import { Box, Pressable, ScrollView, Text, View } from 'native-base';
