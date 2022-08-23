@@ -1,8 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useNavigation } from '@react-navigation/native';
-import { Platform } from 'expo-modules-core';
-import { View, FlatList, HStack, Heading, Divider, Pressable } from 'native-base';
+import { View, FlatList, Heading, Divider, Pressable } from 'native-base';
 import React, { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -18,7 +17,7 @@ import { storeArrayTrip } from '../features/user/tripArraySlice';
 import { storeUser } from '../features/user/userSlice';
 import { getDate } from '../helpers/getDateOfTripDay';
 import { fetchUser } from '../services/user';
-import { DayAct, TripStackScreenProps } from '../types';
+import { DayAct } from '../types';
 
 function filterActivity(dayAct: DayAct) {
 	if (dayAct.dayActivity?.activity) return <ActivityCard activity={dayAct.dayActivity.activity} />;
@@ -73,9 +72,13 @@ function Trip() {
 					width="100%"
 					data={trip.tripDay}
 					keyExtractor={(item) => item.id!}
-					renderItem={({ item }) => (
-						<View width="100%" my={2}>
-							<Heading ml={5} pb={0.5} fontWeight="medium">
+					renderItem={({ item, index }) => (
+						<View
+							width="100%"
+							mt={index === 0 ? 5 : 0}
+							mb={index === trip.tripDay.length - 1 ? 9 : 3}
+						>
+							<Heading ml={5} pb={0.5} fontWeight="medium" color={Colors.grey.dark}>
 								{getDate(trip.startDate, item.dayIndex)}
 							</Heading>
 							<Divider width="90%" mb={2} alignSelf="center" color={Colors.grey.dark} />

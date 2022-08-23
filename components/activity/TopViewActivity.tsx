@@ -1,18 +1,21 @@
+/* eslint-disable react/require-default-props */
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, Pressable, HStack } from 'native-base';
 import React from 'react';
 import Constants from 'expo-constants';
+import { Platform } from 'react-native';
 import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
 import HeartIcon from '../../assets/icons/HeartIcon';
-import { Platform } from 'react-native';
 
 function TopViewActivity({
 	title = 'ups there was an error',
-	isActivity,
+	isActivity = false,
+	openModal,
 }: {
 	title: string;
-	isActivity: boolean;
+	isActivity?: boolean;
+	openModal?: () => void;
 }) {
 	const navigation = useNavigation();
 
