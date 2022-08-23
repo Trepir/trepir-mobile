@@ -1,9 +1,10 @@
-import { View, Text, ScrollView, Image } from 'native-base';
+import { View, Text, ScrollView, Image, Box } from 'native-base';
 import React from 'react';
 import Colors from '../../constants/Colors';
 import { ActivityEvent } from '../../types';
 import ImagePlaceholder from '../ImagePlaceholder';
 import TagArray from '../ui/TagArray';
+import MapViewActivity from './MapViewActivity';
 
 type Props = {
 	event: ActivityEvent;
@@ -72,6 +73,12 @@ function EventActivityInfo({ event }: Props) {
 					alt="image"
 				/>
 			</View>
+			<Box mb={10}>
+				<MapViewActivity
+					actLatitude={event.location.latitude}
+					actLongitude={event.location.longitude}
+				/>
+			</Box>
 		</ScrollView>
 	);
 }
