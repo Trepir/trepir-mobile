@@ -5,6 +5,7 @@ import EventAccommodationInfo from '../components/activity/EventAccommodationInf
 import EventActivityInfo from '../components/activity/EventActivityInfo';
 import EventTravelInfo from '../components/activity/EventTravelInfo';
 import LikeActivityModal from '../components/activity/LikeActivityModal';
+import MapViewActivity from '../components/activity/MapViewActivity';
 import TopViewActivity from '../components/activity/TopViewActivity';
 import Colors from '../constants/Colors';
 import { DayAct } from '../types';
@@ -20,8 +21,9 @@ function filterActivity(dayAct: DayAct) {
 				bgColor={Colors.grey.extraLight}
 			>
 				<TopViewActivity title="Activity details" isActivity />
-				<EventActivityInfo event={dayAct.dayActivity.activity} />;
-				<LikeActivityModal />
+				<EventActivityInfo event={dayAct.dayActivity.activity} />
+
+				{/* <LikeActivityModal /> */}
 			</View>
 		);
 	}

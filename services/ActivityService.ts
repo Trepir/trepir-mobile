@@ -20,3 +20,14 @@ export const createActivityApi = async (
 		return { data: null, error };
 	}
 };
+
+export const getAllActivities = async (): Promise<{ data: ActivityEvent[] | null; error: any }> => {
+	try {
+		const result = await fetch(`${url}/activity/all`);
+		const allActivities = await result.json();
+		return { data: allActivities, error: null };
+	} catch (error) {
+		console.error(error);
+		return { data: null, error };
+	}
+};

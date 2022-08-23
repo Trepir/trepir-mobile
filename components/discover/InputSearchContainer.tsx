@@ -1,15 +1,19 @@
 import React, { Ref, useMemo, useState } from 'react';
 import DropDownPicker, { ValueType } from 'react-native-dropdown-picker';
 import Constants from 'expo-constants';
-import { Box, Pressable, ScrollView, Text, View } from 'native-base';
+import { Box, Pressable, Text, View } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
 import { ActivityTags } from '../../constants/ActivityTags';
 import GooglePlacesInput from '../utils/GooglePlacesInput';
 import Colors from '../../constants/Colors';
-import { ActivityEvent } from '../../types';
+import { ActivityEvent, DayAct } from '../../types';
 import ActivityCard from '../ui/ActivityCard';
+import { storeCurrentActivity } from '../../features/currentActivity/currentActivitySlice';
+import { useAppDispatch } from '../../app/hooks';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
 	input: {
@@ -30,6 +34,7 @@ type Props = {
 	activities: ActivityEvent[];
 	// eslint-disable-next-line no-unused-vars
 	filterActivitiesByTags: (tags: ValueType[]) => void;
+	goToActivity: (activity: ActivityEvent) => void;
 };
 
 function InputSearchContainer({
@@ -37,16 +42,25 @@ function InputSearchContainer({
 	bottomSheetRef,
 	activities,
 	filterActivitiesByTags,
+	goToActivity,
 }: Props) {
 	const [openDropDown, setOpenDropDown] = useState(false);
 	const [valueDropDown, setValueDropDown] = useState<string[]>([]);
 	const [itemsDropDown, setItemsDropDown] = useState(ActivityTags);
+	const navigation = useNavigation();
+	const dispatch = useAppDispatch();
 
-	const snapPoints = useMemo(() => ['10%', '30%', '50%'], []);
+	const snapPoints = useMemo(() => ['30%', '50%'], []);
 
 	const filterByActivity = (tags: string[]) =>
 		valueDropDown.length === 0 ? true : tags.some((tag) => valueDropDown.includes(tag));
 
+	const navToActivity = (item: ActivityEvent) => {
+		// dispatch(storeCurrentActivity(item));
+		// @ts-ignore
+		dispatch(storeCurrentActivity({ dayActivity: { activity: item } }));
+		navigation.navigate('ActivityScreen');
+	};
 	return (
 		<>
 			<Box
@@ -78,17 +92,19 @@ function InputSearchContainer({
 					placeholderStyle={styles.placeholder}
 				/>
 			</Box>
-			<BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
+			<BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints} enablePanDownToClose>
 				<View alignItems="center">
 					<Text fontSize="xl" fontWeight="medium" mb={2}>
 						Activities
 					</Text>
-					<ScrollView w="full">
+
+					<ScrollView style={{ width: '100%' }}>
 						{activities.map((activity, index) => (
 							<Box w="full" alignItems="center" key={activity.id}>
 								{filterByActivity(activity.tags) && (
 									<Pressable
-										// onPress={() => addActivityToDay(activity)}
+										onPress={() => goToActivity(activity)}
+										onLongPress={() => navToActivity(activity)}
 										shadow={1}
 										mb={index + 1 === activities.length ? '20' : 4}
 									>

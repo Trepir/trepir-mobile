@@ -85,6 +85,7 @@ function Trip() {
 							{item.tripDayActivities.length > 0 ? (
 								<FlatList
 									width="100%"
+									pr={2}
 									data={item.tripDayActivities}
 									keyExtractor={(act) => act.id!}
 									renderItem={({ item }) => (

@@ -8,7 +8,7 @@ import PickEventBS from '../components/modifyTrip/PickEventBS';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTravelState } from '../features/newTravel/newTravelSlice';
 import { clearActivityState } from '../features/newActivity/newActivitySlice';
-import { TripDay, DayAct, Trip } from '../types';
+import { TripDay, DayAct, Trip, ActivityEvent } from '../types';
 import {
 	addAccommodationToTrip,
 	addActivityToTrip,
@@ -20,6 +20,7 @@ import {
 import { addDates } from '../features/createTripValidation/CTValidationSlice';
 import { createActivityApi } from '../services/ActivityService';
 import { storeCurrentTrip } from '../features/trip/currentTripSlice';
+import TopViewTrip from '../components/Trip/TopViewTrip';
 
 const spreadTripDays = (tripDays: TripDay[]) => {
 	const spreadedDays = tripDays.map((day) => [
@@ -93,6 +94,13 @@ function ModifyTrip() {
 		replaceDayState(newDay);
 		setSelectedDay('');
 	};
+	const addActivityServiceFunction = async (activity: ActivityEvent) => {
+		const activityAddedInfo = await addActivityToTrip({
+			tripDayId: tripDays[+selectedDay].id,
+			activityId: activity.id!,
+		});
+		addActivityToDay(activityAddedInfo.data!);
+	};
 
 	useEffect(() => {
 		if (newlyAddedAccommodation.uid !== '') {
@@ -142,6 +150,7 @@ function ModifyTrip() {
 		setSelectedDay('');
 		dispatch(clearTravelState());
 	}, [newlyAddedTravel]);
+
 	useEffect(() => {
 		if (newlyAddedActivity.uid !== '') {
 			try {
@@ -150,11 +159,7 @@ function ModifyTrip() {
 						...newlyAddedActivity,
 					};
 					const createdActivity = await createActivityApi(newActivity);
-					const activityAddedInfo = await addActivityToTrip({
-						tripDayId: tripDays[+selectedDay].id,
-						activityId: createdActivity.data!.id!,
-					});
-					addActivityToDay(activityAddedInfo.data!);
+					await addActivityServiceFunction(createdActivity.data!);
 				};
 				createAndAddActivity();
 			} catch (error) {
@@ -230,13 +235,11 @@ function ModifyTrip() {
 	};
 
 	const endDrag = async ({ data, from, to }: { data: any[]; from: number; to: number }) => {
-		// Check if its trip or accommodation
 		if (from !== to) {
 			try {
 				const spreadData = [...data];
 				const movedOnSameDay = isSameDay([...spreadData]);
 				const reestructuredData = reestructureSpreadTripDays([...spreadData]);
-				// JUST WORKS
 				setTripDaysSpread([...spreadData]);
 				if (movedOnSameDay === true) {
 					const reorderData = {
@@ -247,14 +250,11 @@ function ModifyTrip() {
 					const newDayData = await reorderTripDay(reorderData);
 					replaceDayState(newDayData.data!);
 				} else {
-					// DISSAPEARS ON DRAG END
-					// setTripDaysSpread([...spreadData]);
 					const changeDayOrder = {
 						...movedOnSameDay,
 						newOrder: getOrderOnDay(reestructuredData, data[to].id, movedOnSameDay.newTripDayId),
 					};
 					const tripDaysData = await changeTripDay(changeDayOrder);
-					// console.log('CHANGE TRIP DAYS RESULT', tripDaysData.data);
 					replaceTwoDayState(tripDaysData.data!);
 				}
 			} catch (error) {
@@ -264,20 +264,8 @@ function ModifyTrip() {
 	};
 
 	return (
-		<View flex={1} pt={4} pb="16">
-			<Heading alignSelf="center" fontWeight="semibold" pb={4}>
-				Edit your Itinerary
-			</Heading>
-			<Divider />
-			{/* <Pressable onPress={() => addEventToDay(tripDaysSpread[0].dayIndex)}>
-				<HStack alignItems="center" justifyContent="center">
-					<Heading alignSelf="center" fontWeight="semibold">
-						Day {tripDaysSpread[0].dayIndex + 1}
-					</Heading>
-					<Divider width="50%" mx="5" />
-					<AddIcon size={35} color="#0f0f0f" />
-				</HStack>
-			</Pressable> */}
+		<View flex={1} pb="24">
+			<TopViewTrip title="Edit your Itinerary" isInPast callback={() => {}} />
 			<DraggableFlatList
 				data={tripDaysSpread}
 				onDragEnd={endDrag}
@@ -285,7 +273,7 @@ function ModifyTrip() {
 				renderItem={(renderItemParams: RenderItemParams<DayAct>) => (
 					<Box
 						pt={renderItemParams.index === 0 ? '4' : '0'}
-						pb={renderItemParams.index === tripDaysSpread.length - 1 ? '10' : '0'}
+						pb={renderItemParams.index === tripDaysSpread.length - 1 ? '16' : '0'}
 					>
 						<RenderItem
 							renderItemParams={renderItemParams}
@@ -295,7 +283,7 @@ function ModifyTrip() {
 					</Box>
 				)}
 			/>
-			<PickEventBS bottomSheetRef={bottomSheetRef} addActivityToDay={addActivityToDay} />
+			<PickEventBS bottomSheetRef={bottomSheetRef} addActivityToDay={addActivityServiceFunction} />
 		</View>
 	);
 }

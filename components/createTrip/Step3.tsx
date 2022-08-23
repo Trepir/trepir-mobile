@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { View, Heading, Divider, ScrollView, Box, Pressable } from 'native-base';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import Colors from '../../constants/Colors';
+import { getAllActivities } from '../../services/ActivityService';
 import { ActivityEvent } from '../../types';
 import ActivityCard from '../ui/ActivityCard';
 import ButtonCustom from '../ui/ButtonCustom';
@@ -15,132 +16,56 @@ type Props = {
 function Step3({ jumpTo }: Props) {
 	const navigation = useNavigation();
 	const likedActivities = useAppSelector((state) => state.likedActivities);
-	const activities: ActivityEvent[] = [
-		{
-			id: 'cl6yulnyy00133z4kc749ystla',
-			name: 'Go to the beach asdjfa ljasdnfp asdjnfas asdfna asdlfjkasd asjkldfnas',
-			duration: 120000,
-			imageUrl:
-				'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg',
-			description: 'Swim in the ocean',
-			rating: null,
-			location: {
-				latitude: 0,
-				formattedAddress: '',
-				photoUrl: [''],
-				longitude: 0,
-				country: '',
-				state: '',
-				locationName: '',
-				city: 'Barcelona',
-				googleId: '1',
-			},
-			tags: [],
-		},
-		{
-			id: 'cl6yulnyy00133z4kc749ystld',
-			name: 'Go to the beach',
-			duration: 120000,
-			imageUrl:
-				'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg',
-			description: 'Swim in the ocean',
-
-			rating: null,
-			location: {
-				latitude: 0,
-				formattedAddress: '',
-				photoUrl: [''],
-				longitude: 0,
-				country: '',
-				state: '',
-				locationName: '',
-				city: 'Barcelona',
-				googleId: '2',
-			},
-			tags: [],
-		},
-		{
-			id: 'cl6yulnyy00133z4kc749ystlf',
-			name: 'Go to the beach',
-			duration: 120000,
-			imageUrl:
-				'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg',
-			description: 'Swim in the ocean',
-			rating: null,
-			location: {
-				latitude: 0,
-				formattedAddress: '',
-				photoUrl: [''],
-				longitude: 0,
-				country: '',
-				state: '',
-				locationName: '',
-				city: 'Barcelona',
-				googleId: '3',
-			},
-			tags: [],
-		},
-
-		{
-			id: 'cl6yulnyy00133z4kc749ystla',
-			name: 'Go to the beach',
-			duration: 120000,
-			imageUrl:
-				'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Danny_DeVito_by_Gage_Skidmore.jpg/1200px-Danny_DeVito_by_Gage_Skidmore.jpg',
-			description: 'Swim in the ocean',
-
-			rating: null,
-			location: {
-				latitude: 0,
-				formattedAddress: '',
-				photoUrl: [''],
-				longitude: 0,
-				country: '',
-				state: '',
-				locationName: '',
-				city: 'Barcelona',
-				googleId: '4',
-			},
-			tags: [],
-		},
-	];
+	const [activities, setActivities] = useState<ActivityEvent[]>([]);
 	const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
 	const isActivitySelected = (id: string) => selectedActivities.includes(id);
 	const addTripsAndGoBack = () => {
 		// HAVE TO ADD THE TRIPS HERE
-		jumpTo('first');
 		navigation.goBack();
 	};
+	useEffect(() => {
+		const getActivitiesFromBE = async () => {
+			try {
+				const allActivities = await getAllActivities();
+				setActivities([...allActivities.data!]);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		getActivitiesFromBE();
+	}, []);
 
 	return (
-		<View flex={1} alignItems="center" bgColor={Colors.grey.offWhite} px={10}>
+		<View flex={1} alignItems="center" bgColor={Colors.grey.offWhite}>
 			<Heading alignSelf="center" mt={5} fontWeight="semibold">
-				Trip Created Successfully
+				Trip Created Successfully!!
 			</Heading>
 			<Divider my={4} />
-			<Heading alignSelf="center" fontWeight="semibold" textAlign="center" mb={2}>
+			<Heading alignSelf="center" fontWeight="semibold" textAlign="center" mb={2} px={5}>
 				Add some Activities so you can start planning
 			</Heading>
 			{activities.length > 0 ? (
 				<ScrollView w="100%">
-					{activities.map((activity) => (
-						<Pressable
-							onPress={() => {
-								if (!isActivitySelected(activity.id!)) {
-									setSelectedActivities([...selectedActivities, activity.id!]);
-								} else {
-									setSelectedActivities(selectedActivities.filter((id) => activity.id !== id));
-								}
-								console.log(selectedActivities);
-							}}
-							alignSelf="center"
-							p={0.5}
-							bgColor={isActivitySelected(activity.id!) ? Colors.primary.light : Colors.white}
-							my={2}
-							borderRadius={20}
-						>
-							<ActivityCard activity={activity} />
-						</Pressable>
+					{activities.map((activity, index) => (
+						<Box key={activity.id} pb={index === activities.length - 1 ? '24' : 0.5}>
+							<Pressable
+								onPress={() => {
+									if (!isActivitySelected(activity.id!)) {
+										setSelectedActivities([...selectedActivities, activity.id!]);
+									} else {
+										setSelectedActivities(selectedActivities.filter((id) => activity.id !== id));
+									}
+									console.log(selectedActivities);
+								}}
+								alignSelf="center"
+								p={0.5}
+								bgColor={isActivitySelected(activity.id!) ? Colors.primary.light : Colors.white}
+								my={2}
+								borderRadius={20}
+							>
+								<ActivityCard activity={activity} />
+							</Pressable>
+						</Box>
 					))}
 				</ScrollView>
 			) : (
@@ -148,7 +73,7 @@ function Step3({ jumpTo }: Props) {
 					<EmptyList text="No activities yet" />
 				</Box>
 			)}
-			<Box my={4}>
+			<Box my={4} position="absolute" bottom={4}>
 				<ButtonCustom
 					text="Go back to Dashboard"
 					alignment="center"

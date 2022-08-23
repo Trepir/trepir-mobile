@@ -160,7 +160,7 @@ function TripStackNavigator() {
 	return (
 		<tripStack.Navigator>
 			<tripStack.Screen name="Trip" component={Trip} options={{ headerShown: false }} />
-			<tripStack.Screen name="ModifyTrip" component={ModifyTrip} />
+			<tripStack.Screen name="ModifyTrip" component={ModifyTrip} options={{ headerShown: false }} />
 		</tripStack.Navigator>
 	);
 }

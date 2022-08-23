@@ -96,11 +96,38 @@ function DiscoverScreen() {
 		}
 	};
 
+	const goToActivity = async (activity: ActivityEvent) => {
+		const camera = await mapRef.current?.getCamera();
+
+		if (camera) {
+			mapRef.current?.animateCamera(camera, { duration: 300 });
+			const viewPortNE: LatLng = {
+				latitude: activity.location.latitude + 0.001,
+				longitude: activity.location.longitude + 0.001,
+			};
+			const viewPortSW: LatLng = {
+				latitude: activity.location.latitude - 0.001,
+				longitude: activity.location.longitude - 0.001,
+			};
+
+			const paddingValue = 5;
+			const edgePaddingAct = {
+				top: paddingValue,
+				right: paddingValue,
+				bottom: paddingValue,
+				left: paddingValue,
+			};
+			mapRef.current?.fitToCoordinates([viewPortNE, viewPortSW], { edgePaddingAct });
+			bottomSheetRef.current?.snapToIndex(0);
+		}
+	};
+
 	return (
 		<View style={styles.container} flex={1} alignItems="center" justifyContent="center">
 			<MapView
 				style={styles.map}
 				ref={mapRef}
+				onPress={() => bottomSheetRef.current?.snapToIndex(1)}
 				initialCamera={{
 					// Location of the user
 					center: {
@@ -138,6 +165,7 @@ function DiscoverScreen() {
 					bottomSheetRef={bottomSheetRef}
 					activities={activitiesFromLocation}
 					filterActivitiesByTags={filterActivitiesByTags}
+					goToActivity={goToActivity}
 				/>
 			)}
 		</View>

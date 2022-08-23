@@ -11,9 +11,9 @@ type Props = {
 
 function ConfirmDeleteModal({ isOpen, setIsOpen, pressDelete }: Props) {
 	return (
-		<Modal isOpen={isOpen}>
-			<Modal.Content>
-				<Modal.Body alignItems="center">
+		<Modal isOpen={isOpen} rounded="full">
+			<Modal.Content borderRadius={18}>
+				<Modal.Body alignItems="center" pt={8}>
 					<Heading
 						opacity={75}
 						textAlign="center"
@@ -30,7 +30,7 @@ function ConfirmDeleteModal({ isOpen, setIsOpen, pressDelete }: Props) {
 							borderWidth={2}
 							bgColor="#FF4141"
 							alignSelf="center"
-							rounded="lg"
+							borderRadius={18}
 							m={3}
 							onPress={() => {
 								pressDelete();
@@ -51,7 +51,7 @@ function ConfirmDeleteModal({ isOpen, setIsOpen, pressDelete }: Props) {
 						<Pressable
 							bgColor="white"
 							alignSelf="center"
-							rounded="lg"
+							borderRadius={18}
 							borderColor={Colors.grey.medium}
 							borderWidth={2}
 							onPress={() => setIsOpen(false)}
