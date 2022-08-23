@@ -1,6 +1,8 @@
 import { Text, Box, HStack, VStack } from 'native-base';
 import React from 'react';
 import AccommodationIcon from '../../assets/icons/AccommodationIcon';
+import Arrow from '../../assets/icons/Arrow';
+import Colors from '../../constants/Colors';
 import { AccommodationState } from '../../types';
 
 type Props = {
@@ -11,29 +13,48 @@ function CreateAccomCard({ accommodation }: Props) {
 	const { startDate, endDate, location } = accommodation;
 
 	return (
-		<HStack height="5/6" width="72" bgColor="white" rounded="md">
+		<HStack width="100%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
 			<Box
-				width="2/5"
-				height="90%"
-				bgColor="gray.100"
+				width={120}
+				height={120}
+				bgColor={Colors.primary.softIconBackground}
 				alignItems="center"
 				justifyContent="center"
-				alignSelf="center"
-				ml={2}
-				borderRadius={18}
+				borderRadius={12}
 			>
-				<AccommodationIcon size="80%" color="#c1c1c1" />
+				<AccommodationIcon size="80%" color={Colors.primary.softIcon} />
 			</Box>
-			<VStack pl={3} py={6} justifyContent="space-evenly">
-				<Text fontWeight="semibold" fontSize="md" maxWidth="32" isTruncated>
+
+			<VStack pl={3} justifyContent="space-around" width="58%">
+				<Text
+					fontWeight="semibold"
+					textAlign="center"
+					fontSize="md"
+					bgColor={Colors.grey.light}
+					isTruncated
+					noOfLines={2}
+					mb={1}
+				>
 					{location.locationName}
 				</Text>
-				<Text maxWidth="32" fontWeight="semibold" fontSize="md" isTruncated>
-					{location.city}
-				</Text>
-				<Text alignSelf="center" fontSize="2xs" fontWeight="medium">
-					{`${startDate}=>${endDate}`}
-				</Text>
+				<VStack width="100%">
+					<Text
+						fontWeight="semibold"
+						textAlign="center"
+						fontSize="md"
+						bgColor={Colors.black}
+						isTruncated
+						noOfLines={2}
+						mb={1}
+					>
+						{location.city}
+					</Text>
+					<HStack alignSelf="center" alignItems="center">
+						<Text>{startDate} </Text>
+						<Arrow size={5} color={Colors.primary.normal} />
+						<Text> {endDate}</Text>
+					</HStack>
+				</VStack>
 			</VStack>
 		</HStack>
 	);

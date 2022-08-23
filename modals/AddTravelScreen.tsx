@@ -88,6 +88,7 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 			uid: userId,
 			originLocation: data.origin,
 			destinationLocation: data.destination,
+			// departure: new Date(data.departure).toISOString(),
 			...data,
 		};
 		dispatch(storeNewTravel(submitData));

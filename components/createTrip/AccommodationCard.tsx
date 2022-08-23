@@ -55,7 +55,7 @@ function AccommodationCard({ accommodation, isInTripView = false, isCheckIn = fa
 					>
 						{location.city}
 					</Text>
-					<Text alignSelf="center" bgColor={Colors.grey.dark}>
+					<Text alignSelf="center" bgColor={Colors.grey.dark} fontSize="xs">
 						{isCheckIn ? 'CheckIn at: ' : 'Checkout at: '}
 						{parseCheckDate()}
 					</Text>

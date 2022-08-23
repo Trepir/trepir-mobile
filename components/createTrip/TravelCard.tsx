@@ -3,10 +3,10 @@ import React from 'react';
 import Arrow from '../../assets/icons/Arrow';
 import ConditionalTravelIcon from '../../assets/icons/ConditionalTravelIcon';
 import Colors from '../../constants/Colors';
-import { TravelEvent } from '../../types';
+import { TravelEvent, TravelState } from '../../types';
 
 type Props = {
-	travel: TravelEvent;
+	travel: TravelEvent | TravelState;
 	// eslint-disable-next-line react/require-default-props
 	isInTripView?: boolean;
 };
@@ -19,7 +19,13 @@ function TravelCard({ travel, isInTripView = false }: Props) {
 	};
 
 	return (
-		<HStack width="80%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
+		<HStack
+			width={isInTripView ? '80%' : '100%'}
+			bgColor={Colors.white}
+			borderRadius={18}
+			p={2}
+			shadow={1}
+		>
 			<Box
 				width={120}
 				height={120}

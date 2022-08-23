@@ -33,7 +33,10 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 	useEffect(() => {
 		if (newTravel.uid !== '') {
 			console.log(newTravel);
-			setTravels([...travels, newTravel]);
+			setTravels([
+				...travels,
+				{ ...newTravel, departure: new Date(newTravel.departure).toISOString() },
+			]);
 			dispatch(clearTravelState());
 		}
 	}, [newTravel]);
@@ -58,7 +61,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 					origin: formattedTravels.originLocation,
 					destination: formattedTravels.destinationLocation,
 					travelType: formattedTravels.type,
-					departure: new Date(formattedTravels.departure),
+					// departure: new Date(formattedTravels.departure),
 				})),
 				accommodation: accommodations,
 			};
@@ -94,8 +97,14 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 					data={travels}
 					keyExtractor={(item) => item.originLocation.googleId!}
 					renderItem={({ item, index }) => (
-						<Box ml={index === 0 ? '8' : '0'} mr="4" alignSelf="center">
-							<TravelCard key={item.originLocation.googleId} travel={item} isModify={false} />
+						<Box
+							ml={index === 0 ? '8' : '0'}
+							mr="3"
+							alignSelf="center"
+							style={{ width: 335 }}
+							alignItems="center"
+						>
+							<TravelCard key={item.originLocation.googleId} travel={item} />
 						</Box>
 					)}
 					horizontal
@@ -118,10 +127,17 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 			{accommodations.length > 0 ? (
 				<FlatList
 					maxHeight={180}
+					width="full"
 					data={accommodations}
 					keyExtractor={(item) => item.location.googleId!}
 					renderItem={({ item, index }) => (
-						<Box ml={index === 0 ? '8' : '0'} mr="4" alignSelf="center">
+						<Box
+							ml={index === 0 ? '8' : '0'}
+							mr="3"
+							alignSelf="center"
+							style={{ width: 335 }}
+							alignItems="center"
+						>
 							<CreateAccomCard key={item.location.googleId} accommodation={item} />
 						</Box>
 					)}
