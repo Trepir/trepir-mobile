@@ -7,8 +7,12 @@ import Colors from '../../constants/Colors';
 import { clearDates } from '../../features/createTripValidation/CTValidationSlice';
 import { clearAccommodationState } from '../../features/newAccommodation/newAccommodationSlice';
 import { clearTravelState } from '../../features/newTravel/newTravelSlice';
+import { storeLikedActivities } from '../../features/user/likedActivitiesSlice';
+import { storeArrayTrip } from '../../features/user/tripArraySlice';
+import { storeUser } from '../../features/user/userSlice';
 import { newTripType } from '../../screens/CreateScreen';
 import { createTripApi } from '../../services/CreateTripService';
+import { fetchUser } from '../../services/user';
 import { AccommodationState, TravelState } from '../../types';
 import ButtonCustom from '../ui/ButtonCustom';
 import CreateAccomCard from './CreateAccomCard';
@@ -24,6 +28,7 @@ type Props = {
 
 function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 	const dispatch = useAppDispatch();
+	const userId = useAppSelector((state) => state.user.uid);
 	const navigation = useNavigation();
 	const [travels, setTravels] = useState<TravelState[]>([]);
 	const [accommodations, setAccommodations] = useState<AccommodationState[]>([]);
@@ -46,6 +51,18 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 		}
 	}, [newAccommodation]);
 
+	const updateGeneralState = async () => {
+		const payload = await fetchUser(userId);
+		if (payload.data) {
+			dispatch(storeUser(payload.data));
+			dispatch(storeArrayTrip(payload.data.trips));
+			dispatch(storeLikedActivities(payload.data.favoriteActivities));
+		} else {
+			// SHOW ERROR ON THE SCREEN FIXME
+			console.log('Login.tsx error:', payload.error);
+		}
+	};
+
 	const createTrip = async () => {
 		try {
 			const formattedTrip: any = {
@@ -66,7 +83,8 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 			dispatch(clearDates());
 			const createdTrip = await createTripApi(formattedTrip);
 			console.log(createdTrip.data);
-			//HERE DO THE CALL
+			/* */
+			await updateGeneralState();
 			jumpTo('third');
 		} catch (error) {
 			console.error(error);

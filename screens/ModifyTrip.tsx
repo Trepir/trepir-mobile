@@ -8,7 +8,7 @@ import PickEventBS from '../components/modifyTrip/PickEventBS';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTravelState } from '../features/newTravel/newTravelSlice';
 import { clearActivityState } from '../features/newActivity/newActivitySlice';
-import { TripDay, DayAct } from '../types';
+import { TripDay, DayAct, Trip } from '../types';
 import AddIcon from '../assets/icons/AddIcon';
 import {
 	addAccommodationToTrip,
@@ -20,6 +20,7 @@ import {
 } from '../services/ModifyTripService';
 import { addDates } from '../features/createTripValidation/CTValidationSlice';
 import { createActivityApi } from '../services/ActivityService';
+import { storeCurrentTrip } from '../features/trip/currentTripSlice';
 
 const spreadTripDays = (tripDays: TripDay[]) => {
 	const spreadedDays = tripDays.map((day) => [
@@ -52,6 +53,19 @@ function ModifyTrip() {
 		setSelectedDay(day);
 		bottomSheetRef.current?.expand();
 	};
+	const updateCurrentTrip = (newTripDaysState: TripDay[]) => {
+		const newCurrentTrip: Trip = {
+			...trip,
+			tripDay: [...newTripDaysState],
+		};
+		dispatch(storeCurrentTrip(newCurrentTrip));
+	};
+
+	const updateTripDaysStates = (newTripDaysState: TripDay[]) => {
+		updateCurrentTrip(newTripDaysState);
+		setTripDays(newTripDaysState);
+		setTripDaysSpread(spreadTripDays(newTripDaysState));
+	};
 
 	const replaceDayState = (day: TripDay) => {
 		const newTripDaysState = tripDays.map((tripDay) => {
@@ -61,11 +75,9 @@ function ModifyTrip() {
 			return tripDay;
 		});
 
-		setTripDays(newTripDaysState);
-		setTripDaysSpread(spreadTripDays(newTripDaysState));
+		updateTripDaysStates(newTripDaysState);
 	};
 	const replaceTwoDayState = (day: TripDay[]) => {
-		console.log('DAYS PASSED TO THE FUNCTION=======> ', day);
 		const newTripDaysState = tripDays.map((tripDay) => {
 			if (tripDay.id === day[0].id) {
 				return day[0];
@@ -75,9 +87,7 @@ function ModifyTrip() {
 			}
 			return tripDay;
 		});
-		console.log(' NEW TRIP DAY STATE REPALCE 1 ======>>>', newTripDaysState);
-		setTripDays(newTripDaysState);
-		setTripDaysSpread(spreadTripDays(newTripDaysState));
+		updateTripDaysStates(newTripDaysState);
 	};
 	const addActivityToDay = (newDay: TripDay) => {
 		bottomSheetRef.current?.close();
@@ -224,7 +234,7 @@ function ModifyTrip() {
 		// Check if its trip or accommodation
 		if (from !== to) {
 			try {
-				const spreadData = [tripDaysSpread[0], ...data];
+				const spreadData = [...data];
 				const movedOnSameDay = isSameDay([...spreadData]);
 				const reestructuredData = reestructureSpreadTripDays([...spreadData]);
 				// JUST WORKS
@@ -256,10 +266,11 @@ function ModifyTrip() {
 
 	return (
 		<View flex={1} pt={4} pb="16">
-			<Heading alignSelf="center" fontWeight="semibold">
+			<Heading alignSelf="center" fontWeight="semibold" pb={4}>
 				Edit your Itinerary
 			</Heading>
-			<Pressable onPress={() => addEventToDay(tripDaysSpread[0].dayIndex)}>
+			<Divider />
+			{/* <Pressable onPress={() => addEventToDay(tripDaysSpread[0].dayIndex)}>
 				<HStack alignItems="center" justifyContent="center">
 					<Heading alignSelf="center" fontWeight="semibold">
 						Day {tripDaysSpread[0].dayIndex + 1}
@@ -267,17 +278,22 @@ function ModifyTrip() {
 					<Divider width="50%" mx="5" />
 					<AddIcon size={35} color="#0f0f0f" />
 				</HStack>
-			</Pressable>
+			</Pressable> */}
 			<DraggableFlatList
-				data={tripDaysSpread.slice(1)}
+				data={tripDaysSpread}
 				onDragEnd={endDrag}
 				keyExtractor={(item) => item.id}
 				renderItem={(renderItemParams: RenderItemParams<DayAct>) => (
-					<RenderItem
-						renderItemParams={renderItemParams}
-						deleteTripEvent={deleteTripEvent}
-						addEventToDay={addEventToDay}
-					/>
+					<Box
+						pt={renderItemParams.index === 0 ? '4' : '0'}
+						pb={renderItemParams.index === tripDaysSpread.length - 1 ? '10' : '0'}
+					>
+						<RenderItem
+							renderItemParams={renderItemParams}
+							deleteTripEvent={deleteTripEvent}
+							addEventToDay={addEventToDay}
+						/>
+					</Box>
 				)}
 			/>
 			<PickEventBS bottomSheetRef={bottomSheetRef} addActivityToDay={addActivityToDay} />
