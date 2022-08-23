@@ -21,7 +21,6 @@ function Step3({ jumpTo }: Props) {
 	const isActivitySelected = (id: string) => selectedActivities.includes(id);
 	const addTripsAndGoBack = () => {
 		// HAVE TO ADD THE TRIPS HERE
-		jumpTo('first');
 		navigation.goBack();
 	};
 	useEffect(() => {
@@ -39,7 +38,7 @@ function Step3({ jumpTo }: Props) {
 	return (
 		<View flex={1} alignItems="center" bgColor={Colors.grey.offWhite}>
 			<Heading alignSelf="center" mt={5} fontWeight="semibold">
-				Trip Created Successfully
+				Trip Created Successfully!!
 			</Heading>
 			<Divider my={4} />
 			<Heading alignSelf="center" fontWeight="semibold" textAlign="center" mb={2} px={5}>
@@ -47,25 +46,26 @@ function Step3({ jumpTo }: Props) {
 			</Heading>
 			{activities.length > 0 ? (
 				<ScrollView w="100%">
-					{activities.map((activity) => (
-						<Pressable
-							onPress={() => {
-								if (!isActivitySelected(activity.id!)) {
-									setSelectedActivities([...selectedActivities, activity.id!]);
-								} else {
-									setSelectedActivities(selectedActivities.filter((id) => activity.id !== id));
-								}
-								console.log(selectedActivities);
-							}}
-							alignSelf="center"
-							p={0.5}
-							bgColor={isActivitySelected(activity.id!) ? Colors.primary.light : Colors.white}
-							my={2}
-							borderRadius={20}
-							key={activity.id}
-						>
-							<ActivityCard activity={activity} />
-						</Pressable>
+					{activities.map((activity, index) => (
+						<Box key={activity.id} pb={index === activities.length - 1 ? '24' : 0.5}>
+							<Pressable
+								onPress={() => {
+									if (!isActivitySelected(activity.id!)) {
+										setSelectedActivities([...selectedActivities, activity.id!]);
+									} else {
+										setSelectedActivities(selectedActivities.filter((id) => activity.id !== id));
+									}
+									console.log(selectedActivities);
+								}}
+								alignSelf="center"
+								p={0.5}
+								bgColor={isActivitySelected(activity.id!) ? Colors.primary.light : Colors.white}
+								my={2}
+								borderRadius={20}
+							>
+								<ActivityCard activity={activity} />
+							</Pressable>
+						</Box>
 					))}
 				</ScrollView>
 			) : (
@@ -73,7 +73,7 @@ function Step3({ jumpTo }: Props) {
 					<EmptyList text="No activities yet" />
 				</Box>
 			)}
-			<Box my={4}>
+			<Box my={4} position="absolute" bottom={4}>
 				<ButtonCustom
 					text="Go back to Dashboard"
 					alignment="center"

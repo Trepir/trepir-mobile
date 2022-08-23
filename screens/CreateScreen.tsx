@@ -1,7 +1,7 @@
 import { View } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { TabView, Route, TabBar } from 'react-native-tab-view';
-import { useWindowDimensions } from 'react-native';
+import { Dimensions, useWindowDimensions } from 'react-native';
 import Constants from 'expo-constants';
 import Step1 from '../components/createTrip/Step1';
 import Step2 from '../components/createTrip/Step2';
@@ -84,10 +84,11 @@ function CreateScreen() {
 	);
 	return (
 		<View
-			flex={1}
+			// flex={1}
 			bgColor={Colors.primary.normal}
 			style={{
 				paddingTop: Constants.statusBarHeight,
+				height: Dimensions.get('window').height,
 			}}
 		>
 			<TabView

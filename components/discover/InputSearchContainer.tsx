@@ -1,7 +1,7 @@
 import React, { Ref, useMemo, useState } from 'react';
 import DropDownPicker, { ValueType } from 'react-native-dropdown-picker';
 import Constants from 'expo-constants';
-import { Box, Pressable, ScrollView, Text, View } from 'native-base';
+import { Box, Pressable, Text, View } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -13,6 +13,7 @@ import { ActivityEvent, DayAct } from '../../types';
 import ActivityCard from '../ui/ActivityCard';
 import { storeCurrentActivity } from '../../features/currentActivity/currentActivitySlice';
 import { useAppDispatch } from '../../app/hooks';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
 	input: {
@@ -33,6 +34,7 @@ type Props = {
 	activities: ActivityEvent[];
 	// eslint-disable-next-line no-unused-vars
 	filterActivitiesByTags: (tags: ValueType[]) => void;
+	goToActivity: (activity: ActivityEvent) => void;
 };
 
 function InputSearchContainer({
@@ -40,6 +42,7 @@ function InputSearchContainer({
 	bottomSheetRef,
 	activities,
 	filterActivitiesByTags,
+	goToActivity,
 }: Props) {
 	const [openDropDown, setOpenDropDown] = useState(false);
 	const [valueDropDown, setValueDropDown] = useState<string[]>([]);
@@ -52,7 +55,7 @@ function InputSearchContainer({
 	const filterByActivity = (tags: string[]) =>
 		valueDropDown.length === 0 ? true : tags.some((tag) => valueDropDown.includes(tag));
 
-	const goToActivity = (item: ActivityEvent) => {
+	const navToActivity = (item: ActivityEvent) => {
 		// dispatch(storeCurrentActivity(item));
 		// @ts-ignore
 		dispatch(storeCurrentActivity({ dayActivity: { activity: item } }));
@@ -94,12 +97,14 @@ function InputSearchContainer({
 					<Text fontSize="xl" fontWeight="medium" mb={2}>
 						Activities
 					</Text>
-					<ScrollView w="full">
+
+					<ScrollView style={{ width: '100%' }}>
 						{activities.map((activity, index) => (
 							<Box w="full" alignItems="center" key={activity.id}>
 								{filterByActivity(activity.tags) && (
 									<Pressable
 										onPress={() => goToActivity(activity)}
+										onLongPress={() => navToActivity(activity)}
 										shadow={1}
 										mb={index + 1 === activities.length ? '20' : 4}
 									>
