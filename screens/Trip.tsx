@@ -12,6 +12,7 @@ import TopViewTrip from '../components/Trip/TopViewTrip';
 import ActivityCard from '../components/ui/ActivityCard';
 import Colors from '../constants/Colors';
 import { storeCurrentActivity } from '../features/currentActivity/currentActivitySlice';
+import { getDate } from '../helpers/getDateOfTripDay';
 import { DayAct, TripStackScreenProps } from '../types';
 
 function filterActivity(dayAct: DayAct) {
@@ -21,12 +22,6 @@ function filterActivity(dayAct: DayAct) {
 	if (dayAct.travelEvent) return <TravelCard isInTripView travel={dayAct.travelEvent} />;
 
 	return null;
-}
-
-function getDate(startDate: string, index: number) {
-	const date = new Date(startDate);
-	date.setDate(date.getDate() + index);
-	return date.toLocaleDateString();
 }
 
 function Trip() {

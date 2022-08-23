@@ -65,6 +65,7 @@ function ModifyTrip() {
 		setTripDaysSpread(spreadTripDays(newTripDaysState));
 	};
 	const replaceTwoDayState = (day: TripDay[]) => {
+		console.log('DAYS PASSED TO THE FUNCTION=======> ', day);
 		const newTripDaysState = tripDays.map((tripDay) => {
 			if (tripDay.id === day[0].id) {
 				return day[0];
@@ -74,7 +75,7 @@ function ModifyTrip() {
 			}
 			return tripDay;
 		});
-
+		console.log(' NEW TRIP DAY STATE REPALCE 1 ======>>>', newTripDaysState);
 		setTripDays(newTripDaysState);
 		setTripDaysSpread(spreadTripDays(newTripDaysState));
 	};
@@ -157,23 +158,11 @@ function ModifyTrip() {
 	const deleteTripEvent = async (tripDayActivityId: string) => {
 		try {
 			const deleteInfo = await deleteEventFromTrip(tripDayActivityId);
-			const dayDeleted = tripDays.find((day) => day.id === deleteInfo.data!.tripDayId);
-			const filteredActivities = dayDeleted?.tripDayActivities.filter(
-				(dayEvent) => dayEvent.id !== tripDayActivityId
-			);
-			const orderedDayActivities = filteredActivities?.map((dayEvent, index) => ({
-				...dayEvent,
-				order: index,
-			}));
-			const newTripDaysState = tripDays.map((tripDay) => {
-				if (tripDay.id === deleteInfo.data!.tripDayId) {
-					return { ...tripDay, tripDayActivities: orderedDayActivities! };
-				}
-				return tripDay;
-			});
-
-			setTripDays(newTripDaysState);
-			setTripDaysSpread(spreadTripDays(newTripDaysState));
+			if (deleteInfo.data!.length === 1) {
+				replaceDayState(deleteInfo.data![0]);
+			} else {
+				replaceTwoDayState(deleteInfo.data!);
+			}
 		} catch (error) {
 			console.error(error);
 		}
@@ -234,35 +223,33 @@ function ModifyTrip() {
 	const endDrag = async ({ data, from, to }: { data: any[]; from: number; to: number }) => {
 		// Check if its trip or accommodation
 		if (from !== to) {
-			const spreadData = [tripDaysSpread[0], ...data];
-			const movedOnSameDay = isSameDay([...spreadData]);
-			const reestructuredData = reestructureSpreadTripDays([...spreadData]);
-			if (movedOnSameDay === true) {
-				const reorderData = {
-					newOrder: getOrderOnDay(reestructuredData, data[to].id, data[to].tripDayId),
-					tripDayId: data[to].tripDayId,
-					tripDayActivityId: data[to].id,
-				};
-				try {
-					// setTripDaysSpread([...data]); // ORDER BEFORE SETTING DO IT DOESNT CHANGE
+			try {
+				const spreadData = [tripDaysSpread[0], ...data];
+				const movedOnSameDay = isSameDay([...spreadData]);
+				const reestructuredData = reestructureSpreadTripDays([...spreadData]);
+				// JUST WORKS
+				setTripDaysSpread([...spreadData]);
+				if (movedOnSameDay === true) {
+					const reorderData = {
+						newOrder: getOrderOnDay(reestructuredData, data[to].id, data[to].tripDayId),
+						tripDayId: data[to].tripDayId,
+						tripDayActivityId: data[to].id,
+					};
 					const newDayData = await reorderTripDay(reorderData);
-					console.log('NEW DAY DATA =======>', newDayData.data);
 					replaceDayState(newDayData.data!);
-				} catch (error) {
-					console.error(error);
-				}
-			} else {
-				const changeDayOrder = {
-					...movedOnSameDay,
-					newOrder: getOrderOnDay(reestructuredData, data[to].id, movedOnSameDay.newTripDayId),
-				};
-				try {
+				} else {
+					// DISSAPEARS ON DRAG END
+					// setTripDaysSpread([...spreadData]);
+					const changeDayOrder = {
+						...movedOnSameDay,
+						newOrder: getOrderOnDay(reestructuredData, data[to].id, movedOnSameDay.newTripDayId),
+					};
 					const tripDaysData = await changeTripDay(changeDayOrder);
-					console.log('CHANGE ORDER DATA =======>', tripDaysData.data);
+					// console.log('CHANGE TRIP DAYS RESULT', tripDaysData.data);
 					replaceTwoDayState(tripDaysData.data!);
-				} catch (error) {
-					console.error(error);
 				}
+			} catch (error) {
+				console.error(error);
 			}
 		}
 	};
