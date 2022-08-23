@@ -30,7 +30,7 @@ function TopViewTrip({
 		>
 			<Pressable
 				alignItems="center"
-				width="8%"
+				width="10%"
 				onPress={() => navigation.goBack()}
 				style={{ transform: [{ scaleX: -1 }] }}
 			>
@@ -53,7 +53,7 @@ function TopViewTrip({
 			) : (
 				<Pressable
 					alignItems="center"
-					width="8%"
+					width="10%"
 					onPress={callback}
 					alignSelf="center"
 					rounded="3xl"

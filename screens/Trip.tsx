@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useNavigation } from '@react-navigation/native';
 import { View, FlatList, Heading, Divider, Pressable } from 'native-base';
-import React from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import AccommodationCard from '../components/createTrip/AccommodationCard';
 import EmptyList from '../components/createTrip/EmptyList';
@@ -59,20 +58,10 @@ function Trip() {
 					keyExtractor={(item) => item.id!}
 					renderItem={({ item }) => (
 						<View width="100%" my={2}>
-							{/* <HStack alignItems="center" width="80%" pl="7%" py={1}>
-								<Heading alignSelf="center" fontWeight="medium">
-									{getDate(trip.startDate, item.dayIndex)}
-								</Heading>
-								{Platform.OS === 'ios' ? (
-									<Divider width="120%" mx="5" />
-								) : (
-									<Divider width="120%" mx="5" />
-								)}
-							</HStack> */}
 							<Heading ml={5} pb={0.5} fontWeight="medium">
 								{getDate(trip.startDate, item.dayIndex)}
 							</Heading>
-							<Divider width="100%" mb={2} />
+							<Divider width="90%" mb={2} alignSelf="center" color={Colors.grey.dark} />
 							{item.tripDayActivities.length > 0 ? (
 								<FlatList
 									width="100%"

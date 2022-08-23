@@ -4,8 +4,15 @@ import React from 'react';
 import Constants from 'expo-constants';
 import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
+import HeartIcon from '../../assets/icons/HeartIcon';
 
-function TopViewActivity({ title = 'ups there was an error' }: { title: string }) {
+function TopViewActivity({
+	title = 'ups there was an error',
+	isActivity,
+}: {
+	title: string;
+	isActivity: boolean;
+}) {
 	const navigation = useNavigation();
 
 	return (
@@ -16,11 +23,13 @@ function TopViewActivity({ title = 'ups there was an error' }: { title: string }
 			backgroundColor={Colors.primary.dark}
 			width="100%"
 			pt={Constants.statusBarHeight + 14}
-			pb={4}
+			pb={2}
 		>
 			<Pressable
 				alignItems="center"
-				width="8%"
+				width="10%"
+				height="10"
+				justifyContent="center"
 				onPress={() => navigation.goBack()}
 				style={{ transform: [{ scaleX: -1 }] }}
 			>
@@ -28,8 +37,9 @@ function TopViewActivity({ title = 'ups there was an error' }: { title: string }
 			</Pressable>
 			<Text
 				color={Colors.white}
-				width="60%"
 				flexShrink={1}
+				pt={0.5}
+				height="10"
 				fontSize="2xl"
 				fontWeight="bold"
 				isTruncated
@@ -37,10 +47,20 @@ function TopViewActivity({ title = 'ups there was an error' }: { title: string }
 			>
 				{title}
 			</Text>
-			<View width="8%" />
-			{/* <Pressable alignItems="center" width="8%" onPress={callback} alignSelf="center" rounded="3xl">
-				<AddIcon size={36} color={Colors.primary.light} />
-			</Pressable> */}
+			{isActivity ? (
+				<Pressable
+					alignItems="center"
+					width="10%"
+					height="10"
+					alignSelf="center"
+					rounded="3xl"
+					justifyContent="center"
+				>
+					<HeartIcon size={24} color={Colors.white} />
+				</Pressable>
+			) : (
+				<View width="10%" height="10" />
+			)}
 		</HStack>
 	);
 }

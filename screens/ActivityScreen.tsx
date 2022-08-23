@@ -33,7 +33,7 @@ function filterActivity(dayAct: DayAct) {
 				justifyContent="flex-start"
 				bgColor={Colors.grey.extraLight}
 			>
-				<TopViewActivity title="Activity details" />
+				<TopViewActivity title="Activity details" isActivity />
 				<ScrollView flex={1} width="100%" bgColor="transparent" px="10%">
 					<Text color={Colors.primary.dark} fontWeight="semibold" fontSize="2xl" pt={3}>
 						Title:
@@ -89,6 +89,8 @@ function filterActivity(dayAct: DayAct) {
 								width: '100%',
 								height: '100%',
 								borderRadius: 12,
+								borderColor: Colors.primary.dark,
+								borderWidth: 2,
 							}}
 							alt="image"
 						/>
@@ -138,6 +140,8 @@ function filterActivity(dayAct: DayAct) {
 								width: '100%',
 								height: '100%',
 								borderRadius: 12,
+								borderColor: Colors.primary.dark,
+								borderWidth: 2,
 							}}
 							alt="image"
 						/>
@@ -190,6 +194,8 @@ function filterActivity(dayAct: DayAct) {
 								width: '100%',
 								height: '100%',
 								borderRadius: 12,
+								borderColor: Colors.primary.dark,
+								borderWidth: 2,
 							}}
 							alt="image"
 						/>
@@ -238,6 +244,8 @@ function filterActivity(dayAct: DayAct) {
 								width: '100%',
 								height: '100%',
 								borderRadius: 12,
+								borderColor: Colors.primary.dark,
+								borderWidth: 2,
 							}}
 							alt="image"
 						/>
