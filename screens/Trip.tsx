@@ -1,8 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useNavigation } from '@react-navigation/native';
-import { Platform } from 'expo-modules-core';
-import { View, FlatList, HStack, Heading, Divider, Pressable } from 'native-base';
+import { View, FlatList, Heading, Divider, Pressable } from 'native-base';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import AccommodationCard from '../components/createTrip/AccommodationCard';
@@ -12,7 +11,7 @@ import TopViewTrip from '../components/Trip/TopViewTrip';
 import ActivityCard from '../components/ui/ActivityCard';
 import Colors from '../constants/Colors';
 import { storeCurrentActivity } from '../features/currentActivity/currentActivitySlice';
-import { DayAct, TripStackScreenProps } from '../types';
+import { DayAct } from '../types';
 
 function filterActivity(dayAct: DayAct) {
 	if (dayAct.dayActivity?.activity) return <ActivityCard activity={dayAct.dayActivity.activity} />;
@@ -43,9 +42,16 @@ function Trip() {
 		navigation.navigate('ActivityScreen');
 	};
 
+	const checkIfPast = (date: string) => {
+		const today = new Date();
+		const tripDate = new Date(date);
+		console.log('TIMES!', today, tripDate);
+		return tripDate < today;
+	};
+
 	return (
 		<View flex={1} width="100%" alignItems="center" justifyContent="flex-start">
-			<TopViewTrip title={trip.name} callback={ModifyTrip} />
+			<TopViewTrip title={trip.name} callback={ModifyTrip} isInPast={checkIfPast(trip.endDate)} />
 			<View flex={1} width="100%" bgColor={Colors.grey.extraLight}>
 				<FlatList
 					width="100%"
@@ -53,7 +59,7 @@ function Trip() {
 					keyExtractor={(item) => item.id!}
 					renderItem={({ item }) => (
 						<View width="100%" my={2}>
-							<HStack alignItems="center" width="80%" pl="7%" py={1}>
+							{/* <HStack alignItems="center" width="80%" pl="7%" py={1}>
 								<Heading alignSelf="center" fontWeight="medium">
 									{getDate(trip.startDate, item.dayIndex)}
 								</Heading>
@@ -62,7 +68,11 @@ function Trip() {
 								) : (
 									<Divider width="120%" mx="5" />
 								)}
-							</HStack>
+							</HStack> */}
+							<Heading ml={5} pb={0.5} fontWeight="medium">
+								{getDate(trip.startDate, item.dayIndex)}
+							</Heading>
+							<Divider width="100%" mb={2} />
 							{item.tripDayActivities.length > 0 ? (
 								<FlatList
 									width="100%"

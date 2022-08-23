@@ -53,9 +53,13 @@ function TripItem({ trip }: { trip: TripBasicState }) {
 						<Text fontSize="xl" fontWeight="semibold" isTruncated>
 							{name}
 						</Text>
-						<Text>
-							{startDate} -&gt; {endDate}
-						</Text>
+						<HStack alignSelf="center" alignItems="center">
+							<Text>{startDate} </Text>
+							<Text> </Text>
+							<Arrow size={4} color={Colors.black} />
+							<Text> </Text>
+							<Text> {endDate}</Text>
+						</HStack>
 					</VStack>
 					<Arrow size={11} />
 				</HStack>

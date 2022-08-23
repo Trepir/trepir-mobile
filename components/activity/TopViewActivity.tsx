@@ -5,7 +5,7 @@ import Constants from 'expo-constants';
 import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
 
-function TopViewActivity({ title = 'ups' }: { title: string }) {
+function TopViewActivity({ title = 'ups there was an error' }: { title: string }) {
 	const navigation = useNavigation();
 
 	return (

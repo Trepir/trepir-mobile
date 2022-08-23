@@ -250,7 +250,7 @@ export interface TravelState {
 	departure: string;
 	originLocation: Location;
 	destinationLocation: Location;
-	flightNum?: string | null;
+	info?: string | null;
 	id?: string;
 	uid: string;
 }

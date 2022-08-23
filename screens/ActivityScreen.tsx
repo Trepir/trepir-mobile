@@ -22,6 +22,7 @@ import { DayAct } from '../types';
 // });
 
 function filterActivity(dayAct: DayAct) {
+	console.log('filterActivity', dayAct);
 	if (dayAct.dayActivity?.activity) {
 		const event = dayAct.dayActivity.activity;
 		return (
@@ -66,7 +67,8 @@ function filterActivity(dayAct: DayAct) {
 						Duration:
 					</Text>
 					<Text color={Colors.grey.dark} fontSize="lg" mb={4}>
-						{Math.floor(event.duration / 60)}:{event.duration % 60 < 9 ? `0${181 % 60}` : 181 % 60}h
+						{Math.floor(event.duration / 60)}:
+						{event.duration % 60 < 9 ? `0${event.duration % 60}` : event.duration % 60}h
 					</Text>
 					<Text color={Colors.primary.dark} fontWeight="semibold" fontSize="2xl">
 						Tags:
@@ -206,7 +208,7 @@ function filterActivity(dayAct: DayAct) {
 							{event.destinationLocation.formattedAddress}
 						</Text>
 					</View>
-					{/* {event.type === 'Flight' && (
+					{event.type === 'Flight' && event.travelInfo && (
 						<View>
 							<Text color={Colors.primary.dark} fontWeight="semibold" fontSize="2xl">
 								Flight number:
@@ -215,7 +217,7 @@ function filterActivity(dayAct: DayAct) {
 								{event.travelInfo}
 							</Text>
 						</View>
-					)} */}
+					)}
 					<Text color={Colors.primary.dark} fontWeight="semibold" fontSize="2xl">
 						Image of the place of arrival:
 					</Text>

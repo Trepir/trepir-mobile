@@ -8,11 +8,11 @@ import { AccommodationEvent } from '../../types';
 type Props = {
 	accommodation: AccommodationEvent;
 	isInTripView?: boolean;
-	isCheckIn?: boolean;
 };
 
-function AccommodationCard({ accommodation, isInTripView = false, isCheckIn = false }: Props) {
-	const { date, location } = accommodation;
+function AccommodationCard({ accommodation, isInTripView = false }: Props) {
+	const { date, location, state } = accommodation;
+	console.log(accommodation);
 	const parseCheckDate = () => {
 		if (isInTripView) return date.split('T')[1].slice(0, 5);
 		return date.split('T')[0];
@@ -56,7 +56,7 @@ function AccommodationCard({ accommodation, isInTripView = false, isCheckIn = fa
 						{location.city}
 					</Text>
 					<Text alignSelf="center" bgColor={Colors.grey.dark} fontSize="xs">
-						{isCheckIn ? 'CheckIn at: ' : 'Checkout at: '}
+						{state === 'CheckOut' ? 'Check-out at: ' : 'Check-in at: '}
 						{parseCheckDate()}
 					</Text>
 				</VStack>
