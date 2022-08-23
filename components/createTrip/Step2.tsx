@@ -3,6 +3,7 @@ import { View, Heading, HStack, Pressable, Divider, FlatList, Box } from 'native
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import AddIcon from '../../assets/icons/AddIcon';
+import DeleteIcon from '../../assets/icons/DeleteIcon';
 import Colors from '../../constants/Colors';
 import { clearDates } from '../../features/createTripValidation/CTValidationSlice';
 import { clearAccommodationState } from '../../features/newAccommodation/newAccommodationSlice';
@@ -112,6 +113,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 					width="full"
 					data={travels}
 					keyExtractor={(item) => item.originLocation.googleId!}
+					horizontal
 					renderItem={({ item, index }) => (
 						<Box
 							ml={index === 0 ? '8' : '0'}
@@ -120,10 +122,27 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 							style={{ width: 335 }}
 							alignItems="center"
 						>
+							<Pressable
+								position="absolute"
+								top={3}
+								left={3}
+								zIndex={1}
+								onPress={() =>
+									setTravels(
+										travels.filter(
+											(travelItem) =>
+												travelItem.originLocation.googleId !== item.originLocation.googleId
+										)
+									)
+								}
+								rounded="full"
+								bgColor="white"
+							>
+								<DeleteIcon size={30} color="red" />
+							</Pressable>
 							<TravelCard key={item.originLocation.googleId} travel={item} />
 						</Box>
 					)}
-					horizontal
 				/>
 			) : (
 				<EmptyList text="You dont have any travel yet." />
@@ -146,6 +165,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 					width="full"
 					data={accommodations}
 					keyExtractor={(item) => item.location.googleId!}
+					horizontal
 					renderItem={({ item, index }) => (
 						<Box
 							ml={index === 0 ? '8' : '0'}
@@ -154,10 +174,26 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 							style={{ width: 335 }}
 							alignItems="center"
 						>
+							<Pressable
+								position="absolute"
+								top={3}
+								left={3}
+								zIndex={1}
+								onPress={() =>
+									setAccommodations(
+										accommodations.filter(
+											(accomItem) => accomItem.location.googleId !== item.location.googleId
+										)
+									)
+								}
+								rounded="full"
+								bgColor="white"
+							>
+								<DeleteIcon size={30} color="red" />
+							</Pressable>
 							<CreateAccomCard key={item.location.googleId} accommodation={item} />
 						</Box>
 					)}
-					horizontal
 				/>
 			) : (
 				<EmptyList text="You dont have any stays yet." />

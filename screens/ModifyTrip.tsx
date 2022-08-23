@@ -1,4 +1,4 @@
-import { View, Heading, Pressable, HStack, Divider, Box } from 'native-base';
+import { View, Heading, Divider, Box } from 'native-base';
 import React, { useEffect, useRef, useState } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { clearTravelState } from '../features/newTravel/newTravelSlice';
 import { clearActivityState } from '../features/newActivity/newActivitySlice';
 import { TripDay, DayAct, Trip } from '../types';
-import AddIcon from '../assets/icons/AddIcon';
 import {
 	addAccommodationToTrip,
 	addActivityToTrip,
