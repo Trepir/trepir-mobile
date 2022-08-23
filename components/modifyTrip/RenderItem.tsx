@@ -37,7 +37,7 @@ function RenderItem({ renderItemParams, deleteTripEvent, addEventToDay }: Props)
 					<Pressable
 						position="absolute"
 						top={6}
-						left={53}
+						left={45}
 						zIndex={1}
 						onPress={() => setIsOpen(true)}
 						rounded="full"

@@ -1,15 +1,18 @@
-import React, { Dispatch, Ref, SetStateAction, useMemo, useState } from 'react';
+import React, { Ref, useMemo, useState } from 'react';
 import DropDownPicker, { ValueType } from 'react-native-dropdown-picker';
 import Constants from 'expo-constants';
 import { Box, Pressable, ScrollView, Text, View } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
 import { ActivityTags } from '../../constants/ActivityTags';
 import GooglePlacesInput from '../utils/GooglePlacesInput';
 import Colors from '../../constants/Colors';
-import { ActivityEvent } from '../../types';
+import { ActivityEvent, DayAct } from '../../types';
 import ActivityCard from '../ui/ActivityCard';
+import { storeCurrentActivity } from '../../features/currentActivity/currentActivitySlice';
+import { useAppDispatch } from '../../app/hooks';
 
 const styles = StyleSheet.create({
 	input: {
@@ -41,12 +44,20 @@ function InputSearchContainer({
 	const [openDropDown, setOpenDropDown] = useState(false);
 	const [valueDropDown, setValueDropDown] = useState<string[]>([]);
 	const [itemsDropDown, setItemsDropDown] = useState(ActivityTags);
+	const navigation = useNavigation();
+	const dispatch = useAppDispatch();
 
-	const snapPoints = useMemo(() => ['10%', '30%', '50%'], []);
+	const snapPoints = useMemo(() => ['30%', '50%'], []);
 
 	const filterByActivity = (tags: string[]) =>
 		valueDropDown.length === 0 ? true : tags.some((tag) => valueDropDown.includes(tag));
 
+	const goToActivity = (item: ActivityEvent) => {
+		// dispatch(storeCurrentActivity(item));
+		// @ts-ignore
+		dispatch(storeCurrentActivity({ dayActivity: { activity: item } }));
+		navigation.navigate('ActivityScreen');
+	};
 	return (
 		<>
 			<Box
@@ -78,7 +89,7 @@ function InputSearchContainer({
 					placeholderStyle={styles.placeholder}
 				/>
 			</Box>
-			<BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
+			<BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints} enablePanDownToClose>
 				<View alignItems="center">
 					<Text fontSize="xl" fontWeight="medium" mb={2}>
 						Activities
@@ -88,7 +99,7 @@ function InputSearchContainer({
 							<Box w="full" alignItems="center" key={activity.id}>
 								{filterByActivity(activity.tags) && (
 									<Pressable
-										// onPress={() => addActivityToDay(activity)}
+										onPress={() => goToActivity(activity)}
 										shadow={1}
 										mb={index + 1 === activities.length ? '20' : 4}
 									>

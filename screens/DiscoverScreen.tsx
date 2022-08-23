@@ -4,12 +4,12 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { Box, View } from 'native-base';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { ValueType } from 'react-native-dropdown-picker';
 import GooglePlacesInput from '../components/utils/GooglePlacesInput';
 import Colors from '../constants/Colors';
 import InputSearchContainer from '../components/discover/InputSearchContainer';
 import { ActivityEvent, Viewport } from '../types';
 import { activitiesFromViewport } from '../services/DiscoverService';
-import { ValueType } from 'react-native-dropdown-picker';
 // import { parseLocationDetails } from '../helpers/parseLocationDetails';
 
 // type Props = {};
@@ -101,6 +101,7 @@ function DiscoverScreen() {
 			<MapView
 				style={styles.map}
 				ref={mapRef}
+				onPress={() => bottomSheetRef.current?.snapToIndex(1)}
 				initialCamera={{
 					// Location of the user
 					center: {

@@ -19,7 +19,7 @@ function AccommodationCard({ accommodation, isInTripView = false }: Props) {
 	};
 
 	return (
-		<HStack width="80%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
+		<HStack width="85%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
 			<Box
 				width={120}
 				height={120}

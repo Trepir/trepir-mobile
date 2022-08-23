@@ -20,7 +20,7 @@ function TravelCard({ travel, isInTripView = false }: Props) {
 
 	return (
 		<HStack
-			width={isInTripView ? '80%' : '100%'}
+			width={isInTripView ? '85%' : '100%'}
 			bgColor={Colors.white}
 			borderRadius={18}
 			p={2}
