@@ -5,6 +5,7 @@ import Constants from 'expo-constants';
 import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
 import HeartIcon from '../../assets/icons/HeartIcon';
+import { Platform } from 'react-native';
 
 function TopViewActivity({
 	title = 'ups there was an error',
@@ -22,8 +23,8 @@ function TopViewActivity({
 			alignItems="center"
 			backgroundColor={Colors.primary.dark}
 			width="100%"
-			pt={Constants.statusBarHeight + 14}
-			pb={2}
+			style={{ paddingTop: Platform.OS === 'ios' ? 20 : Constants.statusBarHeight + 14 }}
+			pb={4}
 		>
 			<Pressable
 				alignItems="center"

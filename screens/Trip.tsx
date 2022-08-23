@@ -1,7 +1,10 @@
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useNavigation } from '@react-navigation/native';
-import { View, FlatList, Heading, Divider, Pressable } from 'native-base';
+import { Platform } from 'expo-modules-core';
+import { View, FlatList, HStack, Heading, Divider, Pressable } from 'native-base';
+import React, { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import AccommodationCard from '../components/createTrip/AccommodationCard';
 import EmptyList from '../components/createTrip/EmptyList';
@@ -10,7 +13,12 @@ import TopViewTrip from '../components/Trip/TopViewTrip';
 import ActivityCard from '../components/ui/ActivityCard';
 import Colors from '../constants/Colors';
 import { storeCurrentActivity } from '../features/currentActivity/currentActivitySlice';
-import { DayAct } from '../types';
+import { storeLikedActivities } from '../features/user/likedActivitiesSlice';
+import { storeArrayTrip } from '../features/user/tripArraySlice';
+import { storeUser } from '../features/user/userSlice';
+import { getDate } from '../helpers/getDateOfTripDay';
+import { fetchUser } from '../services/user';
+import { DayAct, TripStackScreenProps } from '../types';
 
 function filterActivity(dayAct: DayAct) {
 	if (dayAct.dayActivity?.activity) return <ActivityCard activity={dayAct.dayActivity.activity} />;
@@ -21,15 +29,10 @@ function filterActivity(dayAct: DayAct) {
 	return null;
 }
 
-function getDate(startDate: string, index: number) {
-	const date = new Date(startDate);
-	date.setDate(date.getDate() + index);
-	return date.toLocaleDateString();
-}
-
 function Trip() {
 	const navigation = useNavigation();
 	const trip = useAppSelector((state) => state.currentTrip);
+	const userId = useAppSelector((state) => state.user.uid);
 	const dispatch = useAppDispatch();
 
 	const ModifyTrip = () => {
@@ -40,6 +43,20 @@ function Trip() {
 		dispatch(storeCurrentActivity(item));
 		navigation.navigate('ActivityScreen');
 	};
+	const updateGeneralState = async () => {
+		const payload = await fetchUser(userId);
+		if (payload.data) {
+			dispatch(storeUser(payload.data));
+			dispatch(storeArrayTrip(payload.data.trips));
+			dispatch(storeLikedActivities(payload.data.favoriteActivities));
+		} else {
+			// SHOW ERROR ON THE SCREEN FIXME
+			console.log('Login.tsx error:', payload.error);
+		}
+	};
+	useEffect(() => {
+		updateGeneralState();
+	}, []);
 
 	const checkIfPast = (date: string) => {
 		const today = new Date();

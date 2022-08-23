@@ -1,4 +1,4 @@
-import MapView, { LatLng } from 'react-native-maps';
+import MapView, { LatLng, Marker } from 'react-native-maps';
 import React, { useRef, useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Box, View } from 'native-base';
@@ -9,6 +9,7 @@ import Colors from '../constants/Colors';
 import InputSearchContainer from '../components/discover/InputSearchContainer';
 import { ActivityEvent, Viewport } from '../types';
 import { activitiesFromViewport } from '../services/DiscoverService';
+import { ValueType } from 'react-native-dropdown-picker';
 // import { parseLocationDetails } from '../helpers/parseLocationDetails';
 
 // type Props = {};
@@ -42,6 +43,16 @@ const edgePadding = {
 function DiscoverScreen() {
 	const [startedSearch, setStartedSearch] = useState(false);
 	const [activitiesFromLocation, setActivitiesFromLocation] = useState<ActivityEvent[]>([]);
+	const [filteredActivities, setFilteredActivities] = useState<ActivityEvent[]>([]);
+	const filterActivitiesByTags = (tagsFilter: ValueType[]) => {
+		if (tagsFilter.length === 0) {
+			setFilteredActivities(activitiesFromLocation);
+		} else {
+			setFilteredActivities(
+				filteredActivities.filter(({ tags }) => tags.some((tag) => tagsFilter.includes(tag)))
+			);
+		}
+	};
 
 	const mapRef = useRef<MapView>(null);
 	const bottomSheetRef = useRef<BottomSheet>(null);
@@ -56,6 +67,8 @@ function DiscoverScreen() {
 			};
 
 			const activities = await activitiesFromViewport(viewport);
+			// HAVE TO FILTER HERE
+			setFilteredActivities([...activities.data!]);
 			setActivitiesFromLocation([...activities.data!]);
 		} catch (error) {
 			console.error(error);
@@ -99,7 +112,17 @@ function DiscoverScreen() {
 					altitude: 100000000000000000, // Check what te max is
 					zoom: 0,
 				}}
-			/>
+			>
+				{filteredActivities.map((activityItem) => (
+					<Marker
+						key={activityItem.id}
+						coordinate={{
+							latitude: activityItem.location.latitude,
+							longitude: activityItem.location.longitude,
+						}}
+					/>
+				))}
+			</MapView>
 
 			{!startedSearch ? (
 				<Box position="absolute" zIndex={5} width="80%">
@@ -114,6 +137,7 @@ function DiscoverScreen() {
 					goToDestination={goToDestination}
 					bottomSheetRef={bottomSheetRef}
 					activities={activitiesFromLocation}
+					filterActivitiesByTags={filterActivitiesByTags}
 				/>
 			)}
 		</View>

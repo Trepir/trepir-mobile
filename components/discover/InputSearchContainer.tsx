@@ -1,5 +1,5 @@
-import React, { Ref, useMemo, useState } from 'react';
-import DropDownPicker from 'react-native-dropdown-picker';
+import React, { Dispatch, Ref, SetStateAction, useMemo, useState } from 'react';
+import DropDownPicker, { ValueType } from 'react-native-dropdown-picker';
 import Constants from 'expo-constants';
 import { Box, Pressable, ScrollView, Text, View } from 'native-base';
 import { StyleSheet } from 'react-native';
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
 	input: {
 		borderColor: Colors.primary.normal,
 		borderWidth: 2,
+		borderRadius: 15,
 	},
 	placeholder: {
 		color: '#c1c1c1',
@@ -27,9 +28,16 @@ type Props = {
 	goToDestination: (_: any, details: GooglePlaceDetail) => void;
 	bottomSheetRef: Ref<BottomSheet>;
 	activities: ActivityEvent[];
+	// eslint-disable-next-line no-unused-vars
+	filterActivitiesByTags: (tags: ValueType[]) => void;
 };
 
-function InputSearchContainer({ goToDestination, bottomSheetRef, activities }: Props) {
+function InputSearchContainer({
+	goToDestination,
+	bottomSheetRef,
+	activities,
+	filterActivitiesByTags,
+}: Props) {
 	const [openDropDown, setOpenDropDown] = useState(false);
 	const [valueDropDown, setValueDropDown] = useState<string[]>([]);
 	const [itemsDropDown, setItemsDropDown] = useState(ActivityTags);
@@ -59,6 +67,9 @@ function InputSearchContainer({ goToDestination, bottomSheetRef, activities }: P
 					setOpen={setOpenDropDown}
 					setValue={setValueDropDown}
 					setItems={setItemsDropDown}
+					onChangeValue={(values) => {
+						filterActivitiesByTags(values!);
+					}}
 					multiple
 					mode="BADGE"
 					placeholder="Filter Activities by tags"
