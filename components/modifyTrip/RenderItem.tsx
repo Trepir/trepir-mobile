@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist';
 import { Divider, Heading, HStack, Pressable } from 'native-base';
 import AccommodationCard from '../createTrip/AccommodationCard';
@@ -6,10 +6,10 @@ import ActivityCard from '../ui/ActivityCard';
 import TravelCard from '../createTrip/TravelCard';
 import { DayAct } from '../../types';
 import DeleteIcon from '../../assets/icons/DeleteIcon';
-import Colors from '../../constants/Colors';
 import AddIcon from '../../assets/icons/AddIcon';
 import { getDate } from '../../helpers/getDateOfTripDay';
 import { useAppSelector } from '../../app/hooks';
+import ConfirmDeleteModal from '../../modals/ConfirmDeleteModal';
 
 type Props = {
 	renderItemParams: RenderItemParams<DayAct & { dayIndex: number; id: string; tripId: string }>;
@@ -22,6 +22,7 @@ type Props = {
 function RenderItem({ renderItemParams, deleteTripEvent, addEventToDay }: Props) {
 	const { item, drag, isActive } = renderItemParams;
 	const { startDate } = useAppSelector((state) => state.currentTrip);
+	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<ScaleDecorator>
 			{item.dayIndex === undefined ? (
@@ -38,7 +39,7 @@ function RenderItem({ renderItemParams, deleteTripEvent, addEventToDay }: Props)
 						top={6}
 						left={53}
 						zIndex={1}
-						onPress={() => deleteTripEvent(item.id)}
+						onPress={() => setIsOpen(true)}
 						rounded="full"
 						bgColor="white"
 					>
@@ -59,6 +60,11 @@ function RenderItem({ renderItemParams, deleteTripEvent, addEventToDay }: Props)
 					</HStack>
 				</Pressable>
 			)}
+			<ConfirmDeleteModal
+				pressDelete={() => deleteTripEvent(item.id)}
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+			/>
 		</ScaleDecorator>
 	);
 }

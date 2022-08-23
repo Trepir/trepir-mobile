@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 	input: {
 		borderColor: Colors.primary.normal,
 		borderWidth: 2,
+		borderRadius: 15,
 	},
 	placeholder: {
 		color: '#c1c1c1',
