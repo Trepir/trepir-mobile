@@ -1,12 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
-import { Text, Pressable, HStack } from 'native-base';
+import { Text, Pressable, HStack, View } from 'native-base';
 import React from 'react';
 import Constants from 'expo-constants';
 import AddIcon from '../../assets/icons/AddIcon';
 import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
 
-function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () => void }) {
+function TopViewTrip({
+	title = 'ups',
+	callback,
+	isInPast,
+}: {
+	title: string;
+	callback: () => void;
+	isInPast: boolean;
+}) {
 	const navigation = useNavigation();
 
 	return (
@@ -22,7 +30,7 @@ function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () 
 		>
 			<Pressable
 				alignItems="center"
-				width="8%"
+				width="10%"
 				onPress={() => navigation.goBack()}
 				style={{ transform: [{ scaleX: -1 }] }}
 			>
@@ -40,9 +48,19 @@ function TopViewTrip({ title = 'ups', callback }: { title: string; callback: () 
 			>
 				{title}
 			</Text>
-			<Pressable alignItems="center" width="8%" onPress={callback} alignSelf="center" rounded="3xl">
-				<AddIcon size={36} color={Colors.primary.light} />
-			</Pressable>
+			{isInPast ? (
+				<View width="8%" />
+			) : (
+				<Pressable
+					alignItems="center"
+					width="10%"
+					onPress={callback}
+					alignSelf="center"
+					rounded="3xl"
+				>
+					<AddIcon size={36} color={Colors.primary.light} />
+				</Pressable>
+			)}
 		</HStack>
 	);
 }

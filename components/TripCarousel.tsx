@@ -33,14 +33,16 @@ function TripCarousel({ type, trips }: CarouselProps) {
 	}
 
 	return (
-		<View>
+		<View pb={type === 'past' ? 3 : 0}>
 			<Text paddingX={6} mt={4} fontSize="2xl">
 				{title}
 			</Text>
 			{trips.length > 0 ? (
 				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-					{trips.map((trip) => (
-						<TripItem key={trip.id} trip={trip} />
+					{trips.map((trip, index) => (
+						<View key={trip.id} pl={index === 0 ? 2 : 0} pr={index === trips.length - 1 ? 2 : 0}>
+							<TripItem key={trip.id} trip={trip} />
+						</View>
 					))}
 				</ScrollView>
 			) : (

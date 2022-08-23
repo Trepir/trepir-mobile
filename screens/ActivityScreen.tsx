@@ -4,7 +4,6 @@ import React from 'react';
 import { useAppSelector } from '../app/hooks';
 import TopViewActivity from '../components/activity/TopViewActivity';
 import ImagePlaceholder from '../components/ImagePlaceholder';
-import Tag from '../components/ui/Tag';
 import TagArray from '../components/ui/TagArray';
 import Colors from '../constants/Colors';
 import { DayAct } from '../types';
@@ -23,6 +22,7 @@ import { DayAct } from '../types';
 // });
 
 function filterActivity(dayAct: DayAct) {
+	console.log('filterActivity', dayAct);
 	if (dayAct.dayActivity?.activity) {
 		const event = dayAct.dayActivity.activity;
 		return (
@@ -33,7 +33,7 @@ function filterActivity(dayAct: DayAct) {
 				justifyContent="flex-start"
 				bgColor={Colors.grey.extraLight}
 			>
-				<TopViewActivity title="Activity details" />
+				<TopViewActivity title="Activity details" isActivity />
 				<ScrollView flex={1} width="100%" bgColor="transparent" px="10%">
 					<Text color={Colors.primary.dark} fontWeight="semibold" fontSize="2xl" pt={3}>
 						Title:
@@ -67,7 +67,8 @@ function filterActivity(dayAct: DayAct) {
 						Duration:
 					</Text>
 					<Text color={Colors.grey.dark} fontSize="lg" mb={4}>
-						{Math.floor(event.duration / 60)}:{event.duration % 60 < 9 ? `0${181 % 60}` : 181 % 60}h
+						{Math.floor(event.duration / 60)}:
+						{event.duration % 60 < 9 ? `0${event.duration % 60}` : event.duration % 60}h
 					</Text>
 					<Text color={Colors.primary.dark} fontWeight="semibold" fontSize="2xl">
 						Tags:
@@ -88,6 +89,8 @@ function filterActivity(dayAct: DayAct) {
 								width: '100%',
 								height: '100%',
 								borderRadius: 12,
+								borderColor: Colors.primary.dark,
+								borderWidth: 2,
 							}}
 							alt="image"
 						/>
@@ -137,6 +140,8 @@ function filterActivity(dayAct: DayAct) {
 								width: '100%',
 								height: '100%',
 								borderRadius: 12,
+								borderColor: Colors.primary.dark,
+								borderWidth: 2,
 							}}
 							alt="image"
 						/>
@@ -189,6 +194,8 @@ function filterActivity(dayAct: DayAct) {
 								width: '100%',
 								height: '100%',
 								borderRadius: 12,
+								borderColor: Colors.primary.dark,
+								borderWidth: 2,
 							}}
 							alt="image"
 						/>
@@ -207,7 +214,7 @@ function filterActivity(dayAct: DayAct) {
 							{event.destinationLocation.formattedAddress}
 						</Text>
 					</View>
-					{/* {event.type === 'Flight' && (
+					{event.type === 'Flight' && event.travelInfo && (
 						<View>
 							<Text color={Colors.primary.dark} fontWeight="semibold" fontSize="2xl">
 								Flight number:
@@ -216,7 +223,7 @@ function filterActivity(dayAct: DayAct) {
 								{event.travelInfo}
 							</Text>
 						</View>
-					)} */}
+					)}
 					<Text color={Colors.primary.dark} fontWeight="semibold" fontSize="2xl">
 						Image of the place of arrival:
 					</Text>
@@ -237,6 +244,8 @@ function filterActivity(dayAct: DayAct) {
 								width: '100%',
 								height: '100%',
 								borderRadius: 12,
+								borderColor: Colors.primary.dark,
+								borderWidth: 2,
 							}}
 							alt="image"
 						/>

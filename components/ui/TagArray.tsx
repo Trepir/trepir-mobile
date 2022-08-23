@@ -8,12 +8,16 @@ function TagArray({ tags, short = false }: { tags: Tag[]; short?: boolean }) {
 	if (short) {
 		return (
 			<View flexDirection="row" alignItems="center">
-				<View key={tags[0]} mr={1}>
-					<TagItem text={tags[0]} />
-				</View>
-				<View key={tags[1]} mr={1}>
-					<TagItem text={tags[1]} />
-				</View>
+				{tags.length > 0 && (
+					<View key={tags[0]} mr={1}>
+						<TagItem text={tags[0]} />
+					</View>
+				)}
+				{tags.length > 1 && (
+					<View key={tags[1]} mr={1}>
+						<TagItem text={tags[1]} />
+					</View>
+				)}
 				{tags.length > 2 && <Text>{`+${tags.length - 2}`}</Text>}
 			</View>
 		);

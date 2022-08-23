@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Platform } from 'expo-modules-core';
 import { View, FlatList, HStack, Heading, Divider, Pressable } from 'native-base';
 import React, { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import AccommodationCard from '../components/createTrip/AccommodationCard';
 import EmptyList from '../components/createTrip/EmptyList';
@@ -57,9 +58,16 @@ function Trip() {
 		updateGeneralState();
 	}, []);
 
+	const checkIfPast = (date: string) => {
+		const today = new Date();
+		const tripDate = new Date(date);
+		console.log('TIMES!', today, tripDate);
+		return tripDate < today;
+	};
+
 	return (
 		<View flex={1} width="100%" alignItems="center" justifyContent="flex-start">
-			<TopViewTrip title={trip.name} callback={ModifyTrip} />
+			<TopViewTrip title={trip.name} callback={ModifyTrip} isInPast={checkIfPast(trip.endDate)} />
 			<View flex={1} width="100%" bgColor={Colors.grey.extraLight}>
 				<FlatList
 					width="100%"
@@ -67,16 +75,10 @@ function Trip() {
 					keyExtractor={(item) => item.id!}
 					renderItem={({ item }) => (
 						<View width="100%" my={2}>
-							<HStack alignItems="center" width="80%" pl="7%" py={1}>
-								<Heading alignSelf="center" fontWeight="medium">
-									{getDate(trip.startDate, item.dayIndex)}
-								</Heading>
-								{Platform.OS === 'ios' ? (
-									<Divider width="120%" mx="5" />
-								) : (
-									<Divider width="120%" mx="5" />
-								)}
-							</HStack>
+							<Heading ml={5} pb={0.5} fontWeight="medium">
+								{getDate(trip.startDate, item.dayIndex)}
+							</Heading>
+							<Divider width="90%" mb={2} alignSelf="center" color={Colors.grey.dark} />
 							{item.tripDayActivities.length > 0 ? (
 								<FlatList
 									width="100%"

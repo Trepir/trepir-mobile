@@ -15,12 +15,12 @@ import Navigation from './navigation';
 export default function App() {
 	const isLoadingComplete = useCachedResources();
 	// const colorScheme = useColorScheme();
-	const [fontsLoaded] = useFonts({
-		'Gilroy-ExtraBold': GilroyExtraBold,
-		'Gilroy-Light': GilroyLight,
-	});
+	// const [fontsLoaded] = useFonts({
+	// 	'Gilroy-ExtraBold': GilroyExtraBold,
+	// 	'Gilroy-Light': GilroyLight,
+	// });
 
-	const theme = {};
+	// const theme = {};
 	// 	= extendTheme({
 	// 	fontConfig: {
 	// 		Gilroy: {
@@ -70,7 +70,7 @@ export default function App() {
 	// 	},
 	// });
 
-	if (!isLoadingComplete && !fontsLoaded) {
+	if (!isLoadingComplete) {
 		return null;
 	}
 	return (

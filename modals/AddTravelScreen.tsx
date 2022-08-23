@@ -62,7 +62,7 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 			departure: Date.now(),
 			origin: new Location(),
 			destination: new Location(),
-			flightNumber: null,
+			info: null,
 		},
 	});
 

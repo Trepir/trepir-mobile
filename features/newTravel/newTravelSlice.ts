@@ -27,7 +27,7 @@ const initialState: TravelState = {
 		formattedAddress: '',
 		photoUrl: [],
 	},
-	flightNum: null,
+	info: null,
 };
 
 const newActivitySlice = createSlice({
