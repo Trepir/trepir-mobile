@@ -18,7 +18,7 @@ function TagArray({ tags, short = false }: { tags: Tag[]; short?: boolean }) {
 						<TagItem text={tags[1]} />
 					</View>
 				)}
-				{tags.length > 2 && <Text fontSize={'xs'}>{`+${tags.length - 2}`}</Text>}
+				{tags.length > 2 && <Text fontSize="xs">{`+${tags.length - 2}`}</Text>}
 			</View>
 		);
 	}
@@ -26,7 +26,7 @@ function TagArray({ tags, short = false }: { tags: Tag[]; short?: boolean }) {
 		<View flexDirection="row">
 			{tags.map((tag) => (
 				<View key={tag} mr={1}>
-					<TagItem text={tag} />
+					<TagItem text={tag} big />
 				</View>
 			))}
 		</View>

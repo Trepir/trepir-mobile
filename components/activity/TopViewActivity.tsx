@@ -59,6 +59,7 @@ function TopViewActivity({
 					alignSelf="center"
 					rounded="3xl"
 					justifyContent="center"
+					onPress={openModal}
 				>
 					<HeartIcon size={24} color={Colors.white} />
 				</Pressable>
