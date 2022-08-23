@@ -32,7 +32,6 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 
 	useEffect(() => {
 		if (newTravel.uid !== '') {
-			console.log(newTravel);
 			setTravels([
 				...travels,
 				{ ...newTravel, departure: new Date(newTravel.departure).toISOString() },
@@ -42,7 +41,6 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 	}, [newTravel]);
 	useEffect(() => {
 		if (newAccommodation.uid !== '') {
-			console.log(newAccommodation);
 			setAccommodations([...accommodations, newAccommodation]);
 			dispatch(clearAccommodationState());
 		}
@@ -50,7 +48,6 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 
 	const createTrip = async () => {
 		try {
-			console.log('ACCOMMODATIONS===========>', accommodations);
 			const formattedTrip: any = {
 				...newTrip,
 				uid: '2',
@@ -69,6 +66,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 			dispatch(clearDates());
 			const createdTrip = await createTripApi(formattedTrip);
 			console.log(createdTrip.data);
+			//HERE DO THE CALL
 			jumpTo('third');
 		} catch (error) {
 			console.error(error);
