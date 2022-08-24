@@ -6,6 +6,8 @@ import ButtonGroup from './ButtonGroup';
 import ActivityCard from '../ui/ActivityCard';
 import { ActivityEvent } from '../../types';
 import { getAllActivities } from '../../services/ActivityService';
+import { Dimensions } from 'react-native';
+import { useAppSelector } from '../../app/hooks';
 
 type Props = {
 	bottomSheetRef: Ref<BottomSheet>;
@@ -14,19 +16,9 @@ type Props = {
 };
 
 function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
+	const tripSavedActivities = useAppSelector((state) => state.currentTrip.favouriteActivities);
 	const snapPoints = useMemo(() => ['60%', '80%'], []);
-	const [activities, setActivities] = useState<ActivityEvent[]>([]);
-	useEffect(() => {
-		const getActivitiesFromBE = async () => {
-			try {
-				const allActivities = await getAllActivities();
-				setActivities([...allActivities.data!]);
-			} catch (error) {
-				console.error(error);
-			}
-		};
-		getActivitiesFromBE();
-	}, []);
+	console.log(tripSavedActivities);
 
 	return (
 		<BottomSheet ref={bottomSheetRef} index={-1} snapPoints={snapPoints} enablePanDownToClose>
@@ -41,14 +33,18 @@ function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 					Select from you own Activities
 				</Text>
 
-				<ScrollView contentContainerStyle={{ alignItems: 'center', width: '100%' }}>
-					{activities.map((activity, index) => (
+				<ScrollView
+					style={{ width: Dimensions.get('window').width }}
+					contentContainerStyle={{ alignItems: 'center' }}
+				>
+					{tripSavedActivities.map((activity, index) => (
 						<Pressable
 							onPress={() => addActivityToDay(activity)}
 							key={activity.id}
 							shadow={1}
-							mb={index + 1 === activities.length ? '48' : 4}
+							mb={index + 1 === tripSavedActivities.length ? '48' : 4}
 							width="100%"
+							alignItems="center"
 						>
 							<ActivityCard activity={activity} />
 						</Pressable>
