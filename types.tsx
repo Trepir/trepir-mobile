@@ -308,7 +308,7 @@ export type TripForPost = {
 export type Trip = {
 	uid: string;
 	id: string;
-	createdAt: string;
+	createdAt?: string;
 	userId: string;
 	startDate: string;
 	endDate: string;

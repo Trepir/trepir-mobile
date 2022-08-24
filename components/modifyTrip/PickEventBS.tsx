@@ -18,7 +18,6 @@ type Props = {
 function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 	const tripSavedActivities = useAppSelector((state) => state.currentTrip.favouriteActivities);
 	const snapPoints = useMemo(() => ['60%', '80%'], []);
-	console.log(tripSavedActivities);
 
 	return (
 		<BottomSheet ref={bottomSheetRef} index={-1} snapPoints={snapPoints} enablePanDownToClose>

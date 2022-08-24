@@ -12,8 +12,9 @@ import Colors from '../../constants/Colors';
 import { ActivityEvent, DayAct } from '../../types';
 import ActivityCard from '../ui/ActivityCard';
 import { storeCurrentActivity } from '../../features/currentActivity/currentActivitySlice';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { ScrollView } from 'react-native-gesture-handler';
+import HeartIcon from '../../assets/icons/HeartIcon';
 
 const styles = StyleSheet.create({
 	input: {
@@ -49,6 +50,7 @@ function InputSearchContainer({
 	const [itemsDropDown, setItemsDropDown] = useState(ActivityTags);
 	const navigation = useNavigation();
 	const dispatch = useAppDispatch();
+	const tripSavedActivities = useAppSelector((state) => state.likedActivities);
 
 	const snapPoints = useMemo(() => ['30%', '50%'], []);
 
@@ -61,6 +63,9 @@ function InputSearchContainer({
 		dispatch(storeCurrentActivity({ dayActivity: { activity: item } }));
 		navigation.navigate('ActivityScreen');
 	};
+
+	const isActivityLiked = (activityId: string) =>
+		tripSavedActivities.some((act) => act.id === activityId);
 	return (
 		<>
 			<Box
@@ -109,6 +114,11 @@ function InputSearchContainer({
 										mb={index + 1 === activities.length ? '20' : 4}
 									>
 										<ActivityCard activity={activity} />
+										{isActivityLiked(activity.id!) && (
+											<Box position="absolute" right={2} top={2}>
+												<HeartIcon size={30} color={Colors.like.like_error} />
+											</Box>
+										)}
 									</Pressable>
 								)}
 							</Box>
