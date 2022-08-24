@@ -51,7 +51,7 @@ function RenderItem({ renderItemParams, deleteTripEvent, addEventToDay }: Props)
 					{item.travelEvent !== null && <TravelCard isInTripView travel={item.travelEvent!} />}
 				</Pressable>
 			) : (
-				<Pressable onPress={() => addEventToDay(item.dayIndex)} px="16">
+				<Pressable onPress={() => addEventToDay(item.dayIndex)} px="16" py={2}>
 					<HStack alignItems="center" justifyContent="center">
 						<Heading alignSelf="center" fontWeight="medium" color={Colors.grey.dark}>
 							{getDate(startDate, item.dayIndex)}
