@@ -14,6 +14,7 @@ import { useAppDispatch } from '../app/hooks';
 import { clearDates } from '../features/createTripValidation/CTValidationSlice';
 
 export type newTripType = {
+	id: string;
 	uid: string;
 	name: string;
 	startDate: string;
@@ -30,6 +31,7 @@ export type newTripType = {
 
 function CreateScreen() {
 	const [newTrip, setNewTrip] = useState<newTripType>({
+		id: '',
 		uid: '',
 		name: '',
 		startDate: '',
@@ -43,6 +45,7 @@ function CreateScreen() {
 		travel: [],
 		accommodation: [],
 	});
+	const [createdId, setCreatedId] = useState('');
 
 	const dispatch = useAppDispatch();
 	useEffect(() => {
@@ -55,9 +58,16 @@ function CreateScreen() {
 			case 'first':
 				return <Step1 jumpTo={jumpTo} newTrip={newTrip} setNewTrip={setNewTrip} />;
 			case 'second':
-				return <Step2 jumpTo={jumpTo} newTrip={newTrip} setNewTrip={setNewTrip} />;
+				return (
+					<Step2
+						jumpTo={jumpTo}
+						newTrip={newTrip}
+						setNewTrip={setNewTrip}
+						setCreatedId={setCreatedId}
+					/>
+				);
 			case 'third':
-				return <Step3 jumpTo={jumpTo} />;
+				return <Step3 jumpTo={jumpTo} createdId={createdId} />;
 
 			default:
 				return <Step1 jumpTo={jumpTo} newTrip={newTrip} setNewTrip={setNewTrip} />;

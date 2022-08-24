@@ -21,7 +21,6 @@ export function getDateAsDate(startDate: string, index: number, timeSet?: string
 				new Date(Date.parse(timeSet!)).getMinutes()
 			)
 		);
-		console.log('NEW DATE =======>', newDate);
 		return newDate;
 	}
 	return date;

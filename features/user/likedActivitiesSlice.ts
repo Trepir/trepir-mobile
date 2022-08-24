@@ -1,17 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActivityEvent, DayActivityEvent } from '../../types';
 
-const initialState: ActivityEvent[] = [];
+export type FaveActivity = {
+	activityId: string;
+	id: number;
+	tripId: string;
+	userId: string;
+	activity: ActivityEvent;
+};
+const initialState: FaveActivity[] = [];
 
 const likedActivitiesSlice = createSlice({
 	name: 'likedActivities',
 	initialState,
 	reducers: {
-		storeLikedActivities: (state: ActivityEvent[], action: PayloadAction<DayActivityEvent[]>) => {
-			const newPayload = action.payload.map((activity: DayActivityEvent) => activity.activity);
-			console.log('NEW PAYLOAD ======>', newPayload);
-			return [...newPayload];
-		},
+		storeLikedActivities: (state: FaveActivity[], action: PayloadAction<FaveActivity[]>) => [
+			...action.payload,
+		],
+
 		clearLikedActivities: () => initialState,
 		// addLikedActivity: (state: ActivityEvent[], action: PayloadAction<DayActivityEvent>) => {
 		// 	return [...state, action.payload];

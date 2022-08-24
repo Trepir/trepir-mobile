@@ -25,9 +25,10 @@ type Props = {
 	jumpTo: (key: string) => void;
 	newTrip: newTripType;
 	setNewTrip: Dispatch<SetStateAction<newTripType>>;
+	setCreatedId: Dispatch<SetStateAction<string>>;
 };
 
-function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
+function Step2({ jumpTo, newTrip, setNewTrip, setCreatedId }: Props) {
 	const dispatch = useAppDispatch();
 	const userId = useAppSelector((state) => state.user.uid);
 	const navigation = useNavigation();
@@ -84,6 +85,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 			dispatch(clearDates());
 			const createdTrip = await createTripApi(formattedTrip);
 			console.log(createdTrip.data);
+			setCreatedId(createdTrip.data!.id);
 			/* */
 			await updateGeneralState();
 			jumpTo('third');
