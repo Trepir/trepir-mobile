@@ -21,6 +21,7 @@ import { ActivityEvent, Location, RootTabScreenProps } from '../types';
 import { parseLocationDetails } from '../helpers/parseLocationDetails';
 import { ActivityTags } from '../constants/ActivityTags';
 import ApiKeys from '../constants/ApiKeys';
+import TopViewActivity from '../components/activity/TopViewActivity';
 
 // For ANDROID => READ THE DOCS
 // DateTimePickerAndroid.open(params: AndroidNativeProps)
@@ -84,44 +85,47 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 
 	return (
 		<DismissKeyboard>
-			<View flex={1} px="10" keyboardShouldPersistTaps="handled">
-				{/* WHEN THIS IS ACTIVE I HAVE TO TOP THE SCROLLING OF THE MODAL  */}
-				<HStack alignSelf="center" alignItems="center">
-					<GoogleIcon size={25} />
-					<Heading fontSize="lg" fontWeight="semibold" my={4} ml={2}>
-						Select a Location for your Activity
-					</Heading>
-				</HStack>
+			<>
+				<TopViewActivity title="Add a new Activity" />
 
-				<View position="absolute" width="100%" alignSelf="center" zIndex={2} mt={16}>
-					<GooglePlacesInput
-						placeholder="Select a Location for your Activity"
-						pressFunction={getLocationData}
-						queryType="establishment"
-					/>
-					{locationValidation.touched && !locationValidation.valid && (
-						<Text color="error.600">This is required.</Text>
-					)}
-				</View>
+				<View flex={1} px="10" keyboardShouldPersistTaps="handled">
+					{/* WHEN THIS IS ACTIVE I HAVE TO TOP THE SCROLLING OF THE MODAL  */}
+					<HStack alignSelf="center" alignItems="center">
+						<GoogleIcon size={25} />
+						<Heading fontSize="lg" fontWeight="semibold" my={4} ml={2}>
+							Select a Location for your Activity
+						</Heading>
+					</HStack>
 
-				<View flex={1} mt={locationValidation.touched && !locationValidation.valid ? 24 : 16}>
-					<Divider mb={2} />
-					<TextInputForm
-						name="name"
-						control={control}
-						errors={errors}
-						placeholder="Activity Name"
-					/>
-					<TextAreaInput
-						name="description"
-						control={control}
-						errors={errors}
-						placeholder="Give a short description..."
-					/>
+					<View position="absolute" width="100%" alignSelf="center" zIndex={2} mt={16}>
+						<GooglePlacesInput
+							placeholder="Select a Location for your Activity"
+							pressFunction={getLocationData}
+							queryType="establishment"
+						/>
+						{locationValidation.touched && !locationValidation.valid && (
+							<Text color="error.600">This is required.</Text>
+						)}
+					</View>
 
-					<NumberInput name="duration" control={control} errors={errors} placeholder="0" />
+					<View flex={1} mt={locationValidation.touched && !locationValidation.valid ? 24 : 16}>
+						<Divider mb={2} />
+						<TextInputForm
+							name="name"
+							control={control}
+							errors={errors}
+							placeholder="Activity Name"
+						/>
+						<TextAreaInput
+							name="description"
+							control={control}
+							errors={errors}
+							placeholder="Give a short description..."
+						/>
 
-					{/* <InputLabel labelText="Pick a time range (Optional)" />
+						<NumberInput name="duration" control={control} errors={errors} placeholder="0" />
+
+						{/* <InputLabel labelText="Pick a time range (Optional)" />
 					<HStack alignSelf="center" alignItems="center">
 						<TimePickerInput
 							time={timeStart}
@@ -140,29 +144,30 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 						/>
 					</HStack> */}
 
-					<InputLabel labelText="Pick some Tags" />
-					<DropDown
-						name="tags"
-						control={control}
-						errors={errors}
-						placeholder="Select up to three tags"
-						setValue={setValue}
-						dropDownItems={ActivityTags}
-						min={1}
-						max={3}
-					/>
-					<Box my={8}>
-						<ButtonCustom
-							pressFunction={submitFunction}
-							text="Create Activity"
-							alignment="center"
+						<InputLabel labelText="Pick some Tags" />
+						<DropDown
+							name="tags"
+							control={control}
+							errors={errors}
+							placeholder="Select up to three tags"
+							setValue={setValue}
+							dropDownItems={ActivityTags}
+							min={1}
+							max={3}
 						/>
-					</Box>
+						<Box my={8}>
+							<ButtonCustom
+								pressFunction={submitFunction}
+								text="Create Activity"
+								alignment="center"
+							/>
+						</Box>
 
-					{/* Use a light status bar on iOS to account for the black space above the modal */}
-					<StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+						{/* Use a light status bar on iOS to account for the black space above the modal */}
+						<StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+					</View>
 				</View>
-			</View>
+			</>
 		</DismissKeyboard>
 	);
 }

@@ -10,6 +10,7 @@ import AddIcon from '../../assets/icons/AddIcon';
 import { getDate } from '../../helpers/getDateOfTripDay';
 import { useAppSelector } from '../../app/hooks';
 import ConfirmDeleteModal from '../../modals/ConfirmDeleteModal';
+import Colors from '../../constants/Colors';
 
 type Props = {
 	renderItemParams: RenderItemParams<DayAct & { dayIndex: number; id: string; tripId: string }>;
@@ -43,7 +44,7 @@ function RenderItem({ renderItemParams, deleteTripEvent, addEventToDay }: Props)
 						rounded="full"
 						bgColor="white"
 					>
-						<DeleteIcon size={30} color="red" />
+						<DeleteIcon size={30} color={Colors.like.like_error} />
 					</Pressable>
 					{item.accommodation !== null && <AccommodationCard accommodation={item.accommodation!} />}
 					{item.dayActivity !== null && <ActivityCard activity={item.dayActivity?.activity!} />}
@@ -52,11 +53,11 @@ function RenderItem({ renderItemParams, deleteTripEvent, addEventToDay }: Props)
 			) : (
 				<Pressable onPress={() => addEventToDay(item.dayIndex)} px="16">
 					<HStack alignItems="center" justifyContent="center">
-						<Heading alignSelf="center" fontWeight="semibold">
+						<Heading alignSelf="center" fontWeight="medium" color={Colors.grey.dark}>
 							{getDate(startDate, item.dayIndex)}
 						</Heading>
 						<Divider width="50%" mx="5" />
-						<AddIcon size={35} color="#0f0f0f" />
+						<AddIcon size={35} color={Colors.primary.dark} />
 					</HStack>
 				</Pressable>
 			)}

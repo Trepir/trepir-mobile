@@ -127,18 +127,20 @@ export const reorderTripDay = async (
 	}
 };
 type ChangeDay = {
-	activityId: string;
+	// activityId: string;
 	newOrder: number;
 	newTripDayId: string;
 	previousTripDayId: string;
 	tripDayActivityId: string;
+	type: string;
+	date: Date;
 };
 
 export const changeTripDay = async (
 	changeData: ChangeDay
 ): Promise<{ data: TripDay[] | null; error: any }> => {
 	try {
-		const result = await fetch(`${url}/trip/activityChangeDay`, {
+		const result = await fetch(`${url}/trip/eventChangeDay`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(changeData),

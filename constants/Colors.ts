@@ -17,6 +17,9 @@ export default {
 		softIcon: '#7ED3B7',
 		softIconBackground: '#DEF5ED',
 	},
+	like: {
+		like_error: '#f54e4e',
+	},
 	secondary: {
 		normal: '#FF9D00',
 	},

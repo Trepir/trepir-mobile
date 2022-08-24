@@ -1,8 +1,9 @@
-import { View, Text, ScrollView, Image } from 'native-base';
+import { View, Text, ScrollView, Image, Box } from 'native-base';
 import React from 'react';
 import Colors from '../../constants/Colors';
 import { TravelEvent } from '../../types';
 import ImagePlaceholder from '../ImagePlaceholder';
+import MapViewActivity from './MapViewActivity';
 
 type Props = {
 	event: TravelEvent;
@@ -98,6 +99,12 @@ function EventTravelInfo({ event }: Props) {
 					alt="image"
 				/>
 			</View>
+			{/* <Box mb={10}>
+				<MapViewActivity
+					actLatitude={event.location.latitude}
+					actLongitude={event.location.longitude}
+				/>
+			</Box> */}
 		</ScrollView>
 	);
 }

@@ -13,6 +13,7 @@ import TextInput from '../components/form/TextInput';
 import { storeNewTravel } from '../features/newTravel/newTravelSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { parseLocationDetails } from '../helpers/parseLocationDetails';
+import TopViewActivity from '../components/activity/TopViewActivity';
 
 function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	const travelTypes = [
@@ -107,83 +108,87 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 
 	return (
 		<DismissKeyboard>
-			<View flex={1} px="10" pt="4">
-				<View position="absolute" mt={4} width="100%" alignSelf="center" zIndex={11}>
-					<InputLabel labelText="Origin place" />
-					<GooglePlacesInput
-						pressFunction={assignOrigin}
-						queryType="establishment"
-						placeholder="Origin"
-					/>
-					{originValidation.touched && !originValidation.valid && (
-						<Text color="error.600">This is required.</Text>
-					)}
-				</View>
-				<View
-					position="absolute"
-					mt="24"
-					pt={originValidation.touched && !originValidation.valid ? '6' : '4'}
-					width="100%"
-					alignSelf="center"
-					zIndex={10}
-				>
-					<InputLabel labelText="Destination place" />
-					<GooglePlacesInput
-						pressFunction={assignDestination}
-						queryType="establishment"
-						placeholder="Destination"
-					/>
-					{destinationValidation.touched && !destinationValidation.valid && (
-						<Text color="error.600">This is required.</Text>
-					)}
-				</View>
+			<>
+				<TopViewActivity title="Add a Travel Event" />
 
-				<Box mt={destinationValidation.touched && !destinationValidation.valid ? '56' : '48'} />
-				<InputLabel labelText="Set the trip date" />
-				<Box alignSelf="center">
-					<DatePickerInput
-						date={date}
-						onChangeFunction={(e, newDate) => {
-							setDate({ value: newDate!, touched: true });
-							setValue('departure', newDate.getTime(), { shouldValidate: true });
-						}}
-						name="departure"
-						control={control}
-						errors={errors}
-					/>
-				</Box>
+				<View flex={1} px="10" pt="4">
+					<View position="absolute" mt={4} width="100%" alignSelf="center" zIndex={11}>
+						<InputLabel labelText="Origin place" />
+						<GooglePlacesInput
+							pressFunction={assignOrigin}
+							queryType="establishment"
+							placeholder="Origin"
+						/>
+						{originValidation.touched && !originValidation.valid && (
+							<Text color="error.600">This is required.</Text>
+						)}
+					</View>
+					<View
+						position="absolute"
+						mt="24"
+						pt={originValidation.touched && !originValidation.valid ? '6' : '4'}
+						width="100%"
+						alignSelf="center"
+						zIndex={10}
+					>
+						<InputLabel labelText="Destination place" />
+						<GooglePlacesInput
+							pressFunction={assignDestination}
+							queryType="establishment"
+							placeholder="Destination"
+						/>
+						{destinationValidation.touched && !destinationValidation.valid && (
+							<Text color="error.600">This is required.</Text>
+						)}
+					</View>
 
-				<InputLabel labelText="How are you traveling?" />
-				<DDTravelType
-					dropDownItems={travelTypes}
-					name="type"
-					control={control}
-					errors={errors}
-					placeholder="Type of Travel"
-					setValue={setValue}
-					min={1}
-					max={1}
-					trackValue={(value) => setTypeValue(value)}
-				/>
-				{typeValue === 'Flight' ? (
-					<View mt="2">
-						<TextInput
+					<Box mt={destinationValidation.touched && !destinationValidation.valid ? '56' : '48'} />
+					<InputLabel labelText="Set the trip date" />
+					<Box alignSelf="center">
+						<DatePickerInput
+							date={date}
+							onChangeFunction={(e, newDate) => {
+								setDate({ value: newDate!, touched: true });
+								setValue('departure', newDate.getTime(), { shouldValidate: true });
+							}}
+							name="departure"
 							control={control}
 							errors={errors}
-							name="flight number"
-							placeholder="Input your flight number..."
-							isRequired={false}
 						/>
+					</Box>
+
+					<InputLabel labelText="How are you traveling?" />
+					<DDTravelType
+						dropDownItems={travelTypes}
+						name="type"
+						control={control}
+						errors={errors}
+						placeholder="Type of Travel"
+						setValue={setValue}
+						min={1}
+						max={1}
+						trackValue={(value) => setTypeValue(value)}
+					/>
+					{typeValue === 'Flight' ? (
+						<View mt="2">
+							<TextInput
+								control={control}
+								errors={errors}
+								name="flight number"
+								placeholder="Input your flight number..."
+								isRequired={false}
+							/>
+							<Box mt="6">
+								<ButtonCustom alignment="center" pressFunction={submitFunction} text="Add Travel" />
+							</Box>
+						</View>
+					) : (
 						<Box mt="6">
 							<ButtonCustom alignment="center" pressFunction={submitFunction} text="Add Travel" />
 						</Box>
-					</View>
-				) : (
-					<Box mt="6">
-						<ButtonCustom alignment="center" pressFunction={submitFunction} text="Add Travel" />
-					</Box>
-				)}
-			</View>
+					)}
+				</View>
+			</>
 		</DismissKeyboard>
 	);
 }
