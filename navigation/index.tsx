@@ -185,17 +185,17 @@ function RootNavigator() {
 				<Stack.Screen
 					name="NewActivityModal"
 					component={AddActivityModal}
-					options={{ title: 'Create a New Activity' }}
+					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
 					name="NewTravelModal"
 					component={AddTravelScreen}
-					options={{ title: 'Add a Travel Event' }}
+					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
 					name="NewAccommodationModal"
 					component={AddAccomScreen}
-					options={{ title: 'Add an Accommodation' }}
+					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
 					name="ActivityScreen"

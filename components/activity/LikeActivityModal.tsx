@@ -1,9 +1,10 @@
-import { View, Text, ScrollView, Pressable, Divider } from 'native-base';
+import { View, Text, Pressable, Divider } from 'native-base';
 import React, { useMemo } from 'react';
-import BottomSheet, { BottomSheetFlatList, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import { useAppSelector } from '../../app/hooks';
 import TripItem from '../ui/TripItem';
 import ButtonWide from '../ui/ButtonWide';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function LikeActivityModal({ bottomSheetRef }: { bottomSheetRef: React.Ref<BottomSheet> }) {
 	const allTrips = useAppSelector((state) => state.tripArray);
@@ -37,9 +38,9 @@ function LikeActivityModal({ bottomSheetRef }: { bottomSheetRef: React.Ref<Botto
 						</Pressable>
 					))}
 				</BottomSheetScrollView> */}
-				<ScrollView style={{ width: '100%' }}>
-					{trips.map((trip) => (
-						<Pressable key={trip.id} alignSelf="center">
+				<ScrollView style={{ width: '100%', height: '80%' }}>
+					{trips.map((trip, index) => (
+						<Pressable key={trip.id} alignSelf="center" pb={index === trips.length - 1 ? 16 : 0}>
 							<TripItem trip={trip} />
 						</Pressable>
 					))}

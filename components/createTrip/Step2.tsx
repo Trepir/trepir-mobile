@@ -138,7 +138,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 								rounded="full"
 								bgColor="white"
 							>
-								<DeleteIcon size={30} color="red" />
+								<DeleteIcon size={30} color={Colors.like.like_error} />
 							</Pressable>
 							<TravelCard key={item.originLocation.googleId} travel={item} />
 						</Box>
@@ -189,7 +189,7 @@ function Step2({ jumpTo, newTrip, setNewTrip }: Props) {
 								rounded="full"
 								bgColor="white"
 							>
-								<DeleteIcon size={30} color="red" />
+								<DeleteIcon size={30} color={Colors.like.like_error} />
 							</Pressable>
 							<CreateAccomCard key={item.location.googleId} accommodation={item} />
 						</Box>

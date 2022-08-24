@@ -136,7 +136,7 @@ function DiscoverScreen() {
 					},
 					pitch: 0,
 					heading: 0,
-					altitude: 100000000000000000, // Check what te max is
+					altitude: Number.MAX_SAFE_INTEGER,
 					zoom: 0,
 				}}
 			>
