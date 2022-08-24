@@ -29,7 +29,7 @@ function MapViewActivity({ actLatitude, actLongitude }: Props) {
 					altitude: 1000,
 					pitch: 0,
 					heading: 0,
-					zoom: 0,
+					zoom: 14,
 				}}
 			>
 				<Marker

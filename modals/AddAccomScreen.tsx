@@ -1,4 +1,4 @@
-import { Box, Text, View } from 'native-base';
+import { Box, HStack, Text, View } from 'native-base';
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Platform } from 'react-native';
@@ -14,6 +14,7 @@ import { storeNewAccommodation } from '../features/newAccommodation/newAccommoda
 import DateRangePicker from '../components/form/DateRangePicker';
 import TopViewTrip from '../components/Trip/TopViewTrip';
 import TopViewActivity from '../components/activity/TopViewActivity';
+import TimePickerInput from '../components/form/TimePickerInput';
 
 function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	const dispatch = useAppDispatch();
@@ -26,6 +27,14 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 		location: true,
 	});
 	const [location, setLocation] = useState(new Location());
+	const [checkInTime, setCheckInTime] = useState({
+		value: new Date(Date.now()),
+		touched: false,
+	});
+	const [checkOutTime, setCheckOutTime] = useState({
+		value: new Date(Date.now()),
+		touched: false,
+	});
 
 	const assignLocation = (_: any, details: GooglePlaceDetail) => {
 		const locationData = parseLocationDetails(details);
@@ -46,11 +55,24 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 
 			setFormValidation(newFormValidationState);
 		} else {
+			const formattedStartDate = new Date(
+				new Date(startDate).setHours(
+					checkInTime.value.getHours() + 2,
+					checkInTime.value.getMinutes()
+				)
+			).toISOString();
+			const formattedEndDate = new Date(
+				new Date(endDate).setHours(
+					checkOutTime.value.getHours() + 2,
+					checkOutTime.value.getMinutes()
+				)
+			).toISOString();
+
 			dispatch(
 				storeNewAccommodation({
 					uid: userId,
-					startDate,
-					endDate,
+					startDate: formattedStartDate,
+					endDate: formattedEndDate,
 					location,
 				})
 			);
@@ -87,6 +109,22 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 							isValid={formValidation.date}
 						/>
 					</Box>
+
+					<InputLabel labelText="Checkin & Checkout" />
+					<HStack justifyContent="space-evenly">
+						<TimePickerInput
+							time={checkInTime}
+							onChangeFunction={(e, date) => {
+								setCheckInTime({ value: date, touched: true });
+							}}
+						/>
+						<TimePickerInput
+							time={checkOutTime}
+							onChangeFunction={(e, date) => {
+								setCheckOutTime({ value: date, touched: true });
+							}}
+						/>
+					</HStack>
 					<Box mt="8">
 						<ButtonCustom
 							text="Add Accommodation"

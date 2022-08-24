@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { View, Heading, Divider, ScrollView, Box, Pressable } from 'native-base';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import Colors from '../../constants/Colors';
 import { getAllActivities } from '../../services/ActivityService';
+import { addActivitiesToTripFav } from '../../services/CreateTripService';
 import { ActivityEvent } from '../../types';
 import ActivityCard from '../ui/ActivityCard';
 import ButtonCustom from '../ui/ButtonCustom';
@@ -12,13 +13,14 @@ import EmptyList from './EmptyList';
 type Props = {
 	// eslint-disable-next-line no-unused-vars
 	jumpTo: (key: string) => void;
+	createdId: string;
 };
-function Step3({ jumpTo }: Props) {
+function Step3({ jumpTo, createdId }: Props) {
 	const navigation = useNavigation();
 	const likedActivities = useAppSelector((state) => state.likedActivities);
 	const [activities, setActivities] = useState<ActivityEvent[]>([]);
-	const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
-	const isActivitySelected = (id: string) => selectedActivities.includes(id);
+	const [selectedActivities, setSelectedActivities] = useState<number[]>([]);
+	const isActivitySelected = (id: number) => selectedActivities.includes(id);
 
 	useEffect(() => {
 		const getActivitiesFromBE = async () => {
@@ -33,16 +35,16 @@ function Step3({ jumpTo }: Props) {
 	}, []);
 
 	const addTripsAndGoBack = async () => {
-		// HAVE TO ADD THE TRIPS HERE
 		try {
-			selectedActivities.forEach((activity) => {
-				// ADD ACTIVITY TO FAVORITES
-				console.log(activity);
-			});
+			if (selectedActivities.length > 0) {
+				await addActivitiesToTripFav({
+					favoriteId: selectedActivities,
+					tripId: createdId,
+				});
+			}
 		} catch (error) {
 			console.error(error);
 		}
-
 		navigation.goBack();
 	};
 
@@ -58,20 +60,20 @@ function Step3({ jumpTo }: Props) {
 				</Heading>
 				{activities.length > 0 ? (
 					<ScrollView w="100%">
-						{activities.map((activity, index) => (
+						{likedActivities.map(({ id, activity }, index) => (
 							<Box key={activity.id} mb={index === activities.length - 1 ? '32' : 0.5}>
 								<Pressable
 									onPress={() => {
-										if (!isActivitySelected(activity.id!)) {
-											setSelectedActivities([...selectedActivities, activity.id!]);
+										if (!isActivitySelected(id)) {
+											setSelectedActivities([...selectedActivities, id]);
 										} else {
-											setSelectedActivities(selectedActivities.filter((id) => activity.id !== id));
+											setSelectedActivities(selectedActivities.filter((actID) => id !== actID));
 										}
 										console.log(selectedActivities);
 									}}
 									alignSelf="center"
 									p={0.5}
-									bgColor={isActivitySelected(activity.id!) ? Colors.primary.light : Colors.white}
+									bgColor={isActivitySelected(id) ? Colors.primary.light : Colors.white}
 									my={2}
 									borderRadius={20}
 								>

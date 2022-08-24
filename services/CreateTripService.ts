@@ -1,4 +1,6 @@
+import { async } from '@firebase/util';
 import { newTripType } from '../screens/CreateScreen';
+import { ActivityEvent } from '../types';
 
 const url = 'https://trepir.herokuapp.com';
 // const url = 'http://192.168.1.215:4000';
@@ -21,8 +23,8 @@ export const createTripApi = async (
 };
 
 export const createActivityApi = async (
-	activity: Activity
-): Promise<{ data: Activity | null; error: any }> => {
+	activity: ActivityEvent
+): Promise<{ data: ActivityEvent | null; error: any }> => {
 	try {
 		const result = await fetch(`${url}/activity/create`, {
 			method: 'POST',
@@ -32,6 +34,26 @@ export const createActivityApi = async (
 		const newActivity = await result.json();
 		console.log('NEW ACTIVITY ===========>', newActivity);
 		return { data: newActivity, error: null };
+	} catch (error) {
+		console.error(error);
+		return { data: null, error };
+	}
+};
+type AddActToFavType = {
+	favoriteId: number[];
+	tripId: string;
+};
+
+export const addActivitiesToTripFav = async (addFavObject: AddActToFavType): Promise<any> => {
+	try {
+		const result = await fetch(`${url}/activity/initialFavoriteActivities`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(addFavObject),
+		});
+		const fav = await result.json();
+		console.log(fav);
+		return { data: fav, error: null };
 	} catch (error) {
 		console.error(error);
 		return { data: null, error };
