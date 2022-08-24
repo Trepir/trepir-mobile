@@ -66,7 +66,7 @@ function InputSearchContainer({
 	};
 
 	const isActivityLiked = (activityId: string) =>
-		tripSavedActivities.some((act) => act.id === activityId);
+		tripSavedActivities.some((act) => act.activityId === activityId);
 	return (
 		<>
 			<Box

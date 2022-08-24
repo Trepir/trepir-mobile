@@ -54,7 +54,7 @@ function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 					{tripSavedActivities.map((activity, index) => (
 						<Pressable
 							onPress={() => addActivityToDay(activity)}
-							key={activity.id}
+							key={activity?.id}
 							shadow={1}
 							mb={index + 1 === tripSavedActivities.length ? '48' : 4}
 							width="100%"

@@ -210,10 +210,18 @@ function ModifyTrip() {
 				auxDay = spreadData.shift();
 			} else {
 				if (auxDay.id !== spreadData[0].tripDayId) {
+					console.log(spreadData[0]);
+					const time =
+						// eslint-disable-next-line no-nested-ternary
+						typeOfEvent(spreadData[0]) === 'Activity'
+							? ''
+							: typeOfEvent(spreadData[0]) === 'Accommodation'
+							? spreadData[0].accommodation.date
+							: spreadData[0].travelEvent.departure;
 					return {
 						// activityId: spreadData[0].dayActivity?.activity.id,
 						type: typeOfEvent(spreadData[0]),
-						date: getDateAsDate(trip.startDate, auxDay.dayIndex),
+						date: getDateAsDate(trip.startDate, auxDay.dayIndex, time).toISOString(),
 						newTripDayId: auxDay.id,
 						previousTripDayId: spreadData[0].tripDayId,
 						tripDayActivityId: spreadData[0].id,
