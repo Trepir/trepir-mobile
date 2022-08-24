@@ -11,6 +11,7 @@ import GilroyExtraBold from './assets/fonts/Gilroy-ExtraBold.otf';
 import useCachedResources from './hooks/useCachedResources';
 // import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
+import { PortalProvider } from '@gorhom/portal';
 
 export default function App() {
 	const isLoadingComplete = useCachedResources();
@@ -29,7 +30,9 @@ export default function App() {
 			<NativeBaseProvider>
 				<SafeAreaProvider>
 					<GestureHandlerRootView style={{ flex: 1 }}>
-						<Navigation /* colorScheme={colorScheme} */ />
+						<PortalProvider>
+							<Navigation /* colorScheme={colorScheme} */ />
+						</PortalProvider>
 					</GestureHandlerRootView>
 					<StatusBar />
 				</SafeAreaProvider>

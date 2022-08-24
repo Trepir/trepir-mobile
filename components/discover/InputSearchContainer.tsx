@@ -16,6 +16,7 @@ import { storeCurrentActivity } from '../../features/currentActivity/currentActi
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import HeartIcon from '../../assets/icons/HeartIcon';
 import EmptyList from '../createTrip/EmptyList';
+import { Portal } from '@gorhom/portal';
 
 const styles = StyleSheet.create({
 	input: {
@@ -98,62 +99,64 @@ function InputSearchContainer({
 					placeholderStyle={styles.placeholder}
 				/>
 			</Box>
-			<BottomSheet
-				ref={bottomSheetRef}
-				index={1}
-				snapPoints={snapPoints}
-				enablePanDownToClose
-				style={{
-					shadowColor: '#000',
-					shadowOffset: {
-						width: 0,
-						height: 2,
-					},
-					shadowOpacity: 0.25,
-					shadowRadius: 5,
-					elevation: 5,
-				}}
-			>
-				<View alignItems="center">
-					<Text fontSize="xl" fontWeight="medium" mb={2}>
-						Activities
-					</Text>
-					{activities.length > 0 ? (
-						<ScrollView style={{ width: '100%' }}>
-							{activities.map((activity, index) => (
-								<Box w="full" alignItems="center" key={activity.id}>
-									{filterByActivity(activity.tags) && (
-										<Pressable
-											onPress={() => goToActivity(activity)}
-											onLongPress={() => navToActivity(activity)}
-											shadow={1}
-											mb={index + 1 === activities.length ? '20' : 4}
-										>
-											<ActivityCard activity={activity} />
-											{isActivityLiked(activity.id!) && (
-												<Box
-													position="absolute"
-													left={3}
-													top={3}
-													rounded="full"
-													bgColor="white"
-													p={0.5}
-													pt={1}
-													px={1}
-												>
-													<HeartIcon size={30} color={Colors.like.like_error} />
-												</Box>
-											)}
-										</Pressable>
-									)}
-								</Box>
-							))}
-						</ScrollView>
-					) : (
-						<EmptyList text={`There are no activities in this area.\nTry somewhere else.`} />
-					)}
-				</View>
-			</BottomSheet>
+			<Portal>
+				<BottomSheet
+					ref={bottomSheetRef}
+					index={1}
+					snapPoints={snapPoints}
+					enablePanDownToClose
+					style={{
+						shadowColor: '#000',
+						shadowOffset: {
+							width: 0,
+							height: 2,
+						},
+						shadowOpacity: 0.25,
+						shadowRadius: 5,
+						elevation: 5,
+					}}
+				>
+					<View alignItems="center">
+						<Text fontSize="xl" fontWeight="medium" mb={2}>
+							Activities
+						</Text>
+						{activities.length > 0 ? (
+							<ScrollView style={{ width: '100%' }}>
+								{activities.map((activity, index) => (
+									<Box w="full" alignItems="center" key={activity.id}>
+										{filterByActivity(activity.tags) && (
+											<Pressable
+												onPress={() => goToActivity(activity)}
+												onLongPress={() => navToActivity(activity)}
+												shadow={1}
+												mb={index + 1 === activities.length ? '20' : 4}
+											>
+												<ActivityCard activity={activity} />
+												{isActivityLiked(activity.id!) && (
+													<Box
+														position="absolute"
+														left={3}
+														top={3}
+														rounded="full"
+														bgColor="white"
+														p={0.5}
+														pt={1}
+														px={1}
+													>
+														<HeartIcon size={30} color={Colors.like.like_error} />
+													</Box>
+												)}
+											</Pressable>
+										)}
+									</Box>
+								))}
+							</ScrollView>
+						) : (
+							<EmptyList text={`There are no activities in this area.\nTry somewhere else.`} />
+						)}
+					</View>
+				</BottomSheet>
+			</Portal>
 		</>
 	);
 }
