@@ -8,7 +8,7 @@ import { fetchTrip } from '../../services/trip';
 import { useAppDispatch } from '../../app/hooks';
 import { storeCurrentTrip } from '../../features/trip/currentTripSlice';
 
-function TripItem({ trip }: { trip: TripBasicState }) {
+function TripItem({ trip, useNav }: { trip: TripBasicState; useNav?: () => {} }) {
 	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
 
@@ -26,17 +26,21 @@ function TripItem({ trip }: { trip: TripBasicState }) {
 			p={2}
 			m={2}
 			shadow={2}
-			onPress={async () => {
-				try {
-					const fetchedTrip = await fetchTrip(id);
-					if (fetchedTrip.data) {
-						dispatch(storeCurrentTrip(fetchedTrip.data));
-						navigation.navigate('TripStack', { screen: 'Trip' });
-					}
-				} catch (error) {
-					console.error(error);
-				}
-			}}
+			onPress={
+				useNav !== undefined
+					? useNav
+					: async () => {
+							try {
+								const fetchedTrip = await fetchTrip(id);
+								if (fetchedTrip.data) {
+									dispatch(storeCurrentTrip(fetchedTrip.data));
+									navigation.navigate('TripStack', { screen: 'Trip' });
+								}
+							} catch (error) {
+								console.error(error);
+							}
+					  }
+			}
 		>
 			<VStack>
 				<Image

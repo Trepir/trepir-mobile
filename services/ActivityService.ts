@@ -31,3 +31,24 @@ export const getAllActivities = async (): Promise<{ data: ActivityEvent[] | null
 		return { data: null, error };
 	}
 };
+
+export const addLikedActivity = async (
+	activityId: string,
+	uid: string,
+	tripId?: string
+): Promise<{ data: ActivityEvent | null; error: any }> => {
+	const bodyData = tripId !== undefined ? { activityId, uid, tripId } : { activityId, uid };
+
+	try {
+		const result = await fetch(`${url}/activity/favorite`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(bodyData),
+		});
+		const newActivity = await result.json();
+		return { data: newActivity, error: null };
+	} catch (error) {
+		console.error(error);
+		return { data: null, error };
+	}
+};

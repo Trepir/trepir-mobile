@@ -31,7 +31,7 @@ const newActivitySlice = createSlice({
 	initialState,
 	reducers: {
 		storeNewActivity: (state: ActivityEvent, action: PayloadAction<ActivityEvent>) => {
-			console.log('NEW ACTIVITY STORED', action.payload);
+			// console.log('NEW ACTIVITY STORED', action.payload);
 			return { ...action.payload };
 		},
 		// Change Type if necessary

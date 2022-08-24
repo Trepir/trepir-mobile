@@ -1,5 +1,5 @@
 import { View } from 'native-base';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useAppSelector } from '../app/hooks';
 import EventAccommodationInfo from '../components/activity/EventAccommodationInfo';
@@ -29,7 +29,7 @@ function ActivityScreen() {
 			>
 				<TopViewActivity title="Activity details" isActivity openModal={openModal} />
 				<EventActivityInfo event={dayAct.dayActivity.activity} />
-				<LikeActivityModal bottomSheetRef={bottomSheetRef} />
+				<LikeActivityModal activity={dayAct.dayActivity.activity} bottomSheetRef={bottomSheetRef} />
 			</View>
 		);
 	}
