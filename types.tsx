@@ -133,9 +133,9 @@ export class ActivityEvent {
 		this.time = '';
 	}
 
-	id?: string;
+	id: string;
 
-	uid?: string;
+	uid: string;
 
 	name: string;
 

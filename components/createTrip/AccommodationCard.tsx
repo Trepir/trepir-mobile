@@ -12,7 +12,6 @@ type Props = {
 
 function AccommodationCard({ accommodation, isInTripView = false }: Props) {
 	const { date, location, state } = accommodation;
-	console.log(accommodation);
 	const parseCheckDate = () => {
 		if (isInTripView) return date.split('T')[1].slice(0, 5);
 		return date.split('T')[0];

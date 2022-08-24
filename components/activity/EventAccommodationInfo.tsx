@@ -25,7 +25,7 @@ function EventAccommodationInfo({ event }: Props) {
 				{event.location.formattedAddress}
 			</Text>
 			<Text color={Colors.primary.dark} fontWeight="semibold" fontSize="2xl">
-				Check In/Out:
+				{event.state === 'CheckOut' ? 'Check Out: ' : 'Check In: '}
 			</Text>
 			<Text color={Colors.grey.dark} fontSize="lg" mb={4}>
 				{event.date.split('T')[1].slice(0, 5)}h

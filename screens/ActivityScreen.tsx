@@ -29,7 +29,7 @@ function ActivityScreen() {
 			>
 				<TopViewActivity title="Activity details" isActivity openModal={openModal} />
 				<EventActivityInfo event={dayAct.dayActivity.activity} />
-				<LikeActivityModal bottomSheetRef={bottomSheetRef} />
+				<LikeActivityModal activity={dayAct.dayActivity.activity} bottomSheetRef={bottomSheetRef} />
 			</View>
 		);
 	}

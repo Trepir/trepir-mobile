@@ -34,10 +34,10 @@ export const getAllActivities = async (): Promise<{ data: ActivityEvent[] | null
 
 export const addLikedActivity = async (
 	activityId: string,
-	userId: string,
+	uid: string,
 	tripId?: string
 ): Promise<{ data: ActivityEvent | null; error: any }> => {
-	const bodyData = tripId ? { activityId, uid: userId, tripId } : { activityId, uid: userId };
+	const bodyData = tripId !== undefined ? { activityId, uid, tripId } : { activityId, uid };
 
 	try {
 		const result = await fetch(`${url}/activity/favorite`, {
