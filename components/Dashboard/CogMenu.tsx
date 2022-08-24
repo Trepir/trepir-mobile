@@ -19,8 +19,8 @@ function CogMenu({ callback, color }: { callback: () => void; color: string }) {
 		<Box position="absolute" bottom={7} right={8}>
 			<Menu
 				p={1}
-				offset={40}
-				crossOffset={-80}
+				// offset={40}
+				// crossOffset={-80}
 				trigger={(triggerProps) => (
 					<Pressable {...triggerProps}>
 						<CogIcon size={25} color={color} />

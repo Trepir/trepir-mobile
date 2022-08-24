@@ -13,6 +13,7 @@ function DashboardScreen() {
 
 	const user = useAppSelector((state) => state.user);
 	const trips = useAppSelector((state) => state.tripArray);
+	const sharedTrips = useAppSelector((state) => state.sharedTrips);
 
 	useEffect(() => {
 		if (trips) {
@@ -36,6 +37,7 @@ function DashboardScreen() {
 					{currentTrips.length > 0 && <TripCarousel type="current" trips={currentTrips} />}
 					<TripCarousel type="upcoming" trips={upcomingTrips} />
 					<TripCarousel type="past" trips={pastTrips} />
+					{sharedTrips.length > 1 && <TripCarousel type="shared" trips={sharedTrips} />}
 				</ScrollView>
 			</View>
 		);

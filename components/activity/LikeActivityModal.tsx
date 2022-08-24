@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Divider } from 'native-base';
+import { View, Text, Divider } from 'native-base';
 import React, { useMemo } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -23,9 +23,7 @@ function LikeActivityModal({
 
 	const addToLiked = async (act: ActivityEvent) => {
 		try {
-			console.log('add to liked', act);
-			const returnData = await addLikedActivity(act.id, uid);
-			console.log(returnData);
+			await addLikedActivity(act.id, uid);
 			bottomSheetRef.current.close();
 		} catch (error) {
 			console.log(error);
@@ -34,8 +32,7 @@ function LikeActivityModal({
 
 	const addToLikedTrip = async (act: ActivityEvent, tripId: string) => {
 		try {
-			const returnData = await addLikedActivity(act.id, uid, tripId);
-			console.log(returnData);
+			await addLikedActivity(act.id, uid, tripId);
 			bottomSheetRef.current.close();
 		} catch (error) {
 			console.log(error);

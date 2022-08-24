@@ -167,6 +167,7 @@ export type User = {
 	emailVerified: boolean;
 	favoriteActivities: ActivityEvent[];
 	trips: [];
+	sharedTrips: [];
 };
 
 export type UserFromBackend = {

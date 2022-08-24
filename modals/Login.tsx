@@ -2,7 +2,11 @@ import { Box } from 'native-base';
 import React, { useMemo } from 'react';
 import { Control, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
-import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import {
+	BottomSheetModal,
+	BottomSheetModalProvider,
+	BottomSheetTextInput,
+} from '@gorhom/bottom-sheet';
 import * as SecureStore from 'expo-secure-store';
 import { useAppDispatch } from '../app/hooks';
 
@@ -72,13 +76,23 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 		}
 	};
 
-	const snapPoints = useMemo(() => ['50%', '80%'], []);
+	const snapPoints = useMemo(() => ['72%'], []);
 
 	return (
 		<BottomSheetModalProvider>
 			<BottomSheetModal
 				ref={reference}
 				index={0}
+				style={{
+					shadowColor: '#000',
+					shadowOffset: {
+						width: 0,
+						height: 3,
+					},
+					shadowOpacity: 0.45,
+					shadowRadius: 6.84,
+					elevation: 5,
+				}}
 				snapPoints={snapPoints}
 				enablePanDownToClose
 				keyboardBehavior="fillParent"

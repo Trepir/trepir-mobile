@@ -12,7 +12,6 @@ import { parseLocationDetails } from '../helpers/parseLocationDetails';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { storeNewAccommodation } from '../features/newAccommodation/newAccommodationSlice';
 import DateRangePicker from '../components/form/DateRangePicker';
-import TopViewTrip from '../components/Trip/TopViewTrip';
 import TopViewActivity from '../components/activity/TopViewActivity';
 import TimePickerInput from '../components/form/TimePickerInput';
 
@@ -81,9 +80,9 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	};
 
 	return (
-		<DismissKeyboard>
-			<>
-				<TopViewActivity title="Add an Accommodation" />
+		<>
+			<TopViewActivity title="Add an Accommodation" />
+			<DismissKeyboard>
 				<View flex={1} px="10">
 					<View position="absolute" width="100%" alignSelf="center" zIndex={2} mt="4">
 						<InputLabel labelText="Where are you staying" />
@@ -134,8 +133,8 @@ function AddAccomScreen({ navigation }: RootTabScreenProps<'Create'>) {
 					</Box>
 					<StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
 				</View>
-			</>
-		</DismissKeyboard>
+			</DismissKeyboard>
+		</>
 	);
 }
 

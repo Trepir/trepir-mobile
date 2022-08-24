@@ -67,7 +67,7 @@ function Register({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 		}
 	};
 
-	const snapPoints = useMemo(() => ['50%', '90%'], []);
+	const snapPoints = useMemo(() => ['72%'], []);
 
 	// const handleSheetChanges = useCallback((index: number) => {
 	// 	console.log('handleSheetChanges', index);
@@ -78,10 +78,19 @@ function Register({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 				ref={reference}
 				index={0}
 				snapPoints={snapPoints}
-				// onChange={handleSheetChanges}
 				enablePanDownToClose
 				keyboardBehavior="interactive"
 				detached
+				style={{
+					shadowColor: '#000',
+					shadowOffset: {
+						width: 0,
+						height: 3,
+					},
+					shadowOpacity: 0.45,
+					shadowRadius: 6.84,
+					elevation: 5,
+				}}
 			>
 				<DismissKeyboard>
 					<KeyboardAvoidingView

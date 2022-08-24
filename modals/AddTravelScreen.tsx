@@ -107,10 +107,9 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 	};
 
 	return (
-		<DismissKeyboard>
-			<>
-				<TopViewActivity title="Add a Travel Event" />
-
+		<>
+			<TopViewActivity title="Add a Travel Event" />
+			<DismissKeyboard>
 				<View flex={1} px="10" pt="4">
 					<View position="absolute" mt={4} width="100%" alignSelf="center" zIndex={11}>
 						<InputLabel labelText="Origin place" />
@@ -188,8 +187,8 @@ function AddTravelScreen({ navigation }: RootTabScreenProps<'Create'>) {
 						</Box>
 					)}
 				</View>
-			</>
-		</DismissKeyboard>
+			</DismissKeyboard>
+		</>
 	);
 }
 

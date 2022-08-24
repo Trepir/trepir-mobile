@@ -8,7 +8,9 @@ type Props = {
 function EmptyList({ text }: Props) {
 	return (
 		<Box height="150" width="full" alignItems="center" justifyContent="center">
-			<Text position="absolute">{text}</Text>
+			<Text position="absolute" textAlign="center">
+				{text}
+			</Text>
 		</Box>
 	);
 }
