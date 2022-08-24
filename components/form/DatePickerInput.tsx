@@ -26,7 +26,7 @@ function TimePickerInput({ name, control, errors, date, onChangeFunction }: Prop
 	const styles = StyleSheet.create({
 		timePicker: {
 			backgroundColor: date.touched ? Colors.primary.normal : '',
-			width: 80,
+			width: 185,
 			borderRadius: 4,
 		},
 	});
@@ -56,6 +56,7 @@ function TimePickerInput({ name, control, errors, date, onChangeFunction }: Prop
 					>
 						{Platform.OS === 'ios' ? (
 							<RNDateTimePicker
+								mode="datetime"
 								style={styles.timePicker}
 								value={date.value}
 								minimumDate={startingDate === '' ? new Date(Date.now()) : new Date(startingDate)}

@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { View, Box, Text, HStack, ScrollView } from 'native-base';
+import { View, Box, Text, HStack } from 'native-base';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Platform } from 'react-native';
@@ -102,7 +102,7 @@ function Step1({ jumpTo, newTrip, setNewTrip }: Props) {
 	};
 	return (
 		<DismissKeyboard>
-			<ScrollView flex={1} px={10} pt={1} bgColor={Colors.grey.offWhite}>
+			<View flex={1} px={10} pt={1} bgColor={Colors.grey.offWhite}>
 				<TextInput
 					name="name"
 					control={control}
@@ -143,7 +143,7 @@ function Step1({ jumpTo, newTrip, setNewTrip }: Props) {
 						<ButtonCustom text="Next Step" pressFunction={submitFunction} alignment="flex-end" />
 					</Box>
 				</HStack>
-			</ScrollView>
+			</View>
 		</DismissKeyboard>
 	);
 }

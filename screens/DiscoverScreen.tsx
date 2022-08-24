@@ -1,7 +1,7 @@
 import MapView, { LatLng, Marker } from 'react-native-maps';
 import React, { useRef, useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
-import { Box, View } from 'native-base';
+import { Box, Heading, View } from 'native-base';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { ValueType } from 'react-native-dropdown-picker';
@@ -153,6 +153,9 @@ function DiscoverScreen() {
 
 			{!startedSearch ? (
 				<Box position="absolute" zIndex={5} width="80%">
+					<Heading color="white" alignSelf="center" my={4}>
+						Where are we going?
+					</Heading>
 					<GooglePlacesInput
 						queryType={['(cities)', '(regions)']}
 						placeholder="Start discovering Activities"

@@ -23,7 +23,7 @@ function ActivityCard({ activity }: Props) {
 			>
 				<Image
 					source={{
-						uri: location.photoUrl[0],
+						uri: location?.photoUrl[0],
 					}}
 					fallbackElement={<ImagePlaceholder />}
 					alt="activity image"
@@ -48,7 +48,7 @@ function ActivityCard({ activity }: Props) {
 				</VStack>
 				<VStack>
 					<Text fontSize="md" isTruncated color={Colors.black}>
-						{location.city}
+						{location?.city}
 					</Text>
 					<TagArray tags={tags} short />
 				</VStack>

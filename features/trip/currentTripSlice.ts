@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Trip } from '../../types';
+import { ActivityEvent, DayActivityEvent, Trip } from '../../types';
 
 const initialState: Trip = {
 	uid: '',
@@ -24,8 +24,11 @@ const currentTripSlice = createSlice({
 	initialState,
 	reducers: {
 		storeCurrentTrip: (state: Trip, action: PayloadAction<Trip>) => {
-			console.log('Payload: ', action.payload.favouriteActivities);
-			return { ...action.payload };
+			const parsedLiked = action.payload.favouriteActivities.map(
+				// @ts-ignore
+				(dayActivity: DayActivityEvent) => dayActivity.activity
+			);
+			return { ...action.payload, favouriteActivities: parsedLiked };
 		},
 		clearCurrentTrip: () => initialState,
 	},
