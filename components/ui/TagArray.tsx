@@ -10,12 +10,12 @@ function TagArray({ tags, short = false }: { tags: Tag[]; short?: boolean }) {
 			<View flexDirection="row" alignItems="center">
 				{tags.length > 0 && (
 					<View key={tags[0]} mr={1}>
-						<TagItem text={tags[0]} />
+						<TagItem text={tags[0]} big={false} />
 					</View>
 				)}
 				{tags.length > 1 && (
 					<View key={tags[1]} mr={1}>
-						<TagItem text={tags[1]} />
+						<TagItem text={tags[1]} big={false} />
 					</View>
 				)}
 				{tags.length > 2 && <Text fontSize="xs">{`+${tags.length - 2}`}</Text>}

@@ -1,5 +1,5 @@
 import { View } from 'native-base';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useAppSelector } from '../app/hooks';
 import EventAccommodationInfo from '../components/activity/EventAccommodationInfo';
