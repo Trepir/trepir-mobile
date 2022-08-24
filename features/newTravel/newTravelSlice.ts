@@ -35,7 +35,7 @@ const newActivitySlice = createSlice({
 	initialState,
 	reducers: {
 		storeNewTravel: (state: TravelState, action: PayloadAction<TravelState>) => {
-			console.log(action.payload);
+			// console.log(action.payload);
 			return { ...action.payload };
 		},
 		// Change Type if necessary
