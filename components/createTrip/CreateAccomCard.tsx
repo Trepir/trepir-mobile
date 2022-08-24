@@ -12,6 +12,9 @@ type Props = {
 function CreateAccomCard({ accommodation }: Props) {
 	const { startDate, endDate, location } = accommodation;
 
+	const parsedStartDate = startDate.split('T')[0].slice(0, 10);
+	const parsedEndDate = endDate.split('T')[0].slice(0, 10);
+
 	return (
 		<HStack width="100%" bgColor={Colors.white} borderRadius={18} p={2} shadow={1}>
 			<Box
@@ -50,9 +53,9 @@ function CreateAccomCard({ accommodation }: Props) {
 						{location.city}
 					</Text>
 					<HStack alignSelf="center" alignItems="center">
-						<Text>{startDate} </Text>
+						<Text>{parsedStartDate} </Text>
 						<Arrow size={5} color={Colors.primary.normal} />
-						<Text> {endDate}</Text>
+						<Text> {parsedEndDate}</Text>
 					</HStack>
 				</VStack>
 			</VStack>
