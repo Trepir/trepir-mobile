@@ -18,21 +18,8 @@ type Props = {
 function Step3({ jumpTo, createdId }: Props) {
 	const navigation = useNavigation();
 	const likedActivities = useAppSelector((state) => state.likedActivities);
-	const [activities, setActivities] = useState<ActivityEvent[]>([]);
 	const [selectedActivities, setSelectedActivities] = useState<number[]>([]);
 	const isActivitySelected = (id: number) => selectedActivities.includes(id);
-
-	useEffect(() => {
-		const getActivitiesFromBE = async () => {
-			try {
-				const allActivities = await getAllActivities();
-				setActivities([...allActivities.data!]);
-			} catch (error) {
-				console.error(error);
-			}
-		};
-		getActivitiesFromBE();
-	}, []);
 
 	const addTripsAndGoBack = async () => {
 		try {
@@ -58,10 +45,10 @@ function Step3({ jumpTo, createdId }: Props) {
 				<Heading alignSelf="center" fontWeight="semibold" textAlign="center" mb={2} px={5}>
 					Add some Activities so you can start planning
 				</Heading>
-				{activities.length > 0 ? (
+				{likedActivities.length > 0 ? (
 					<ScrollView w="100%">
 						{likedActivities.map(({ id, activity }, index) => (
-							<Box key={activity.id} mb={index === activities.length - 1 ? '32' : 0.5}>
+							<Box key={activity.id} pb={index === likedActivities.length - 1 ? '32' : 0.5}>
 								<Pressable
 									onPress={() => {
 										if (!isActivitySelected(id)) {

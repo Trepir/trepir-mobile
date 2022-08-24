@@ -60,7 +60,7 @@ function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 							width="100%"
 							alignItems="center"
 						>
-							<ActivityCard activity={activity} />
+							{activity !== undefined && <ActivityCard activity={activity} />}
 						</Pressable>
 					))}
 				</ScrollView>

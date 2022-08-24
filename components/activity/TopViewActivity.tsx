@@ -7,17 +7,24 @@ import { Platform } from 'react-native';
 import Arrow from '../../assets/icons/Arrow';
 import Colors from '../../constants/Colors';
 import HeartIcon from '../../assets/icons/HeartIcon';
+import { useAppSelector } from '../../app/hooks';
 
 function TopViewActivity({
 	title = 'ups there was an error',
+	id = '',
 	isActivity = false,
 	openModal,
 }: {
 	title: string;
 	isActivity?: boolean;
+	id?: string;
 	openModal?: () => void;
 }) {
 	const navigation = useNavigation();
+	const tripSavedActivities = useAppSelector((state) => state.likedActivities);
+
+	const isActivityLiked = (activityId: string) =>
+		tripSavedActivities.some((act) => act.activityId === activityId);
 
 	return (
 		<HStack
@@ -61,7 +68,10 @@ function TopViewActivity({
 					justifyContent="center"
 					onPress={openModal}
 				>
-					<HeartIcon size={24} color={Colors.white} />
+					<HeartIcon
+						size={24}
+						color={isActivityLiked(id) ? Colors.like.like_error : Colors.white}
+					/>
 				</Pressable>
 			) : (
 				<View width="10%" height="10" />

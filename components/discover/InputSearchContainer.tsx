@@ -131,7 +131,16 @@ function InputSearchContainer({
 										>
 											<ActivityCard activity={activity} />
 											{isActivityLiked(activity.id!) && (
-												<Box position="absolute" right={2} top={2}>
+												<Box
+													position="absolute"
+													left={3}
+													top={3}
+													rounded="full"
+													bgColor="white"
+													p={0.5}
+													pt={1}
+													px={1}
+												>
 													<HeartIcon size={30} color={Colors.like.like_error} />
 												</Box>
 											)}

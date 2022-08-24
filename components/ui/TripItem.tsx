@@ -4,7 +4,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../../constants/Colors';
 import Arrow from '../../assets/icons/Arrow';
-import { TripBasicState } from '../../types';
+import { DayActivityEvent, TripBasicState } from '../../types';
 import { fetchTrip } from '../../services/trip';
 import { useAppDispatch } from '../../app/hooks';
 import { storeCurrentTrip } from '../../features/trip/currentTripSlice';
@@ -34,7 +34,15 @@ function TripItem({ trip, useNav }: { trip: TripBasicState; useNav?: () => void 
 							try {
 								const fetchedTrip = await fetchTrip(id);
 								if (fetchedTrip.data) {
-									dispatch(storeCurrentTrip(fetchedTrip.data));
+									dispatch(
+										storeCurrentTrip({
+											...fetchedTrip.data,
+											favouriteActivities: fetchedTrip.data.favouriteActivities.map(
+												// @ts-ignore
+												(dayActivity: DayActivityEvent) => dayActivity.activity
+											),
+										})
+									);
 									navigation.navigate('TripStack', { screen: 'Trip' });
 								}
 							} catch (error) {

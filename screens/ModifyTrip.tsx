@@ -61,6 +61,7 @@ function ModifyTrip() {
 			tripDay: [...newTripDaysState],
 		};
 		dispatch(storeCurrentTrip(newCurrentTrip));
+		console.log('UDATED TRIP=======>', trip);
 	};
 
 	const updateTripDaysStates = (newTripDaysState: TripDay[]) => {

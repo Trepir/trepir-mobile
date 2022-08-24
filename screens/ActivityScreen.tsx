@@ -27,7 +27,12 @@ function ActivityScreen() {
 				justifyContent="flex-start"
 				bgColor={Colors.grey.extraLight}
 			>
-				<TopViewActivity title={dayAct.dayActivity.activity.name} openModal={openModal} />
+				<TopViewActivity
+					title={dayAct.dayActivity.activity.name}
+					openModal={openModal}
+					isActivity
+					id={dayAct.dayActivity?.activity.id}
+				/>
 				<EventActivityInfo event={dayAct.dayActivity.activity} />
 				<LikeActivityModal activity={dayAct.dayActivity.activity} bottomSheetRef={bottomSheetRef} />
 			</View>

@@ -23,13 +23,7 @@ const currentTripSlice = createSlice({
 	name: 'currentTrip',
 	initialState,
 	reducers: {
-		storeCurrentTrip: (state: Trip, action: PayloadAction<Trip>) => {
-			const parsedLiked = action.payload.favouriteActivities.map(
-				// @ts-ignore
-				(dayActivity: DayActivityEvent) => dayActivity.activity
-			);
-			return { ...action.payload, favouriteActivities: parsedLiked };
-		},
+		storeCurrentTrip: (state: Trip, action: PayloadAction<Trip>) => ({ ...action.payload }),
 		clearCurrentTrip: () => initialState,
 	},
 });
