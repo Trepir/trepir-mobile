@@ -21,6 +21,8 @@ import { addDates } from '../features/createTripValidation/CTValidationSlice';
 import { createActivityApi } from '../services/ActivityService';
 import { storeCurrentTrip } from '../features/trip/currentTripSlice';
 import TopViewTrip from '../components/Trip/TopViewTrip';
+import { getDateAsDate } from '../helpers/getDateOfTripDay';
+import { typeOfEvent } from '../helpers/getTypeOfEvent';
 
 const spreadTripDays = (tripDays: TripDay[]) => {
 	const spreadedDays = tripDays.map((day) => [
@@ -209,9 +211,9 @@ function ModifyTrip() {
 			} else {
 				if (auxDay.id !== spreadData[0].tripDayId) {
 					return {
-						// sameDay: false,
-						activityId: spreadData[0].dayActivity?.activity.id,
-						// newOrder: number,
+						// activityId: spreadData[0].dayActivity?.activity.id,
+						type: typeOfEvent(spreadData[0]),
+						date: getDateAsDate(trip.startDate, auxDay.dayIndex),
 						newTripDayId: auxDay.id,
 						previousTripDayId: spreadData[0].tripDayId,
 						tripDayActivityId: spreadData[0].id,
