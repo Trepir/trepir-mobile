@@ -42,7 +42,7 @@ function TopViewActivity({
 			<Text
 				color={Colors.white}
 				flexShrink={1}
-				pt={0.5}
+				pt={1}
 				height="10"
 				fontSize="2xl"
 				fontWeight="bold"

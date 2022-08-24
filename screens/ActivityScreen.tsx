@@ -27,7 +27,7 @@ function ActivityScreen() {
 				justifyContent="flex-start"
 				bgColor={Colors.grey.extraLight}
 			>
-				<TopViewActivity title="Activity details" isActivity openModal={openModal} />
+				<TopViewActivity title={dayAct.dayActivity.activity.name} openModal={openModal} />
 				<EventActivityInfo event={dayAct.dayActivity.activity} />
 				<LikeActivityModal activity={dayAct.dayActivity.activity} bottomSheetRef={bottomSheetRef} />
 			</View>
@@ -42,7 +42,7 @@ function ActivityScreen() {
 				justifyContent="flex-start"
 				bgColor={Colors.grey.extraLight}
 			>
-				<TopViewActivity title="Accommodation details" />
+				<TopViewActivity title={dayAct.accommodation.location.locationName} />
 				<EventAccommodationInfo event={dayAct.accommodation} />
 			</View>
 		);

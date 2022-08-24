@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import { Text, Pressable, Image, VStack, HStack } from 'native-base';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -8,7 +9,7 @@ import { fetchTrip } from '../../services/trip';
 import { useAppDispatch } from '../../app/hooks';
 import { storeCurrentTrip } from '../../features/trip/currentTripSlice';
 
-function TripItem({ trip, useNav }: { trip: TripBasicState; useNav?: () => {} }) {
+function TripItem({ trip, useNav }: { trip: TripBasicState; useNav?: () => void }) {
 	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
 

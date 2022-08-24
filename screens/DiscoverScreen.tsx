@@ -91,7 +91,7 @@ function DiscoverScreen() {
 			mapRef.current?.animateCamera(camera, { duration: 300 });
 			mapRef.current?.fitToCoordinates([viewPortNE, viewPortSW], { edgePadding });
 			setStartedSearch(true);
-			bottomSheetRef.current?.snapToIndex(1);
+			bottomSheetRef.current?.snapToIndex(0);
 			await getActivitiesFromLocation(details);
 		}
 	};

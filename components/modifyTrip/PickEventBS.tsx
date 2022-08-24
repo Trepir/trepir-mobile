@@ -20,7 +20,22 @@ function PickEventBS({ bottomSheetRef, addActivityToDay }: Props) {
 	const snapPoints = useMemo(() => ['60%', '80%'], []);
 
 	return (
-		<BottomSheet ref={bottomSheetRef} index={-1} snapPoints={snapPoints} enablePanDownToClose>
+		<BottomSheet
+			ref={bottomSheetRef}
+			index={-1}
+			snapPoints={snapPoints}
+			enablePanDownToClose
+			style={{
+				shadowColor: '#000',
+				shadowOffset: {
+					width: 0,
+					height: 2,
+				},
+				shadowOpacity: 0.25,
+				shadowRadius: 5,
+				elevation: 5,
+			}}
+		>
 			<View alignItems="center">
 				<Text fontSize="xl" fontWeight="medium" mb={2}>
 					Add something new

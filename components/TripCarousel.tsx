@@ -6,7 +6,7 @@ import EmptyList from './createTrip/EmptyList';
 import { TripBasicState } from '../types';
 
 type CarouselProps = {
-	type: 'upcoming' | 'past' | 'favorites' | 'current';
+	type: 'upcoming' | 'past' | 'shared' | 'current';
 	trips: TripBasicState[];
 };
 
@@ -27,9 +27,13 @@ function TripCarousel({ type, trips }: CarouselProps) {
 			title = 'Past trips';
 			empty = "You didn't completed any trips on the app yet!";
 			break;
+		case 'shared':
+			title = 'Shared trips';
+			empty = 'You have no shared trips.';
+			break;
 		default:
-			title = 'Favorites';
-			empty = 'Favorite trips to save them here!';
+			title = 'Ups, something went wrong';
+			empty = 'UPSIII';
 	}
 
 	return (

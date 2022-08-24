@@ -18,6 +18,7 @@ import { storeUser } from '../features/user/userSlice';
 import { fetchUser } from '../services/user';
 import { storeArrayTrip } from '../features/user/tripArraySlice';
 import { storeLikedActivities } from '../features/user/likedActivitiesSlice';
+import { StatusBar } from 'expo-status-bar';
 
 const { height } = Dimensions.get('window');
 
@@ -64,6 +65,7 @@ function HomeScreen({ navigation }: HomePageScreenProps<'HomeScreen'>) {
 
 	return (
 		<View flex={1} justifyContent="center" alignItems="center" height={height}>
+			<StatusBar style="dark" />
 			<Image source={img} style={Style.image} blurRadius={5} />
 			<VStack flex={1} justifyContent="center" alignItems="center">
 				<Logo size={100} />

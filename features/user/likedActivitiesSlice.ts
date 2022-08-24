@@ -9,7 +9,7 @@ const likedActivitiesSlice = createSlice({
 	reducers: {
 		storeLikedActivities: (state: ActivityEvent[], action: PayloadAction<DayActivityEvent[]>) => {
 			const newPayload = action.payload.map((activity: DayActivityEvent) => activity.activity);
-			console.log('NEW PAYLOAD ======>', newPayload);
+			// console.log('NEW PAYLOAD ======>', newPayload);
 			return [...newPayload];
 		},
 		clearLikedActivities: () => initialState,

@@ -84,10 +84,9 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 	};
 
 	return (
-		<DismissKeyboard>
-			<>
-				<TopViewActivity title="Add a new Activity" />
-
+		<>
+			<TopViewActivity title="Add a new Activity" />
+			<DismissKeyboard>
 				<View flex={1} px="10" keyboardShouldPersistTaps="handled">
 					{/* WHEN THIS IS ACTIVE I HAVE TO TOP THE SCROLLING OF THE MODAL  */}
 					<HStack alignSelf="center" alignItems="center">
@@ -167,7 +166,7 @@ export default function AddActivityModal({ navigation }: RootTabScreenProps<'Cre
 						<StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
 					</View>
 				</View>
-			</>
-		</DismissKeyboard>
+			</DismissKeyboard>
+		</>
 	);
 }
