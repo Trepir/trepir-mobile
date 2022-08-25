@@ -66,7 +66,7 @@ function TripItem({ trip, useNav }: { trip: TripBasicState; useNav?: () => void 
 						<Text fontSize="xl" fontWeight="semibold" isTruncated>
 							{name}
 						</Text>
-						<HStack alignSelf="center" alignItems="center">
+						<HStack>
 							<Text>{startDate} </Text>
 							<Text> </Text>
 							<Arrow size={4} color={Colors.black} />
