@@ -1,0 +1,71 @@
+export const trip = {
+	id: 'cl6z1r1wk00335y0gexv91hgv',
+	createdAt: '2022-08-18T12:56:37.988Z',
+	userId: 'cl6z1ojg900205y0gpubxhdop',
+	startDate: '2022-08-19T00:00:00.000Z',
+	endDate: '2022-08-27T00:00:00.000Z',
+	name: 'London Calling',
+	googlePlaceId: 'ChIJdd4hrwug2EcRmSrV3Vo6llI',
+	latitude: 51.5072178,
+	longitude: -0.1275862,
+	formattedAddress: 'London, UK',
+	googleLocationName: 'London',
+	photoUrl:
+		'https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sAeJbb3dQMWMZm3NMC-O4DSN_Q72TB4NZT3mzP5ub3Lal-89KZC8CVq5nbNS1-KqLsmfY0Qjs2pdM5UkybK9Pc4mQTB4nGIz1GX3zAtvrAz3TrbQtYSiDLk9CcCrTkp0r80vXQ2MKAVSU_YaGR-d18bc4ulB8OpOYXCw0fcgSJwenXdvso9r6&3u1280&5m1&2e1&callback=none&key=AIzaSyBouxWEJmWQTyT529v6xpiWDauFcFs1VTw&token=130736',
+	tripDay: [
+		{
+			id: 'cl6z1r1wk00345y0g7mcdmzwj',
+			dayIndex: 0,
+			tripId: 'cl6z1r1wk00335y0gexv91hgv',
+			tripDayActivities: [],
+		},
+		{
+			id: 'cl6z1r1wk00355y0ge14khmxx',
+			dayIndex: 1,
+			tripId: 'cl6z1r1wk00335y0gexv91hgv',
+			tripDayActivities: [],
+		},
+		{
+			id: 'cl6z1r1wk00365y0glwc8g3c2',
+			dayIndex: 2,
+			tripId: 'cl6z1r1wk00335y0gexv91hgv',
+			tripDayActivities: [],
+		},
+		{
+			id: 'cl6z1r1wk00375y0gwmtnjcav',
+			dayIndex: 3,
+			tripId: 'cl6z1r1wk00335y0gexv91hgv',
+			tripDayActivities: [],
+		},
+		{
+			id: 'cl6z1r1wk00385y0gjqaqnt7y',
+			dayIndex: 4,
+			tripId: 'cl6z1r1wk00335y0gexv91hgv',
+			tripDayActivities: [],
+		},
+		{
+			id: 'cl6z1r1wk00395y0g9660k2b5',
+			dayIndex: 5,
+			tripId: 'cl6z1r1wk00335y0gexv91hgv',
+			tripDayActivities: [],
+		},
+		{
+			id: 'cl6z1r1wk00405y0gxl1ipve4',
+			dayIndex: 6,
+			tripId: 'cl6z1r1wk00335y0gexv91hgv',
+			tripDayActivities: [],
+		},
+		{
+			id: 'cl6z1r1wk00415y0glicrkgj8',
+			dayIndex: 7,
+			tripId: 'cl6z1r1wk00335y0gexv91hgv',
+			tripDayActivities: [],
+		},
+		{
+			id: 'cl6z1r1wk00425y0gm9kbzmum',
+			dayIndex: 8,
+			tripId: 'cl6z1r1wk00335y0gexv91hgv',
+			tripDayActivities: [],
+		},
+	],
+};

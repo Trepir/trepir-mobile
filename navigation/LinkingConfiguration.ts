@@ -7,30 +7,65 @@
 import { LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 
-import { RootStackParamList } from '../types';
+import { RootStackParamList, HomePageParamList } from '../types';
 
-const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: [Linking.createURL('/')],
-  config: {
-    screens: {
-      Root: {
-        screens: {
-          TabOne: {
-            screens: {
-              TabOneScreen: 'one',
-            },
-          },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: 'two',
-            },
-          },
-        },
-      },
-      Modal: 'modal',
-      NotFound: '*',
-    },
-  },
+// WHEN WE CHANGE SOMETHING ON THE ROUTES WE HAVE TO CHANGE IT HERE
+export const linkingRoot: LinkingOptions<RootStackParamList> = {
+	prefixes: [Linking.createURL('/')],
+	config: {
+		screens: {
+			Root: {
+				screens: {
+					Dashboard: {
+						screens: {
+							Dashboard: 'Dashboard',
+						},
+					},
+					Create: {
+						screens: {
+							Create: 'Create Trip',
+						},
+					},
+					Discover: {
+						screens: {
+							Discover: 'Discover',
+						},
+					},
+				},
+			},
+			NewActivityModal: 'NewActivityModal',
+			NewTravelModal: 'NewTravelModal',
+			NewAccommodationModal: 'NewAccommodationModal',
+			NotFound: '*',
+		},
+	},
 };
 
-export default linking;
+export const linkingAuth: LinkingOptions<HomePageParamList> = {
+	prefixes: [Linking.createURL('/')],
+	config: {
+		screens: {
+			HomeScreen: {
+				screens: {
+					Login: {
+						screens: {
+							Login: 'Login',
+						},
+					},
+					HomeScreen: {
+						screens: {
+							Home: 'Home',
+						},
+					},
+					Register: {
+						screens: {
+							Register: 'Register',
+						},
+					},
+				},
+			},
+		},
+	},
+};
+
+// export default linkingRoot, linkingAuth;
