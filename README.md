@@ -33,18 +33,29 @@ cd trepir-mobile
 npm install
 ```
 
-1. Fill out your API keys
+3. Fill out your API keys
 
+```
+    // On constanst/ApiKeys.ts replace this with your keys
+    export default {
+        googleMapsAPIKey: 'YOUR_KEY',
+    };
 ```
 
 ```
-
-4. Do BE KEYS
-
+    const firebaseConfigInfo = {
+	apiKey: '',
+	authDomain: '',
+	projectId: '',
+	storageBucket: '',
+	messagingSenderId: '',
+	appId: '',
+	measurementId: '',
+    };
+    export default firebaseConfigInfo;
 ```
-DATABASE_URL="CONNECTION_URL"
-SECRET_JWT_SEED=YOUR_SUPPER_SECRET_JWT_SEED
-```
+
+4. Make sure to connect to the Back-End on https://github.com/Trepir/trepir-be.git
 
 5. Start development server
 
