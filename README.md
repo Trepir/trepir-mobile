@@ -71,8 +71,10 @@ npx expo start
   - Able to work on both Android and iOS.
   - Can access every hardware functionality on your phone for a better experience.
   - Create an account once on your phone and always be logged in.
-- ### FEATURE
-
-- ### FEATURE
+- ### Shared Content
+  - Users can create activities for other users to add to their trips.
+- ### Modify Your Trips
+  - Easy drag and drop UI for ease of use
+  - Dates modify automatically for the user when an accommodation or travel is moved to a new day.
 
 ### Coming soon to AppStore and Play Store...
