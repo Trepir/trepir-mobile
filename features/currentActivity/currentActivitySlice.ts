@@ -14,10 +14,7 @@ const currentActivitySlice = createSlice({
 	name: 'currentActivity',
 	initialState,
 	reducers: {
-		storeCurrentActivity: (state: DayAct, action: PayloadAction<DayAct>) => {
-			// console.log('Payload: ', action.payload);
-			return { ...action.payload };
-		},
+		storeCurrentActivity: (state: DayAct, action: PayloadAction<DayAct>) => ({ ...action.payload }),
 		clearCurrentActivity: () => initialState,
 	},
 });

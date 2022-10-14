@@ -4,14 +4,6 @@ export function getDate(startDate: string, index: number) {
 	return date.toLocaleDateString();
 }
 export function getDateAsDate(startDate: string, index: number, timeSet?: string) {
-	/*
-	const formattedStartDate = new Date(
-		new Date(startDate).setHours(
-			checkInTime.value.getHours() + 2,
-			checkInTime.value.getMinutes()
-		)
-	).toISOString();
-	*/
 	const date = new Date(startDate);
 	date.setDate(date.getDate() + index);
 	if (timeSet) {
@@ -25,10 +17,3 @@ export function getDateAsDate(startDate: string, index: number, timeSet?: string
 	}
 	return date;
 }
-
-/**
- * 
- * const date = new Date(startDate);
-	date.setDate(date.getDate() + index);
-	return date;
- */

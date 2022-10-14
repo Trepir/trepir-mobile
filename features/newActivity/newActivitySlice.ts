@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActivityEvent } from '../../types';
 
@@ -30,11 +29,9 @@ const newActivitySlice = createSlice({
 	name: 'newActivity',
 	initialState,
 	reducers: {
-		storeNewActivity: (state: ActivityEvent, action: PayloadAction<ActivityEvent>) => {
-			// console.log('NEW ACTIVITY STORED', action.payload);
-			return { ...action.payload };
-		},
-		// Change Type if necessary
+		storeNewActivity: (state: ActivityEvent, action: PayloadAction<ActivityEvent>) => ({
+			...action.payload,
+		}),
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 		clearActivityState: (state: ActivityEvent) => initialState,
 	},

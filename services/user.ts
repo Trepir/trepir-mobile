@@ -1,8 +1,9 @@
 import { UserFromBackend, User, UserState } from '../types';
+import ApiUrl from '../constants/ApiUrl';
 
 export const fetchUser = async (id: string): Promise<{ data: User | null; error: any }> => {
 	try {
-		const data = await fetch('https://trepir.herokuapp.com/user/signin', {
+		const data = await fetch(`${ApiUrl}/user/signin`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -34,7 +35,7 @@ type UserSignUpInfo = {
 };
 
 export const signUp = async (userInfo: UserSignUpInfo, id: string) => {
-	const data = await fetch('https://trepir.herokuapp.com/user/signin', {
+	const data = await fetch(`${ApiUrl}/user/signin`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

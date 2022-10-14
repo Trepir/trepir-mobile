@@ -1,10 +1,11 @@
 import { ActivityEvent, Viewport } from '../types';
+import ApiUrl from '../constants/ApiUrl';
 
 export const activitiesFromViewport = async (
 	viewport: Viewport
 ): Promise<{ data: ActivityEvent[] | null; error: any }> => {
 	try {
-		const data = await fetch(`https://trepir.herokuapp.com/activity/coordinates`, {
+		const data = await fetch(`${ApiUrl}/activity/coordinates`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

@@ -1,20 +1,3 @@
-// type Tag =
-// 	| 'Relax'
-// 	| 'Landmark'
-// 	| 'Entertainment'
-// 	| 'Drinks'
-// 	| 'Restaurant'
-// 	| 'Adventure'
-// 	| 'Museum'
-// 	| 'Outdoors'
-// 	| 'Tour'
-// 	| 'Beach'
-// 	| 'Culture'
-// 	| 'Nightlife'
-// 	| 'Nature'
-// 	| 'Festivity'
-// 	| 'Sport';
-
 export const ActivityTags = [
 	{ value: 'Relax', label: 'Relax' },
 	{ value: 'Landmark', label: 'Landmark' },

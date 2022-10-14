@@ -1,9 +1,7 @@
 // import { Trip } from '../types';
 
 import { Location, TripDay } from '../types';
-
-const url = 'https://trepir.herokuapp.com';
-// const url = 'http://192.168.1.215:4000';
+import ApiUrl from '../constants/ApiUrl';
 
 type AddActivityType = {
 	tripDayId: string;
@@ -15,7 +13,7 @@ export const addActivityToTrip = async (
 	activityInfo: AddActivityType
 ): Promise<{ data: TripDay | null; error: any }> => {
 	try {
-		const result = await fetch(`${url}/trip/addActivity`, {
+		const result = await fetch(`${ApiUrl}/trip/addActivity`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(activityInfo),
@@ -40,7 +38,7 @@ export const addAccommodationToTrip = async (
 	newAccommodation: AddAccommodationType
 ): Promise<{ data: TripDay[] | null; error: any }> => {
 	try {
-		const result = await fetch(`${url}/trip/addAccommodation`, {
+		const result = await fetch(`${ApiUrl}/trip/addAccommodation`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(newAccommodation),
@@ -66,7 +64,7 @@ export const addTravelToTrip = async (
 	newTravel: AddTravelType
 ): Promise<{ data: TripDay | null; error: any }> => {
 	try {
-		const result = await fetch(`${url}/trip/addTravelEvent`, {
+		const result = await fetch(`${ApiUrl}/trip/addTravelEvent`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(newTravel),
@@ -90,7 +88,7 @@ export const deleteEventFromTrip = async (
 	id: string
 ): Promise<{ data: TripDay[] | null; error: any }> => {
 	try {
-		const result = await fetch(`${url}/trip/deleteEvent`, {
+		const result = await fetch(`${ApiUrl}/trip/deleteEvent`, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ id }),
@@ -113,7 +111,7 @@ export const reorderTripDay = async (
 	reorderData: ReorderDay
 ): Promise<{ data: TripDay | null; error: any }> => {
 	try {
-		const result = await fetch(`${url}/trip/reorderDay`, {
+		const result = await fetch(`${ApiUrl}/trip/reorderDay`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(reorderData),
@@ -140,7 +138,7 @@ export const changeTripDay = async (
 	changeData: ChangeDay
 ): Promise<{ data: TripDay[] | null; error: any }> => {
 	try {
-		const result = await fetch(`${url}/trip/eventChangeDay`, {
+		const result = await fetch(`${ApiUrl}/trip/eventChangeDay`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(changeData),

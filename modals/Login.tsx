@@ -2,11 +2,7 @@ import { Box } from 'native-base';
 import React, { useMemo } from 'react';
 import { Control, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
-import {
-	BottomSheetModal,
-	BottomSheetModalProvider,
-	BottomSheetTextInput,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as SecureStore from 'expo-secure-store';
 import { useAppDispatch } from '../app/hooks';
 
@@ -58,7 +54,6 @@ function Login({ reference }: { reference: React.Ref<BottomSheetModal> }) {
 	const onSubmit = async () => {
 		const uidFromFirebase = '2';
 		try {
-			console.log('hello');
 			await save('user', uidFromFirebase);
 			const payload = await fetchUser(uidFromFirebase);
 			if (payload.data) {

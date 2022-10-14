@@ -1,13 +1,11 @@
 import { ActivityEvent } from '../types';
-
-const url = 'https://trepir.herokuapp.com';
-// const url = 'http://192.168.1.215:4000';
+import ApiUrl from '../constants/ApiUrl';
 
 export const createActivityApi = async (
 	activity: ActivityEvent
 ): Promise<{ data: ActivityEvent | null; error: any }> => {
 	try {
-		const result = await fetch(`${url}/activity/create`, {
+		const result = await fetch(`${ApiUrl}/activity/create`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(activity),
@@ -23,7 +21,7 @@ export const createActivityApi = async (
 
 export const getAllActivities = async (): Promise<{ data: ActivityEvent[] | null; error: any }> => {
 	try {
-		const result = await fetch(`${url}/activity/all`);
+		const result = await fetch(`${ApiUrl}/activity/all`);
 		const allActivities = await result.json();
 		return { data: allActivities, error: null };
 	} catch (error) {
@@ -40,7 +38,7 @@ export const addLikedActivity = async (
 	const bodyData = tripId !== undefined ? { activityId, uid, tripId } : { activityId, uid };
 
 	try {
-		const result = await fetch(`${url}/activity/favorite`, {
+		const result = await fetch(`${ApiUrl}/activity/favorite`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(bodyData),

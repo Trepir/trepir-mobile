@@ -10,7 +10,6 @@ export default {
 	},
 	primary: {
 		normal: 'rgba(28, 185, 133, 1)',
-		// darkk: '#008787',
 		dark: 'rgba(24, 156, 109, 1)',
 		light: 'rgba(55, 220, 165, 1)',
 		inputLabel: 'rgba(28, 185, 133, 1)',

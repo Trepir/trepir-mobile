@@ -13,11 +13,9 @@ const newAuthSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		storeNewAuth: (state: AuthState, action: PayloadAction<string | null>) => {
-			// console.log('Payload', action.payload);
-			return { token: action.payload };
-		},
-		// Change Type if necessary
+		storeNewAuth: (state: AuthState, action: PayloadAction<string | null>) => ({
+			token: action.payload,
+		}),
 		clearAuthState: () => initialState,
 	},
 });

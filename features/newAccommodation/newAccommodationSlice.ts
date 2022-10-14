@@ -25,13 +25,8 @@ const newAccommodationSlice = createSlice({
 		storeNewAccommodation: (
 			state: AccommodationState,
 			action: PayloadAction<AccommodationState>
-		) => {
-			// console.log('NEW ACCOMMODATION STORED =>', action.payload);
-			// eslint-disable-next-line no-param-reassign
-			return { ...action.payload };
-		},
-		// Change Type if necessary
-		clearAccommodationState: (state: AccommodationState) => initialState,
+		) => ({ ...action.payload }),
+		clearAccommodationState: () => initialState,
 	},
 });
 

@@ -1,8 +1,9 @@
 import { Trip } from '../types';
+import ApiUrl from '../constants/ApiUrl';
 
 export const fetchTrip = async (id: string): Promise<{ data: Trip | null; error: any }> => {
 	try {
-		const data = await fetch(`https://trepir.herokuapp.com/trip/tripById/${id}`, {
+		const data = await fetch(`${ApiUrl}/trip/tripById/${id}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
